@@ -70,17 +70,7 @@ contract Leg10n is Ownable, AccessControl {
       codename_wallets[user_name_] = userAddress;
    }
 
-   // TODO: Consider remove
-   /**
-   *  @dev This function update user nicname if user change it
-   *  
-   */
-   function UpdateUserName(string memory new_user_name_) public {
-     User memory u = GetUserByAddress(msg.sender);
-     require(u.userAddress == msg.sender, "you don't now own this username");
-     u.userName = new_user_name_;
-     users[msg.sender] = u;
-   }
+
 
    /**
    *   @notice This function for USER who try to obtain some tg_id
@@ -99,10 +89,7 @@ contract Leg10n is Ownable, AccessControl {
       require(feePaid, "Unable to transfer fee");
    }
 
-   function GetCapitalFromString(string memory code_name) public view returns(string memory) {
-      string memory capital = Enigma.Substring(code_name,0,1);
-      return capital;
-   }
+
 
    function RequestJoin(int64 applyerTg, string memory code_name_, string memory parent_name) public payable {
       address applyerAddress = msg.sender;      // ЛИЧНАЯ ПОДАЧА ПАСПОРТА В ТРЕТЬЕ ОКОШКО МФЦ
@@ -112,11 +99,17 @@ contract Leg10n is Ownable, AccessControl {
       address parent_address = codename_wallets[parent_name];
 
       users[msg.sender] = User(applyerAddress, applyerTg, false, parent_address,code_name_,code_name_);
+      address[] storage referals = ref_tree[parent_address];
+      referals.push(msg.sender);
       emit passportApplied(applyerTg, msg.sender);
       emit passportAppliedIndexed(applyerTg, msg.sender);
       emit joinRequested(applyerTg, msg.sender, parent_address);
       (bool feePaid,) = bot.call{value: _passportFee}("");
       require(feePaid, "Unable to transfer fee");
+   }
+
+   function AcceptJoin(int64 applyerTg, string memory code_name_, string memory parent_name) public {
+
    }
 
    /** 

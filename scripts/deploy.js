@@ -7,22 +7,7 @@
 const hre = require("hardhat");
 
 async function main() {
-  /*
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
-
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
-
-  await lock.deployed();
-
-  console.log(
-    `Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
-    */
 
   console.log(hre.network.name);
   let murs_account = ethers.utils.getAddress("0x383A9e83E36796106EaC11E8c2Fbe8b92Ff46D3a");
@@ -39,11 +24,7 @@ async function main() {
 
 
   // We get the contract to deploy
-  /*
-  const TGPassport = await hre.ethers.getContractFactory("TGPassport");
-  const tgpassport = await TGPassport.deploy();
-  console.log("tgpassport address: ", tgpassport.address)
-  */
+ 
 
   const Dictionary = await hre.ethers.getContractFactory("Dictionary");
   const dictionary_entity = await Dictionary.deploy();
@@ -58,7 +39,7 @@ async function main() {
   .GetPassportFee();
   console.log("passport fee:", passportFee);
 
-  const A_test = await legion_entity.connect(owner)
+  const A_test = await dictionary_entity.connect(owner)
   .GetCapitalFromString("Adam");
   console.log("A test:", A_test);
 
