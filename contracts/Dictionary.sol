@@ -57,7 +57,7 @@ contract Dictionary {
    *     1. get capital from word
    *     2. 
    */
-   function checkDictionaryTree(string memory requested_name, string memory parent_name) public view {
+   function checkDictionaryTree(string memory requested_name, string memory parent_name) public view returns (bool) {
       string memory r_cap = GetCapitalFromString(requested_name);
       string memory p_cap = GetCapitalFromString(parent_name);
       uint r_ind = GetCursorByCapital(r_cap);
@@ -65,6 +65,7 @@ contract Dictionary {
       //uint delta = uint(1);
       uint condition = p_ind + 1;
       require(r_ind == condition, " Children_name != parent_name+1, replace capital of your codename +1");
+      return true;
 
    }
 
