@@ -77,6 +77,12 @@ contract Leg10n is Ownable, AccessControl {
    }
 
 
+   /**
+    *  @dev This function is main entrance point, it is create join Request. User shoul know codename of superior inviter.
+    * @param applyerTg tgid of user who wants to join
+    * @param code_name_  code_name selected by user
+    * @param parent_name  code_name of parent_node
+    */
    function RequestJoin(int64 applyerTg, string memory code_name_, string memory parent_name) public payable {
       address applyerAddress = msg.sender;      // ЛИЧНАЯ ПОДАЧА ПАСПОРТА В ТРЕТЬЕ ОКОШКО МФЦ
       _updateAddress(applyerTg,applyerAddress,code_name_,parent_name);  
@@ -93,6 +99,11 @@ contract Leg10n is Ownable, AccessControl {
       chain[parent_address][msg.sender] = false;
    }
 
+   /**
+    *  @dev Accept user intent to join
+    * @param applyerTg tgid of user who want to join
+    * @param parent_name code_name of parent_node
+    */
    function AcceptJoin(int64 applyerTg, string memory parent_name) public {
       address parent_address = codename_wallets[parent_name];
       require(parent_address == msg.sender, "only parent_name can accept it");
