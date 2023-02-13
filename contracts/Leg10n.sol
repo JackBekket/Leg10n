@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 //import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";  
 import "@openzeppelin/contracts/access/AccessControl.sol";
+import "./Dictionary.sol";
 
 
 //import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";    
@@ -28,30 +29,18 @@ contract Leg10n is Ownable, AccessControl {
       string codeName;
    }
 
-    /*
-   struct User {
-        int64 tgid;
-        bool valid;
-        address 
-   }
-    */
-
+ 
    //mappings
    mapping(int64 => address) public tgIdToAddress;
   // mapping(address => Passport) public passports;
    mapping(address => User) public users;
-   mapping(string => address) public username_wallets;  // usernames can be changed, do not trust it, use as utility
+   mapping(string => address) public codename_wallets;  // usernames can be changed, do not trust it, use as utility
+
+   mapping(address => address[]) public ref_tree;  // from user to users
    
    mapping (int64 => mapping(int64 => bool)) public trust_global; // user id => [] user ids => trust
   
-  /**
-   *   
-   *  1. by defult user  TRUST N0 0NE.
-   *  2. we can get int64[] opinion_changed, so we get array of user who express trust/untrust to specific user
-   *  3. then we can call GetTrust(user_from,user_to) for each of result from opinion_changed, and get arrays of trusters/untrusters attached to specific user
-   *  ..... possibly there is a better way to do it
-   */
-   mapping (int64 => int64[]) public opinion_changed;
+
  
    // EVENTS
    //
@@ -59,27 +48,32 @@ contract Leg10n is Ownable, AccessControl {
    event passportAppliedIndexed(int64 indexed applyerTg, address wallet_address);
    event passportApproved(int64 applyerTg, address wallet_address, address issuer);
    event passportDenied(int64 applyerTg, address wallet);
-   event TrustChanged(int64 from, int64 indexed to, bool trust);
 
+   event joinRequested(int64 applyerTg, address wallet_address, address indexed parent_address);
+   
+   Dictionary Enigma;
 
-   constructor() Ownable() {
+   constructor(address enigma_) Ownable() {
       _passportFee = 2000000000000000 wei; 
       _owner = owner();
         _grantRole(DEFAULT_ADMIN_ROLE,msg.sender);
         _grantRole(moderator,msg.sender);
         _grantRole(moderator,bot);
         _grantRole(moderator,murs);
+      Enigma = Dictionary(enigma_);
    }
 
 
    function _updateAddress(int64 tgId, address userAddress, string memory user_name_) internal {
       require(tgIdToAddress[tgId] == address(0x0), "There's address connected to that TG ID already.");  // if cell is not empty revert
       tgIdToAddress[tgId] = userAddress;
-      username_wallets[user_name_] = userAddress;
+      codename_wallets[user_name_] = userAddress;
    }
 
+   // TODO: Consider remove
    /**
    *  @dev This function update user nicname if user change it
+   *  
    */
    function UpdateUserName(string memory new_user_name_) public {
      User memory u = GetUserByAddress(msg.sender);
@@ -101,6 +95,26 @@ contract Leg10n is Ownable, AccessControl {
       users[msg.sender] = User(applyerAddress, applyerTg, false, address(0x0),user_name_,user_name_);
       emit passportApplied(applyerTg, msg.sender);
       emit passportAppliedIndexed(applyerTg, msg.sender);
+      (bool feePaid,) = bot.call{value: _passportFee}("");
+      require(feePaid, "Unable to transfer fee");
+   }
+
+   function GetCapitalFromString(string memory code_name) public view returns(string memory) {
+      string memory capital = Enigma.Substring(code_name,0,1);
+      return capital;
+   }
+
+   function RequestJoin(int64 applyerTg, string memory code_name_, string memory parent_name) public payable {
+      address applyerAddress = msg.sender;      // ЛИЧНАЯ ПОДАЧА ПАСПОРТА В ТРЕТЬЕ ОКОШКО МФЦ
+      _updateAddress(applyerTg,applyerAddress,code_name_);  
+      require (msg.value == _passportFee, "Request fee is not paid");
+
+      address parent_address = codename_wallets[parent_name];
+
+      users[msg.sender] = User(applyerAddress, applyerTg, false, parent_address,code_name_,code_name_);
+      emit passportApplied(applyerTg, msg.sender);
+      emit passportAppliedIndexed(applyerTg, msg.sender);
+      emit joinRequested(applyerTg, msg.sender, parent_address);
       (bool feePaid,) = bot.call{value: _passportFee}("");
       require(feePaid, "Unable to transfer fee");
    }
@@ -128,7 +142,7 @@ contract Leg10n is Ownable, AccessControl {
       require(users[passportToDecline].valid == false, "already approved OR do not exists yet"); // it also means that record exists
       delete users[passportToDecline];
       delete tgIdToAddress[_tgId];
-      delete username_wallets[user_name_];
+      delete codename_wallets[user_name_];
       emit passportDenied(_tgId,passportToDecline);
    }
 
@@ -144,40 +158,12 @@ contract Leg10n is Ownable, AccessControl {
      // require(passports[passportToDecline].valid == false, "already approved OR do not exists yet"); // it also means that record exists
       delete users[passportToDecline];
       delete tgIdToAddress[_tgId];
-      delete username_wallets[user_name_];
+      delete codename_wallets[user_name_];
       emit passportDenied(_tgId,passportToDecline);
    }  
 
 
-      /**
-       * 
-       *  @dev this INTERNAL function is to show trust to other user
-       *  @param from tgid user who trust
-       *  @param to tgid user who trusted by
-       */
-      function _iTrustTo(int64 from, int64 to)  internal {
-         trust_global[from][to] = true;
-      }
-
-      /**
-       *   @dev this INTERNAL function is to DISRESPECT youser
-       *   by DEFAULT you are TRUST NO 0NE!
-       *   @param from tgid user who DONT TRUST
-       *   @param to tgid user who looks suspiciouse
-       */
-      function _iNotTrust(int64 from, int64 to) internal {
-         trust_global[from][to] = false;
-      }
-
-
-
-      /**
-       *  @notice get to know if tgid from trust tgid to
-       */
-      function GetTrust(int64 from, int64 to) public view returns (bool) {
-         return trust_global[from][to];
-      }
-
+    
     /**
      *  @dev setting fee for applying for passport
      */
@@ -215,7 +201,7 @@ contract Leg10n is Ownable, AccessControl {
    //function GetUserByAddress(address user_wallet) public view returns
 
    function GetWalletByNickName(string memory user_name_) public view returns (address) {
-      return username_wallets[user_name_];
+      return codename_wallets[user_name_];
    }
 
    function GetUserByNickName(string memory user_name_) public view returns (User memory) {

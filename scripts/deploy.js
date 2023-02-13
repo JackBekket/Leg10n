@@ -39,13 +39,30 @@ async function main() {
 
 
   // We get the contract to deploy
+  /*
   const TGPassport = await hre.ethers.getContractFactory("TGPassport");
   const tgpassport = await TGPassport.deploy();
   console.log("tgpassport address: ", tgpassport.address)
+  */
 
   const Dictionary = await hre.ethers.getContractFactory("Dictionary");
   const dictionary_entity = await Dictionary.deploy();
   console.log("dictionary address: ", dictionary_entity.address);
+
+  const Legion = await hre.ethers.getContractFactory("Leg10n");
+  const legion_entity = await Legion.deploy(dictionary_entity.address);
+  console.log("legion address: ", legion_entity.address);
+
+  // retriving passport fee:
+  const passportFee = await legion_entity.connect(owner)
+  .GetPassportFee();
+  console.log("passport fee:", passportFee);
+
+  const A_test = await legion_entity.connect(owner)
+  .GetCapitalFromString("Adam");
+  console.log("A test:", A_test);
+
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere
