@@ -19,18 +19,27 @@ contract Leg10n is Ownable, AccessControl {
    
    address private bot = 0x0E5279edeD9Fe8281eB0f7277e51068c6DA2fa31;
 
-   struct Passport {
+   struct User {
       address userAddress;
       int64 tgId;      // unic Id for telegram (number)
       bool valid;
       address validatorAddress;
       string userName; // can be changed, do not trust it
+      string codeName;
    }
 
+    /*
+   struct User {
+        int64 tgid;
+        bool valid;
+        address 
+   }
+    */
 
    //mappings
    mapping(int64 => address) public tgIdToAddress;
-   mapping(address => Passport) public passports;
+  // mapping(address => Passport) public passports;
+   mapping(address => User) public users;
    mapping(string => address) public username_wallets;  // usernames can be changed, do not trust it, use as utility
    
    mapping (int64 => mapping(int64 => bool)) public trust_global; // user id => [] user ids => trust
@@ -73,10 +82,10 @@ contract Leg10n is Ownable, AccessControl {
    *  @dev This function update user nicname if user change it
    */
    function UpdateUserName(string memory new_user_name_) public {
-     Passport memory p = GetPassportByAddress(msg.sender);
-     require(p.userAddress == msg.sender, "you don't now own this username");
-     p.userName = new_user_name_;
-     passports[msg.sender] = p;
+     User memory u = GetUserByAddress(msg.sender);
+     require(u.userAddress == msg.sender, "you don't now own this username");
+     u.userName = new_user_name_;
+     users[msg.sender] = u;
    }
 
    /**
@@ -89,7 +98,7 @@ contract Leg10n is Ownable, AccessControl {
       _updateAddress(applyerTg,applyerAddress,user_name_);  
       require (msg.value == _passportFee, "Passport fee is not paid");
 
-      passports[msg.sender] = Passport(applyerAddress, applyerTg, false, address(0x0),user_name_);
+      users[msg.sender] = User(applyerAddress, applyerTg, false, address(0x0),user_name_,user_name_);
       emit passportApplied(applyerTg, msg.sender);
       emit passportAppliedIndexed(applyerTg, msg.sender);
       (bool feePaid,) = bot.call{value: _passportFee}("");
@@ -101,11 +110,11 @@ contract Leg10n is Ownable, AccessControl {
    *    @param passportToApprove address of user wallet which attached to him
    */
    function ApprovePassport (address passportToApprove) public onlyRole(moderator) {
-        int64 _tgId = passports[passportToApprove].tgId;
-        string memory user_name_ = passports[passportToApprove].userName;
-        require(passports[passportToApprove].valid == false, "already approved OR do not exists yet");
+        int64 _tgId = users[passportToApprove].tgId;
+        string memory user_name_ = users[passportToApprove].userName;
+        require(users[passportToApprove].valid == false, "already approved OR do not exists yet");
         trust_global[_tgId][_tgId] == true;
-        passports[passportToApprove] = Passport(passportToApprove, _tgId, true, msg.sender, user_name_);  
+        users[passportToApprove] = User(passportToApprove, _tgId, true, msg.sender, user_name_,user_name_);  
         emit passportApproved(_tgId,passportToApprove,msg.sender);
    }
 
@@ -114,10 +123,10 @@ contract Leg10n is Ownable, AccessControl {
    *     @param passportToDecline address of user wallet
    */
    function DeclinePassport (address passportToDecline) public onlyRole(moderator) {
-      int64 _tgId = passports[passportToDecline].tgId;
-      string memory user_name_ = passports[passportToDecline].userName;
-      require(passports[passportToDecline].valid == false, "already approved OR do not exists yet"); // it also means that record exists
-      delete passports[passportToDecline];
+      int64 _tgId = users[passportToDecline].tgId;
+      string memory user_name_ = users[passportToDecline].userName;
+      require(users[passportToDecline].valid == false, "already approved OR do not exists yet"); // it also means that record exists
+      delete users[passportToDecline];
       delete tgIdToAddress[_tgId];
       delete username_wallets[user_name_];
       emit passportDenied(_tgId,passportToDecline);
@@ -128,12 +137,12 @@ contract Leg10n is Ownable, AccessControl {
     *  and make clean state contract. NOT FOR USE IN PRODUCTION
     */
     function DeletePassport (address passportToDecline) public onlyOwner {
-      int64 _tgId = passports[passportToDecline].tgId;
-      string memory user_name_ = passports[passportToDecline].userName;
+      int64 _tgId = users[passportToDecline].tgId;
+      string memory user_name_ = users[passportToDecline].userName;
       uint chainID = block.chainid;
       require(chainID == uint(5), "this function work's only for testnet");  
      // require(passports[passportToDecline].valid == false, "already approved OR do not exists yet"); // it also means that record exists
-      delete passports[passportToDecline];
+      delete users[passportToDecline];
       delete tgIdToAddress[_tgId];
       delete username_wallets[user_name_];
       emit passportDenied(_tgId,passportToDecline);
@@ -160,30 +169,6 @@ contract Leg10n is Ownable, AccessControl {
          trust_global[from][to] = false;
       }
 
-      /*
-      function SetTrustToAddress(address to, bool trust) public {
-      
-      }
-      */
-
-      /**
-       *  @dev set trust 'from' tgid 'to' tgid
-       */
-      function SetTrustToID(int64 from, int64 to, bool trust) public {
-         Passport memory from_p = GetPassportByTgId(from);
-         address from_address = from_p.userAddress;
-         require(from_address == msg.sender, "Your current address mismatch with your registred wallet address"); // we check only registration 'from', 'to' may not be registred
-         if (trust == true) {
-            _iTrustTo(from,to);
-            opinion_changed[from].push(to);     // consider remove
-            emit TrustChanged(from,to,trust);
-         } else {
-            _iNotTrust(from,to);
-            opinion_changed[from].push(to);     // consider remove
-            emit TrustChanged(from,to,trust);
-         }
-
-      }
 
 
       /**
@@ -212,35 +197,37 @@ contract Leg10n is Ownable, AccessControl {
     }
 
 
-   function GetPassportWalletByID(int64 tgId_) public view returns(address){
+   function GetUserWalletByID(int64 tgId_) public view returns(address){
       return tgIdToAddress[tgId_];
    }
 
    function GetTgIdByAddress(address user_wallet) public view returns(int64 tgid) {
-      Passport memory p = GetPassportByAddress(user_wallet);
-      tgid = p.tgId;
+      User memory u = GetUserByAddress(user_wallet);
+      tgid = u.tgId;
       return tgid;
    }
 
-   function GetPassportByAddress(address user_wallet) public view returns(Passport memory) {
-      Passport memory p = passports[user_wallet];
-      return p;
+   function GetUserByAddress(address user_wallet) public view returns(User memory) {
+      User memory u = users[user_wallet];
+      return u;
    }
+
+   //function GetUserByAddress(address user_wallet) public view returns
 
    function GetWalletByNickName(string memory user_name_) public view returns (address) {
       return username_wallets[user_name_];
    }
 
-   function GetPassportByNickName(string memory user_name_) public view returns (Passport memory) {
+   function GetUserByNickName(string memory user_name_) public view returns (User memory) {
       address wallet_ = GetWalletByNickName(user_name_);
-      Passport memory p = passports[wallet_];
-      return p;
+      User memory u = users[wallet_];
+      return u;
    }
 
-   function GetPassportByTgId(int64 tgId_) public view returns (Passport memory) {
-      address wallet = GetPassportWalletByID(tgId_);
-      Passport memory p = passports[wallet];
-      return p;
+   function GetUserByTgId(int64 tgId_) public view returns (User memory) {
+      address wallet = GetUserWalletByID(tgId_);
+      User memory u = users[wallet];
+      return u;
    }
 
    function GetOwner() public view returns(address) {
