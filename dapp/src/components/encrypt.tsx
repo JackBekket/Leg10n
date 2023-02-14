@@ -15,7 +15,7 @@ interface Props {
 declare let window: any;
 
 
-export default function GetWalletByTelegramNickNameTG(props:Props){
+export default function EncryptMessage(props:Props){
   const addressContract = props.addressContract
   const currentAccount = props.currentAccount
   const ethUtil = require('ethereumjs-util');
