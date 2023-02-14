@@ -3,6 +3,8 @@ import {Button, Input , NumberInput,  NumberInputField,  FormControl,  FormLabel
 import {ethers} from 'ethers'
 import {abi} from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { Contract } from "ethers"
+import '@ethereumjs-util'
+import '@metamask/eth-sig-util'
 
 
 interface Props {
@@ -16,8 +18,11 @@ declare let window: any;
 export default function GetWalletByTelegramNickNameTG(props:Props){
   const addressContract = props.addressContract
   const currentAccount = props.currentAccount
+  const ethUtil = require('ethereumjs-util');
+  const sigUtil = require('@metamask/eth-sig-util');
   var [user_name, setUserName] = useState<string>("")
   var [user_wallet, setUserWallet] = useState<string>("")
+  var [message_text,setMessageText] = useState<string>("")
 
   useEffect(() => {
   const queryParams = new URLSearchParams(location.search);
@@ -44,31 +49,72 @@ export default function GetWalletByTelegramNickNameTG(props:Props){
      })
    }
 
+   async function encryptText(plain_text:string, public_key:string) {
+    if(!window.ethereum) return    
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const signer = provider.getSigner()
+    const encryptedMessage = ethUtil.bufferToHex(
+        Buffer.from(
+          JSON.stringify(
+            sigUtil.encrypt({
+              publicKey: public_key,
+              data: plain_text,
+              version: 'x25519-xsalsa20-poly1305',
+            })
+          ),
+          'utf8'
+        )
+      );
+     // setMessageText(encryptMessage);
+      return encryptedMessage;
+        
+   }
+
+
+
+   async function getPublicKey(user_address:string) {
+    if(!window.ethereum) return    
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const signer = provider.getSigner()
+    const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
+    Legion.GetPublicKeyByAddress(user_address)
+     .then((result:string) => {
+        console.log("public key assosiated with address: ", result);
+        
+        console.log(result)
+        return result;
+     })
+   }
+
    async function encryptMessage(event:React.FormEvent) {
     event.preventDefault()
     if(!window.ethereum) return    
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
-    
+
    // const wallet = provider
     const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
     Legion.GetWalletByNickName(user_name)
      .then((result:string) => {
         console.log(result)
         setUserWallet(result)
+        getPublicKey(result)
+     }).then((result:string) => {
+        console.log("public key: ", result)
+       encryptText(message_text,result);
+     }).then((result:string) => {
+        setMessageText(result)
      })
    }
 
   return (
-    <form onSubmit={getWalletByUsername}>
+    <form onSubmit={encryptMessage}>
     <FormControl>
       <FormLabel htmlFor='TGID'>Input codename to get it's eth address </FormLabel>
-      <Input id="tg_name" type="text" required  onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
-      <Button type="submit" isDisabled={!currentAccount}>Get wallet address</Button>
+      <Input id="tg_name" type="text" required placeholder='input codename *TO WHOM* you want to encrypt'  onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
+      <Input id="text to send" type="text" required placeholder='Input text to encrypt' onChange={(e) => setMessageText(e.target.value)} value={message_text} my={3} />
+      <Button type="submit" isDisabled={!currentAccount}>Encrypt message!</Button>
     </FormControl>
-    <div>
-        <Text><b>Ethereum address associated with this codename</b>: {user_wallet}</Text>
-    </div>
     </form>
 
 

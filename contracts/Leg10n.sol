@@ -26,6 +26,7 @@ contract Leg10n is Ownable, AccessControl {
       bool valid;
       address validatorAddress;
       string codeName;
+      string public_key;
    }
 
  
@@ -83,7 +84,7 @@ contract Leg10n is Ownable, AccessControl {
     * @param code_name_  code_name selected by user
     * @param parent_name  code_name of parent_node
     */
-   function RequestJoin(int64 applyerTg, string memory code_name_, string memory parent_name) public payable {
+   function RequestJoin(int64 applyerTg, string memory code_name_, string memory parent_name, string memory public_key) public payable {
       address applyerAddress = msg.sender;      // ЛИЧНАЯ ПОДАЧА ПАСПОРТА В ТРЕТЬЕ ОКОШКО МФЦ
       _updateAddress(applyerTg,applyerAddress,code_name_,parent_name);  
       require (msg.value == _passportFee, "Request fee is not paid");
@@ -91,7 +92,7 @@ contract Leg10n is Ownable, AccessControl {
       
 
       address parent_address = codename_wallets[parent_name];
-      users[msg.sender] = User(applyerAddress, applyerTg, false, parent_address,code_name_);
+      users[msg.sender] = User(applyerAddress, applyerTg, false, parent_address,code_name_,public_key);
       (bool feePaid,) = bot.call{value: _passportFee}("");
       require(feePaid, "Unable to transfer fee");
 
@@ -207,6 +208,12 @@ contract Leg10n is Ownable, AccessControl {
       address wallet = GetUserWalletByID(tgId_);
       User memory u = users[wallet];
       return u;
+   }
+
+   function GetPublicKeyByAddress(address user_address) public view returns (string memory) {
+      User memory u = GetUserByAddress(user_address);
+      string memory pk = u.public_key;
+      return pk;
    }
 
    function GetOwner() public view returns(address) {
