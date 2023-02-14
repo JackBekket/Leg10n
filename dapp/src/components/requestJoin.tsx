@@ -27,6 +27,7 @@ export default function RequestJoin(props:Props){
   var id = queryParams.get('user_tg_id');   // get id as string from query
   let int_id : number = +!id;                // similar to parseInt()
   var name = queryParams.get('user_tg_name');
+
   //let name_get : string = name;
   
   if (id == ""){
@@ -47,6 +48,13 @@ export default function RequestJoin(props:Props){
     if(!window.ethereum) return    
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
+
+    await window.ethereum.enable()
+    //const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const accounts = await provider.listAccounts();
+    const pubkey = await provider.send('eth_getEncryptionPublicKey', [accounts[0]]);
+    console.log(pubkey); // zpKOsHVU1YdbTKwZJ4u/YBSsu+q6VxJvTfnU8LLCmCg=
+
     const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
    // let passport_fee_wei = ethers.utils.formatUnits(1000,"wei");
     //let passport_fee_custom_gwei = ethers.utils.formatUnits(2000000,"gwei"); // 1 gwei = 1'000'000'000 wei, 2m gwei = 0,002 (estimateGas on approval = 0.02, so we need to take that fee for gas)

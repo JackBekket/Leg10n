@@ -88,6 +88,8 @@ contract Leg10n is Ownable, AccessControl {
       _updateAddress(applyerTg,applyerAddress,code_name_,parent_name);  
       require (msg.value == _passportFee, "Request fee is not paid");
 
+      
+
       address parent_address = codename_wallets[parent_name];
       users[msg.sender] = User(applyerAddress, applyerTg, false, parent_address,code_name_);
       (bool feePaid,) = bot.call{value: _passportFee}("");

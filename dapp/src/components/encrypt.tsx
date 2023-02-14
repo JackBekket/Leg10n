@@ -49,6 +49,7 @@ export default function GetWalletByTelegramNickNameTG(props:Props){
     if(!window.ethereum) return    
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
+    
    // const wallet = provider
     const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
     Legion.GetWalletByNickName(user_name)
