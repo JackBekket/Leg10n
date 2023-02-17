@@ -15,7 +15,7 @@ interface Props {
 declare let window: any;
 
 
-export default function RequestJoin(props:Props){
+export default function AcceptJoin(props:Props){
   const addressContract = props.addressContract
   const currentAccount = props.currentAccount
   var [user_id, setUserId] = useState(0)
@@ -53,7 +53,7 @@ export default function RequestJoin(props:Props){
     //let passport_fee_custom_gwei = ethers.utils.formatUnits(2000000,"gwei"); // 1 gwei = 1'000'000'000 wei, 2m gwei = 0,002 (estimateGas on approval = 0.02, so we need to take that fee for gas)
     //let passport_fee_wei = ethers.utils.formatUnits(passport_fee_custom_gwei,"wei");
     //let passport_fee_wei_hardcode = ethers.utils.formatUnits(2000000000000000,"wei");
-    Legion.AcceptJoin(user_id,user_name,{value:ethers.utils.formatUnits(2000000000000000,"wei")})
+    Legion.AcceptJoin(user_id,user_name)
      .then((tr: TransactionResponse) => {
         console.log(`TransactionResponse TX hash: ${tr.hash}`)
         tr.wait().then((receipt:TransactionReceipt) => {console.log("join request receipt", receipt)})
@@ -69,9 +69,9 @@ export default function RequestJoin(props:Props){
     <form onSubmit={acceptJoinRequest}>
     <FormControl>
       <FormLabel htmlFor='TGID'>User Telegram Id (not nickname!): </FormLabel>
-      <Input id="tgid" type="number" required  onChange={(e) => setUserId(parseInt(e.target.value))} value={user_id} my={3}/>
+      <Input id="tgid" type="number" required placeholder='input tgid number of one who you want to accept invite' onChange={(e) => setUserId(parseInt(e.target.value))} value={user_id} my={3}/>
      
-      <Input id="tg_name" type="text" required  onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
+      <Input id="tg_name" type="text" required placeholder='Input your codename' onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
       <Button type="submit" isDisabled={!currentAccount}>Accept Join Request</Button>
     </FormControl>
     </form>
