@@ -7,7 +7,7 @@ contract Dictionary {
 
 
 
-    
+    // TODO change to privates
     string[] public Capitals =["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q", "R","S","T","U","V","W","X","Y","Z"]; // index starts with 0
     uint public range_max = Capitals.length;
     mapping (string => uint) public Cusror; 
