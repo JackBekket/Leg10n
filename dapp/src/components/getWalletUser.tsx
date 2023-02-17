@@ -47,7 +47,7 @@ export default function GetWalletByTelegramNickNameTG(props:Props){
   return (
     <form onSubmit={getWalletByUsername}>
     <FormControl>
-      <FormLabel htmlFor='TGID'>Input codename to get it's eth address </FormLabel>
+      <FormLabel htmlFor='TGID'>Input codename to get its eth address </FormLabel>
       <Input id="tg_name" type="text" required  onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
       <Button type="submit" isDisabled={!currentAccount}>Get wallet address</Button>
     </FormControl>

@@ -110,7 +110,7 @@ export default function EncryptMessage(props:Props){
   return (
     <form onSubmit={encryptMessage}>
     <FormControl>
-      <FormLabel htmlFor='TGID'>Input codename to get it's eth address </FormLabel>
+      <FormLabel htmlFor='TGID'>Input codename to get its eth address </FormLabel>
       <Input id="tg_name" type="text" required placeholder='input codename *TO WHOM* you want to encrypt'  onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
       <Input id="text to send" type="text" required placeholder='Input text to encrypt' onChange={(e) => setMessageText(e.target.value)} value={message_text} my={3} />
       <Button type="submit" isDisabled={!currentAccount}>Encrypt message!</Button>
