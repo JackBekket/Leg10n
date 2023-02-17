@@ -23,6 +23,7 @@
   "devDependencies": {
     "@chakra-ui/react": "^2.5.0",
     "@ethereumjs/util": "^8.0.3",
-    "ethereumjs-util": "^7.1.5"
+    "ethereumjs-util": "^7.1.5",
+    "ethers": "^6.0.4"
   }
 }
