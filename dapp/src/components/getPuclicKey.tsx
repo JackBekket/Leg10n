@@ -8,7 +8,6 @@ import '@metamask/eth-sig-util'
 
 
 interface Props {
-    addressContract: string,
     currentAccount: string | undefined
 }
 
@@ -16,7 +15,7 @@ declare let window: any;
 
 
 export default function GetPublicKey(props:Props){
-  const addressContract = props.addressContract
+  
   const currentAccount = props.currentAccount
   const ethUtil = require('ethereumjs-util');
   const sigUtil = require('@metamask/eth-sig-util');

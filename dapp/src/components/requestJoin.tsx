@@ -20,6 +20,8 @@ export default function RequestJoin(props:Props){
   const currentAccount = props.currentAccount
   var [user_id, setUserId] = useState(0)
   var [user_name, setUserName] = useState<string>("")
+  var [parent_name, setParentName] = useState<string>("")
+  var [public_key, setPublicKey] = useState<string>("")
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -27,6 +29,12 @@ export default function RequestJoin(props:Props){
   var id = queryParams.get('user_tg_id');   // get id as string from query
   let int_id : number = +!id;                // similar to parseInt()
   var name = queryParams.get('user_tg_name');
+  var p_name = queryParams.get('parent_name');  // TODO: set it
+  /*
+  if (p_name != "") {
+    setParentName(p_name);
+  }
+  */
 
   //let name_get : string = name;
   
@@ -49,18 +57,20 @@ export default function RequestJoin(props:Props){
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
 
+    /*
     await window.ethereum.enable()
     //const provider = new ethers.providers.Web3Provider(window.ethereum);
     const accounts = await provider.listAccounts();
     const pubkey = await provider.send('eth_getEncryptionPublicKey', [accounts[0]]);
     console.log(pubkey); // zpKOsHVU1YdbTKwZJ4u/YBSsu+q6VxJvTfnU8LLCmCg=
+    */
 
     const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
    // let passport_fee_wei = ethers.utils.formatUnits(1000,"wei");
     //let passport_fee_custom_gwei = ethers.utils.formatUnits(2000000,"gwei"); // 1 gwei = 1'000'000'000 wei, 2m gwei = 0,002 (estimateGas on approval = 0.02, so we need to take that fee for gas)
     //let passport_fee_wei = ethers.utils.formatUnits(passport_fee_custom_gwei,"wei");
     //let passport_fee_wei_hardcode = ethers.utils.formatUnits(2000000000000000,"wei");
-    Legion.RequestJoin(user_id,user_name,pubkey,{value:ethers.utils.formatUnits(2000000000000000,"wei")})
+    Legion.RequestJoin(user_id,user_name,parent_name, public_key,{value:ethers.utils.formatUnits(2000000000000000,"wei")})
      .then((tr: TransactionResponse) => {
         console.log(`TransactionResponse TX hash: ${tr.hash}`)
         tr.wait().then((receipt:TransactionReceipt) => {console.log("join request receipt", receipt)})
@@ -75,10 +85,11 @@ export default function RequestJoin(props:Props){
   return (
     <form onSubmit={sendJoinRequest}>
     <FormControl>
-      <FormLabel htmlFor='TGID'>User Telegram Id (not nickname!): </FormLabel>
+      <FormLabel htmlFor='TGID'> Join Request Form </FormLabel>
       <Input id="tgid" type="number" required  onChange={(e) => setUserId(parseInt(e.target.value))} value={user_id} my={3}/>
-     
-      <Input id="tg_name" type="text" required  onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
+      <Input id="tg_name" type="text" required placeholder='Your codename' onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
+      <Input id="parent_name" type="text" required placeholder="Codename of user who invite you" onChange={(e) => setParentName(e.target.value)} value={user_name} my={3}/>
+      <Input id="public_key" type="text" required placeholder='Paste your public key here' onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
       <Button type="submit" isDisabled={!currentAccount}>Apply for Join</Button>
     </FormControl>
     </form>
