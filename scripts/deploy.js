@@ -45,11 +45,12 @@ async function main() {
 
   //await ethereum.enable()
   //const provider = new ethers.providers.Web3Provider(window.ethereum);
+  /*
   const accounts = await provider.listAccounts();
   const pubkey = await provider.send('eth_getEncryptionPublicKey', [accounts[0]]);
   console.log("public key is: ", pubkey);
   console.log(pubkey); // zpKOsHVU1YdbTKwZJ4u/YBSsu+q6VxJvTfnU8LLCmCg=
-
+  */
 
 }
 

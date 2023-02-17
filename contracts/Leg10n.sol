@@ -66,6 +66,7 @@ contract Leg10n is Ownable, AccessControl {
       // test data
       tgIdToAddress[1234] = msg.sender;
       codename_wallets["Adam"] = msg.sender;
+      users[msg.sender] = User(0x16d97A46030C5D3D705bca45439e48529997D8b2, 1234, true, 0x16d97A46030C5D3D705bca45439e48529997D8b2,"Adam","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=");
       //TODO: add publicKey in constructor
    }
 
