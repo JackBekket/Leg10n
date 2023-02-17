@@ -20,9 +20,6 @@ export default function GetPublicKey(props:Props){
   const currentAccount = props.currentAccount
   const ethUtil = require('ethereumjs-util');
   const sigUtil = require('@metamask/eth-sig-util');
-  var [user_name, setUserName] = useState<string>("")
-  var [user_wallet, setUserWallet] = useState<string>("")
-  var [message_text,setMessageText] = useState<string>("")
   var [public_key, setPublicKey] = useState<string>("")
 
   useEffect(() => {

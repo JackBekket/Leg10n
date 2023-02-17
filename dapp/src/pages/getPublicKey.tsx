@@ -5,7 +5,7 @@ import { VStack, Heading, Box, LinkOverlay, LinkBox} from "@chakra-ui/layout"
 import { Text, Button } from '@chakra-ui/react'
 import { useState, useEffect} from 'react'
 import {ethers} from "ethers"
-import ApplyPassportTG from 'components/applyPassport'
+import GetPublicKey from '../components/getPuclicKey'
 
 
 declare let window:any
@@ -133,7 +133,7 @@ const Home: NextPage = () => {
         }
         <Box  mb={0} p={4} w='100%' borderWidth="1px" borderRadius="lg">
           <Heading my={4}  fontSize='xl'>Attach telegram id and username to your wallet</Heading>
-          <ApplyPassportTG 
+          <GetPublicKey 
             addressContract='0x34BCAC93be263c8c1a56f651a8bE7FEEb69A56BA'
             currentAccount={currentAccount}
           />
