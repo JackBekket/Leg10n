@@ -22,6 +22,7 @@
   "devDependencies": {
     "@chakra-ui/react": "^2.5.1",
     "@ethereumjs/util": "^8.0.3",
+    "@metamask/eth-sig-util": "^5.0.2",
     "@types/react": "^18.0.28",
     "ethereumjs-util": "^7.1.5",
     "ethers": "^5.7.2"
