@@ -99,28 +99,14 @@ export default function EncryptMessage(props:Props){
      .then((result:string) => {
         console.log("result: ", result);
         setUserWallet(result)
+        getPublicKey(result)
      }).then((result:string) => {
         console.log("result: ", result);
         
-        getPublicKey(user_wallet)
-     })
+        
+     });
 
 
-     
-     .then((result:string) => {
-        console.log("result: ", result);
-        
-        console.log("public key is: ", public_key);
-        console.log("message text is: ", message_text);
-        
-        encryptText(message_text,public_key)
-     }).then((result:string) => {
-        console.log("result: ", result);
-        
-        console.log("encrypted text is: ", result);
-        
-        setMessageText(result)
-     })
      
         /*
         getPublicKey(result)
