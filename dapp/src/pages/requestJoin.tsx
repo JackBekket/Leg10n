@@ -139,7 +139,7 @@ const Home: NextPage = () => {
           />
         </Box>
         <Box  mb={0} p={4} w='100%' borderWidth="1px" borderRadius="lg">
-          <Heading my={4}  fontSize='xl'>Get public key associated to your wallet</Heading>
+          <Heading my={4}  fontSize='xl'>Request join</Heading>
           <RequestJoin 
             currentAccount={currentAccount}
             addressContract='0x11d16C0a62A2FF2dD11BA13AEd77C974be065b00'
