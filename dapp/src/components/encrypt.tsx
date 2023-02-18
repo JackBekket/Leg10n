@@ -23,6 +23,7 @@ export default function EncryptMessage(props:Props){
   var [user_name, setUserName] = useState<string>("")
   var [user_wallet, setUserWallet] = useState<string>("")
   var [message_text,setMessageText] = useState<string>("")
+  var [public_key,setPublicKey] = useState<string>("")
 
   useEffect(() => {
   const queryParams = new URLSearchParams(location.search);
@@ -80,10 +81,10 @@ export default function EncryptMessage(props:Props){
     Legion.GetPublicKeyByAddress(user_address)
      .then((result:string) => {
         console.log("public key assosiated with address: ", result);
-        
+        setPublicKey(result)
         console.log(result)
         return result;
-     })
+     });
    }
 
    async function encryptMessage(event:React.FormEvent) {
@@ -98,6 +99,15 @@ export default function EncryptMessage(props:Props){
      .then((result:string) => {
         console.log(result)
         setUserWallet(result)
+     }).then((result:string) => {
+        getPublicKey(user_wallet)
+        console.log("public key is: ", public_key);
+     }).then((result:string) => {
+        encryptText(message_text,public_key)
+     }).then((result:string) => {
+        setMessageText(result)
+     })
+        /*
         getPublicKey(result)
      }).then((result:string) => {
         console.log("public key: ", result)
@@ -105,6 +115,9 @@ export default function EncryptMessage(props:Props){
      }).then((result:string) => {
         setMessageText(result)
      })
+     */
+
+
    }
 
   return (
