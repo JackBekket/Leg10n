@@ -83,8 +83,9 @@ export default function EncryptMessage(props:Props){
         console.log("public key assosiated with address: ", result);
         setPublicKey(result)
         console.log(result)
-        return result;
+       // return result;
      });
+     return public_key;
    }
 
    async function encryptMessage(event:React.FormEvent) {
@@ -106,7 +107,8 @@ export default function EncryptMessage(props:Props){
         
      });
 
-
+     var encrypted_text = await encryptText(message_text,public_key);
+     setMessageText(encrypted_text);
      
         /*
         getPublicKey(result)
