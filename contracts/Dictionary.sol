@@ -16,7 +16,7 @@ contract Dictionary {
 
 
     constructor() {
-        fillCursor;
+        fillCursor();
     }
 
     function fillCursor() internal {
