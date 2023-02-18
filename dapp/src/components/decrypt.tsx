@@ -52,7 +52,7 @@ export default function DecryptMessage(props:Props){
     window.ethereum
     .request({
       method: 'eth_decrypt',
-      params: [message_text, user_wallet],
+      params: [message_text, s_address],
     })
     .then((result:string) =>
       //console.log("result: ", result)
