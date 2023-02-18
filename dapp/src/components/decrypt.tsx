@@ -3,7 +3,7 @@ import {Button, Input , NumberInput,  NumberInputField,  FormControl,  FormLabel
 import {ethers} from 'ethers'
 import {abi} from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { Contract } from "ethers"
-import '@ethereumjs-util'
+import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
 
 
