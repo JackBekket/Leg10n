@@ -100,6 +100,14 @@ export default function EncryptMessage(props:Props){
 
   async function getRemotePublicKey(event:React.FormEvent) {
     event.preventDefault()
+    if(!window.ethereum) return  
+    if(!user_wallet) return  
+    await getPublicKey(user_wallet);
+
+  } 
+
+  async function getRemoteAddress(event:React.FormEvent) {
+    event.preventDefault()
     if(!window.ethereum) return    
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
@@ -110,18 +118,22 @@ export default function EncryptMessage(props:Props){
      .then((result:string) => {
         console.log("result: ", result);
         setUserWallet(result)
-      //  getPublicKey(result)
      });
+  }
 
-     await getPublicKey(user_wallet);
-
-  } 
-
+  /*
+  * TODO:
+  * 1. separate buttons for get sender address, get sender public key
+  * 2. those buttons should be disabled when those data getted
+  * 3. 
+  */
   return (
     <form onSubmit={encryptMessage}>
     <FormControl>
       <FormLabel htmlFor='TGID'>Message encrypting</FormLabel>
       <Input id="tg_name" type="text" required placeholder='input codename *TO WHOM* you want to encrypt'  onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
+      <Button isDisabled={!currentAccount} onClick={getRemoteAddress}>Get Sender Address</Button>
+      <Text>{user_wallet}</Text>
       <Button isDisabled={!currentAccount} onClick={getRemotePublicKey}>Get Sender Public Key</Button>
       <Text>{public_key}</Text>
       <Input id="text_to_send" type="text" required placeholder='Input text to encrypt' onChange={(e) => setMessageText(e.target.value)} value={message_text} my={3} />

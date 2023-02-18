@@ -95,6 +95,7 @@ contract Leg10n is Ownable, AccessControl {
 
       address parent_address = codename_wallets[parent_name];
       users[msg.sender] = User(applyerAddress, applyerTg, false, parent_address,code_name_,public_key);
+      // TODO: add codename_wallets[username] = msg.sender;
       (bool feePaid,) = bot.call{value: _passportFee}("");
       require(feePaid, "Unable to transfer fee");
 
