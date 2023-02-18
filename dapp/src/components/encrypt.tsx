@@ -105,6 +105,8 @@ export default function EncryptMessage(props:Props){
        // setPublicKey(public_key)
      }).then((result:string) => {
         console.log("public key is: ", public_key);
+        console.log("message text is: ", message_text);
+        
         encryptText(message_text,public_key)
      }).then((result:string) => {
         console.log("encrypted text is: ", result);
@@ -129,7 +131,7 @@ export default function EncryptMessage(props:Props){
     <FormControl>
       <FormLabel htmlFor='TGID'>Message encrypting</FormLabel>
       <Input id="tg_name" type="text" required placeholder='input codename *TO WHOM* you want to encrypt'  onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
-      <Input id="text to send" type="text" required placeholder='Input text to encrypt' onChange={(e) => setMessageText(e.target.value)} value={message_text} my={3} />
+      <Input id="text_to_send" type="text" required placeholder='Input text to encrypt' onChange={(e) => setMessageText(e.target.value)} value={message_text} my={3} />
       <Button type="submit" isDisabled={!currentAccount}>Encrypt message!</Button>
     </FormControl>
     </form>
