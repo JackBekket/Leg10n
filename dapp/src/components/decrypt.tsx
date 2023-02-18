@@ -53,10 +53,11 @@ export default function DecryptMessage(props:Props){
     if(!window.ethereum) return    
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
+    const user_address = signer.getAddress()
     window.ethereum
     .request({
       method: 'eth_decrypt',
-      params: [message_text, {currentAccount}],
+      params: [message_text, user_address],
     })
     .then((result:string) =>
       //console.log("result: ", result)
