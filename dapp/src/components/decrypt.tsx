@@ -67,6 +67,8 @@ export default function DecryptMessage(props:Props){
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
     let s_address = currentAccount!
+    console.log("s_address: ", s_address);
+    
     setUserWallet(s_address)
 
     // const wallet = provider
