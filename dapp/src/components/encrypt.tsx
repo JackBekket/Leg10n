@@ -90,6 +90,16 @@ export default function EncryptMessage(props:Props){
 
    async function encryptMessage(event:React.FormEvent) {
     event.preventDefault()
+    if(!window.ethereum) return
+    if(!public_key) return    
+
+     var encrypted_text = await encryptText(message_text,public_key);
+     setMessageText(encrypted_text);
+     
+   }
+
+  async function getRemotePublicKey(event:React.FormEvent) {
+    event.preventDefault()
     if(!window.ethereum) return    
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
@@ -105,27 +115,15 @@ export default function EncryptMessage(props:Props){
 
      await getPublicKey(user_wallet);
 
-     var encrypted_text = await encryptText(message_text,public_key);
-     setMessageText(encrypted_text);
-     
-        /*
-        getPublicKey(result)
-     }).then((result:string) => {
-        console.log("public key: ", result)
-       encryptText(message_text,result);
-     }).then((result:string) => {
-        setMessageText(result)
-     })
-     */
-
-
-   }
+  } 
 
   return (
     <form onSubmit={encryptMessage}>
     <FormControl>
       <FormLabel htmlFor='TGID'>Message encrypting</FormLabel>
       <Input id="tg_name" type="text" required placeholder='input codename *TO WHOM* you want to encrypt'  onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
+      <Button isDisabled={!currentAccount} onClick={getRemotePublicKey}>Get Sender Public Key</Button>
+      <Text>{public_key}</Text>
       <Input id="text_to_send" type="text" required placeholder='Input text to encrypt' onChange={(e) => setMessageText(e.target.value)} value={message_text} my={3} />
       <Button type="submit" isDisabled={!currentAccount}>Encrypt message!</Button>
     </FormControl>
