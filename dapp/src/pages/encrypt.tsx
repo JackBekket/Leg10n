@@ -108,7 +108,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Request Join</title>
+        <title>Encrypt message</title>
       </Head>
 
       <Heading as="h3"  my={4}>LYOD</Heading>          

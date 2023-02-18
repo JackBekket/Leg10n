@@ -5,8 +5,8 @@ import { VStack, Heading, Box, LinkOverlay, LinkBox} from "@chakra-ui/layout"
 import { Text, Button } from '@chakra-ui/react'
 import { useState, useEffect} from 'react'
 import {ethers} from "ethers"
-
-import AcceptJoin from '../components/acceptJoin'
+//import GetPublicKey from '../components/getPuclicKey'
+import DecryptMessage from '../components/decrypt'
 
 
 declare let window:any
@@ -108,7 +108,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Accept Request</title>
+        <title>Decrypt message</title>
       </Head>
 
       <Heading as="h3"  my={4}>LYOD</Heading>          
@@ -133,12 +133,14 @@ const Home: NextPage = () => {
         :<></>
         }
         <Box  mb={0} p={4} w='100%' borderWidth="1px" borderRadius="lg">
-          <Heading my={4}  fontSize='xl'>Accept join</Heading>
-          <AcceptJoin 
+          <Heading my={4}  fontSize='xl'>Encrypt message</Heading>
+          <DecryptMessage 
             currentAccount={currentAccount}
             addressContract='0x11d16C0a62A2FF2dD11BA13AEd77C974be065b00'
           />
         </Box>
+
+        //decrypt
 
      
 
