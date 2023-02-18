@@ -96,16 +96,14 @@ export default function EncryptMessage(props:Props){
 
    // const wallet = provider
     const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
-    Legion.GetWalletByNickName(user_name)
+    await Legion.GetWalletByNickName(user_name)
      .then((result:string) => {
         console.log("result: ", result);
         setUserWallet(result)
-        getPublicKey(result)
-     }).then((result:string) => {
-        console.log("result: ", result);
-        
-        
+      //  getPublicKey(result)
      });
+
+     await getPublicKey(user_wallet);
 
      var encrypted_text = await encryptText(message_text,public_key);
      setMessageText(encrypted_text);
