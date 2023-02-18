@@ -41,6 +41,9 @@ export default function DecryptMessage(props:Props){
     if(!window.ethereum) return    
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
+    console.log("message text: ", message_text);
+    console.log("user_wallet: ", user_wallet);
+    
     window.ethereum
     .request({
       method: 'eth_decrypt',
