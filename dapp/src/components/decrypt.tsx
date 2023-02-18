@@ -56,10 +56,11 @@ export default function DecryptMessage(props:Props){
     window.ethereum
     .request({
       method: 'eth_decrypt',
-      params: [decryptMessage, {currentAccount}],
+      params: [message_text, {currentAccount}],
     })
-    .then((decryptedMessage:string) =>
-      setMessageText(decryptedMessage)
+    .then((result:string) =>
+      //console.log("result: ", result)
+      setMessageText(result)
      // console.log('The decrypted message is:', decryptedMessage)
       
     )
@@ -71,19 +72,6 @@ export default function DecryptMessage(props:Props){
 
 
 
-   async function getPublicKey(user_address:string) {
-    if(!window.ethereum) return    
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-    const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
-    Legion.GetPublicKeyByAddress(user_address)
-     .then((result:string) => {
-        console.log("public key assosiated with address: ", result);
-        
-        console.log(result)
-        return result;
-     })
-   }
 
    async function decryptMessage(event:React.FormEvent) {
     event.preventDefault()
@@ -99,9 +87,8 @@ export default function DecryptMessage(props:Props){
     <form onSubmit={decryptMessage}>
     <FormControl>
       <FormLabel htmlFor='TGID'>Input codename to get its eth address </FormLabel>
-      <Input id="tg_name" type="text" required placeholder='input codename *FROM WHO* you want to decrypt'  onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
       <Input id="text to send" type="text" required placeholder='Input text to decrypt' onChange={(e) => setMessageText(e.target.value)} value={message_text} my={3} />
-      <Button type="submit" isDisabled={!currentAccount}>Encrypt message!</Button>
+      <Button type="submit" isDisabled={!currentAccount}>Decrypt message!</Button>
     </FormControl>
     </form>
 

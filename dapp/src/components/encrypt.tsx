@@ -112,7 +112,6 @@ export default function EncryptMessage(props:Props){
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
 
-   // const wallet = provider
     const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
     await Legion.GetWalletByNickName(user_name)
      .then((result:string) => {
