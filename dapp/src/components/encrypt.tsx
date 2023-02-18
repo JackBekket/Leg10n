@@ -97,22 +97,31 @@ export default function EncryptMessage(props:Props){
     const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
     Legion.GetWalletByNickName(user_name)
      .then((result:string) => {
-        console.log(result)
+        console.log("result: ", result);
         setUserWallet(result)
      }).then((result:string) => {
-        getPublicKey(user_wallet)
+        console.log("result: ", result);
         
-       // setPublicKey(public_key)
-     }).then((result:string) => {
+        getPublicKey(user_wallet)
+     })
+
+
+     
+     .then((result:string) => {
+        console.log("result: ", result);
+        
         console.log("public key is: ", public_key);
         console.log("message text is: ", message_text);
         
         encryptText(message_text,public_key)
      }).then((result:string) => {
+        console.log("result: ", result);
+        
         console.log("encrypted text is: ", result);
         
         setMessageText(result)
      })
+     
         /*
         getPublicKey(result)
      }).then((result:string) => {
