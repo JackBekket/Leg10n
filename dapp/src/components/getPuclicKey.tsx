@@ -22,10 +22,6 @@ export default function GetPublicKey(props:Props){
   var [public_key, setPublicKey] = useState<string>("")
 
   useEffect(() => {
-
-  
-  
-  //setUserName(name);
   
   }, []);
   

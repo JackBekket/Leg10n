@@ -34,9 +34,7 @@ export default function DecryptMessage(props:Props){
   }, []);
   
 
-
-
-
+   // decrypt text using users key from accounts[0]
    async function decryptText(plain_text:string) {
     if(!window.ethereum) return    
     const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -55,7 +53,6 @@ export default function DecryptMessage(props:Props){
       params: [message_text, s_address],
     })
     .then((result:string) =>
-      //console.log("result: ", result)
       setMessageText(result)
      // console.log('The decrypted message is:', decryptedMessage)
       
@@ -72,14 +69,6 @@ export default function DecryptMessage(props:Props){
    async function decryptMessage(event:React.FormEvent) {
     event.preventDefault()
     if(!window.ethereum) return    
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-    let s_address = currentAccount!
-    console.log("s_address: ", s_address);
-    
-    setUserWallet(s_address)
-
-    // const wallet = provider
     decryptText(message_text)
    }
 
