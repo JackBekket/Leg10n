@@ -36,24 +36,12 @@ export default function DecryptMessage(props:Props){
 
 
 
-   async function getWalletByUsername(event:React.FormEvent) {
-    event.preventDefault()
-    if(!window.ethereum) return    
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-    const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
-    Legion.GetWalletByNickName(user_name)
-     .then((result:string) => {
-        console.log(result)
-        setUserWallet(result)
-     })
-   }
 
    async function decryptText(plain_text:string) {
     if(!window.ethereum) return    
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
-    const user_address = signer.getAddress()
+    const user_address = signer._address
     window.ethereum
     .request({
       method: 'eth_decrypt',
@@ -87,7 +75,7 @@ export default function DecryptMessage(props:Props){
   return (
     <form onSubmit={decryptMessage}>
     <FormControl>
-      <FormLabel htmlFor='TGID'>Input codename to get its eth address </FormLabel>
+      <FormLabel htmlFor='TGID'>Input cyphered text to decrypt</FormLabel>
       <Input id="text to send" type="text" required placeholder='Input text to decrypt' onChange={(e) => setMessageText(e.target.value)} value={message_text} my={3} />
       <Button type="submit" isDisabled={!currentAccount}>Decrypt message!</Button>
     </FormControl>
