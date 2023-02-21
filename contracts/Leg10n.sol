@@ -31,16 +31,10 @@ contract Leg10n is Ownable, AccessControl {
 
  
    //mappings
-   mapping(int64 => address) public tgIdToAddress;
-  // mapping(address => Passport) public passports;
+   mapping(int64 => address) private tgIdToAddress;
    mapping(address => User) public users;
    mapping(string => address) public codename_wallets;  // codenames protected by dictionary
-
-   mapping(address => address[]) public ref_tree;  // from user to users
-   
-
-
-   mapping (address => mapping (address => bool)) public chain;
+   mapping (address => mapping (address => bool)) public chain; // from parent to child to flag
 
  
    // EVENTS
@@ -50,19 +44,20 @@ contract Leg10n is Ownable, AccessControl {
    event joinRequested(int64 applyerTg, address wallet_address, address indexed parent_address);
    event joinRequestedIndexedTG(int64 applyerTg, address wallet_address, address indexed parent_address);
    event requestAccepted(int64 indexed applyerTg, address user_address, address parent_address);
+   event relationChanged(address high_node, address indexed low_node, bool pravda); // we can search by user_address (low_node address) to lookup user relationship
 
    // Roles Engine
-   Dictionary Enigma;
+   Dictionary Turing;
 
 
-   constructor(address enigma_) Ownable() {
+   constructor(address turing_) Ownable() {
       _passportFee = 2000000000000000 wei; 
       _owner = owner();
         _grantRole(DEFAULT_ADMIN_ROLE,msg.sender);
         _grantRole(moderator,msg.sender);
         _grantRole(moderator,bot);
         _grantRole(moderator,murs);
-      Enigma = Dictionary(enigma_);
+      Turing = Dictionary(turing_);
       // test data
       tgIdToAddress[1234] = msg.sender;
       codename_wallets["Adam"] = msg.sender;
@@ -73,7 +68,7 @@ contract Leg10n is Ownable, AccessControl {
 
    function _updateAddress(int64 tgId, address userAddress, string memory code_name_,string memory parent_name) internal {
       require(tgIdToAddress[tgId] == address(0x0), "There's address connected to that TG ID already.");  // if cell is not empty revert
-      bool flag = Enigma.checkDictionaryTree(code_name_,parent_name);
+      bool flag = Turing.checkDictionaryTree(code_name_,parent_name);
       require(flag == true);
       tgIdToAddress[tgId] = userAddress;
       codename_wallets[code_name_] = userAddress;
@@ -88,7 +83,7 @@ contract Leg10n is Ownable, AccessControl {
     */
    function RequestJoin(int64 applyerTg, string memory code_name_, string memory parent_name, string memory public_key) public payable {
       address applyerAddress = msg.sender;      // ЛИЧНАЯ ПОДАЧА ПАСПОРТА В ТРЕТЬЕ ОКОШКО МФЦ
-      _updateAddress(applyerTg,applyerAddress,code_name_,parent_name);  
+       
       require (msg.value == _passportFee, "Request fee is not paid");
 
       
@@ -102,7 +97,9 @@ contract Leg10n is Ownable, AccessControl {
       emit joinRequested(applyerTg, msg.sender, parent_address);
       emit joinRequestedIndexedTG(applyerTg, msg.sender, parent_address);
 
+
       chain[parent_address][msg.sender] = false;
+      _updateAddress(applyerTg,applyerAddress,code_name_,parent_name); 
    }
 
    /**
@@ -114,16 +111,14 @@ contract Leg10n is Ownable, AccessControl {
       address parent_address = codename_wallets[parent_name];
       require(parent_address == msg.sender, "only parent_name can accept it");
       address user_address = GetUserWalletByID(applyerTg);
-      bool isNotRegistred = chain[parent_address][user_address];
-      require(isNotRegistred == false, "already registred");
-      address[] storage referals = ref_tree[parent_address];
-      referals.push(user_address);
+      bool isRegistred = chain[parent_address][user_address];
+      require(isRegistred == false, "already registred");
       users[user_address].valid = true;
       users[user_address].validatorAddress = msg.sender;
       chain[parent_address][user_address] = true;
+      emit relationChanged(parent_address,user_address,true);
 
     //  _updateAddress(applyerTg,user_address,code_name_);
-
    }
 
 
@@ -133,19 +128,24 @@ contract Leg10n is Ownable, AccessControl {
    *    
    */
    function DeclineRequest (int64 tgid) public  {
-      address user_address = GetUserWalletByID(tgid);
-     // int64 _tgId = users[passportToDecline].tgId;
-      string memory user_name_ = users[user_address].codeName;
-      require(users[user_address].valid == false, "already approved OR do not exists yet"); // it also means that record exists
-      delete users[user_address];
+      address child_address = GetUserWalletByID(tgid);
+      //int64 parent_id = GetTgIdByAddress(msg.sender);
+      //string memory parent_name = users[msg.sender].codeName;
+      string memory user_name_ = users[child_address].codeName;
+      require(users[child_address].valid == false, "already approved OR do not exists yet"); // it also means that record exists
+      bool linked = chain[msg.sender][child_address];
+      require(linked == false, "already linked OR dont exists");
+      delete users[child_address];
       delete tgIdToAddress[tgid];
       delete codename_wallets[user_name_];
-      emit requestDenied(tgid,user_address);
+      delete chain[msg.sender][child_address];
+      emit requestDenied(tgid,child_address);
    }
 
    /**
     *  @dev This function is a service function which allow Owner to erase already approved passport
     *  and make clean state contract. NOT FOR USE IN PRODUCTION
+    *  it does not clear chain of command
     */
     function DeleteUser (address passportToDecline) public onlyRole(moderator) {
       int64 _tgId = users[passportToDecline].tgId;
@@ -156,10 +156,17 @@ contract Leg10n is Ownable, AccessControl {
       delete users[passportToDecline];
       delete tgIdToAddress[_tgId];
       delete codename_wallets[user_name_];
+      //delete chain[msg.sender][child_address];
       emit requestDenied(_tgId,passportToDecline);
    }  
 
-
+   /**
+    * 
+    * 
+    */
+   function ClearParent()  public  {
+      
+   }
     
     /**
      *  @dev setting fee for applying for passport
