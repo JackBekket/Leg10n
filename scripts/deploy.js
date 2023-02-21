@@ -43,6 +43,24 @@ async function main() {
   .GetCapitalFromString("Adam");
   console.log("A test:", A_test);
 
+  const A_address_test = await legion_entity.connect(owner)
+  .GetWalletByNickName("Adam");
+  console.log("Adam address: ", A_address_test);
+
+  /*
+  const B_request = await legion_entity.connect(owner)
+  .RequestJoin(90337,"Bekket","Adam","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=",{value:passportFee});
+  console.log("B_request: ", B_request);
+
+  const B_accept = await legion_entity.connect(owner)
+  .AcceptJoin(90337,"Adam");
+  console.log("B_accept: ", B_accept);
+
+  const B_test = await legion_entity.connect(owner)
+  .GetWalletByNickName("Bekket");
+  console.log("B address: ", B_test);
+  */
+
   //await ethereum.enable()
   //const provider = new ethers.providers.Web3Provider(window.ethereum);
   /*
