@@ -18,7 +18,6 @@ contract Leg10n is Ownable, AccessControl {
    bytes32 public constant moderator = keccak256("moderator");
    address private murs = 0x383A9e83E36796106EaC11E8c2Fbe8b92Ff46D3a;   // TODO: consider remove
    
-   address private bot = 0x0E5279edeD9Fe8281eB0f7277e51068c6DA2fa31; // TODO: consider remove
 
    struct User {
       address userAddress;
@@ -55,13 +54,12 @@ contract Leg10n is Ownable, AccessControl {
       _owner = owner();
         _grantRole(DEFAULT_ADMIN_ROLE,msg.sender);
         _grantRole(moderator,msg.sender);
-        _grantRole(moderator,bot);
         _grantRole(moderator,murs);
       Turing = Dictionary(turing_);
       // test data
       tgIdToAddress[1234] = msg.sender;
       codename_wallets["Adam"] = msg.sender;
-      users[msg.sender] = User(0x16d97A46030C5D3D705bca45439e48529997D8b2, 1234, true, 0x16d97A46030C5D3D705bca45439e48529997D8b2,"Adam","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=");
+      users[msg.sender] = User(msg.sender, 1234, true, msg.sender,"Adam","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=");
       //TODO: add publicKey in constructor
    }
 
@@ -87,11 +85,10 @@ contract Leg10n is Ownable, AccessControl {
       require (msg.value == _passportFee, "Request fee is not paid");
 
       
-
       address parent_address = codename_wallets[parent_name];
       users[msg.sender] = User(applyerAddress, applyerTg, false, parent_address,code_name_,public_key);
       // TODO: add codename_wallets[username] = msg.sender;
-      (bool feePaid,) = bot.call{value: _passportFee}("");
+      (bool feePaid,) = _owner.call{value: _passportFee}("");
       require(feePaid, "Unable to transfer fee");
 
       emit joinRequested(applyerTg, msg.sender, parent_address);
@@ -147,25 +144,54 @@ contract Leg10n is Ownable, AccessControl {
     *  and make clean state contract. NOT FOR USE IN PRODUCTION
     *  it does not clear chain of command
     */
-    function DeleteUser (address passportToDecline) public onlyRole(moderator) {
-      int64 _tgId = users[passportToDecline].tgId;
-      string memory user_name_ = users[passportToDecline].codeName;
+    function devDeleteUser (address user_address) public onlyRole(moderator) {
+      int64 _tgId = users[user_address].tgId;
+      string memory user_name_ = users[user_address].codeName;
       uint chainID = block.chainid;
       require(chainID == uint(5), "this function work's only for testnet");  
-     // require(passports[passportToDecline].valid == false, "already approved OR do not exists yet"); // it also means that record exists
-      delete users[passportToDecline];
+      delete users[user_address];
       delete tgIdToAddress[_tgId];
       delete codename_wallets[user_name_];
       //delete chain[msg.sender][child_address];
-      emit requestDenied(_tgId,passportToDecline);
+      emit requestDenied(_tgId,user_address);
    }  
 
+
    /**
-    * 
-    * 
+    *  @dev This function is a service function which allow delete profile of user. It does not clear command chain, so it's required to call ClearParent first
     */
-   function ClearParent()  public  {
-      
+    function DeleteUser (address user_address) internal {
+      int64 _tgId = users[user_address].tgId;
+      string memory user_name_ = users[user_address].codeName;
+      delete users[user_address];
+      delete tgIdToAddress[_tgId];
+      delete codename_wallets[user_name_];
+      //delete chain[msg.sender][child_address];
+      emit requestDenied(_tgId,user_address);
+   }  
+
+
+   /**
+    *  @dev delete yourself profile
+    */
+   function deleteYourSelf() public {
+      bool attached = users[msg.sender].valid; 
+      require(attached == false, "call ClearParent first");
+      DeleteUser(msg.sender);
+   }
+
+
+   /**
+    *  @dev allow users to clear their parenthesis
+    *  @param parent_name name of high node
+    *  @param child_name username
+    */
+   function ClearParent(string memory parent_name, string memory child_name)  public  {
+      address user_address = GetWalletByNickName(child_name);
+      address parent_address = GetWalletByNickName(parent_name);
+      require(user_address == msg.sender, "users allowed only to clear themselfs");
+      users[user_address].valid = false;
+      chain[parent_address][msg.sender] = false;
    }
     
     /**
@@ -175,9 +201,6 @@ contract Leg10n is Ownable, AccessControl {
         _passportFee = passportFee_;
     }
 
-    function SetBotAddress(address bot_) public onlyOwner {
-      bot = bot_;
-    }
 
     /**
      *  @dev getter to obtain how much user will pay for apply

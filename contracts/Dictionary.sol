@@ -41,7 +41,7 @@ contract Dictionary {
     bytes memory result = new bytes(endIndex-startIndex);
     for(uint i = startIndex; i < endIndex; i++) {
         result[i-startIndex] = strBytes[i];
-    }
+                                }
     return string(result);
     }
 
@@ -55,7 +55,8 @@ contract Dictionary {
 
    /*
    *     1. get capital from word
-   *     2. 
+   *     2. ???
+   *     3. PROFIT!
    */
    function checkDictionaryTree(string memory requested_name, string memory parent_name) public view returns (bool) {
       string memory r_cap = GetCapitalFromString(requested_name);
