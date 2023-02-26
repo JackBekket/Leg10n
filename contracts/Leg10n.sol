@@ -1,14 +1,15 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-//import "hardhat/console.sol";
+/*
 import "@openzeppelin/contracts/access/Ownable.sol";  
 import "@openzeppelin/contracts/access/AccessControl.sol";
+*/
 import "./Dictionary.sol";
 
 
-//import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";    
-//import "../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
+import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";    
+import "../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
 
 contract Leg10n is Ownable, AccessControl {
    
@@ -16,7 +17,6 @@ contract Leg10n is Ownable, AccessControl {
    uint private _passportFee; 
    address private _owner; 
    bytes32 public constant moderator = keccak256("moderator");
-   address private murs = 0x383A9e83E36796106EaC11E8c2Fbe8b92Ff46D3a;   // TODO: consider remove
    
 
    struct User {
@@ -31,13 +31,14 @@ contract Leg10n is Ownable, AccessControl {
  
    //mappings
    mapping(int64 => address) private tgIdToAddress;
-   mapping(address => User) public users;
-   mapping(string => address) public codename_wallets;  // codenames protected by dictionary
+   mapping(address => User) private users;
+   mapping(string => address) private codename_wallets;  // codenames protected by dictionary
    mapping (address => mapping (address => bool)) public chain; // from parent to child to flag
 
  
    // EVENTS
    
+   event Initialized(address indexed admin);
    event requestDenied(int64 applyerTg, address wallet);
 
    event joinRequested(int64 applyerTg, address wallet_address, address indexed parent_address);
@@ -49,23 +50,30 @@ contract Leg10n is Ownable, AccessControl {
    Dictionary Turing;
 
 
-   constructor(address turing_) Ownable() {
+   constructor(address turing_,address admin_,int64 tgid_, string memory public_key_) Ownable() {
       _passportFee = 2000000000000000 wei; 
       _owner = owner();
         _grantRole(DEFAULT_ADMIN_ROLE,msg.sender);
         _grantRole(moderator,msg.sender);
-        _grantRole(moderator,murs);
       Turing = Dictionary(turing_);
-      // test data
-      tgIdToAddress[1234] = msg.sender;
-      codename_wallets["Adam"] = msg.sender;
-      users[msg.sender] = User(msg.sender, 1234, true, msg.sender,"Adam","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=");
-      //TODO: add publicKey in constructor
+      // Factory init
+      tgIdToAddress[tgid_] = msg.sender;
+      codename_wallets["0"] = msg.sender;
+      users[msg.sender] = User(msg.sender, tgid_, true, msg.sender,"0","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=");
+      // determine if contract deployed standalone or through factory contract
+      if (admin_ == address(0x0) || tgid_ == 0) {
+         // standalone deploy, deployer is admin
+         _devInitAdmin(msg.sender,1234,"zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=");
+      } else {
+         // factory deploy, factory inputs admin credentials
+         _devInitAdmin(admin_,tgid_,public_key_);
+      }
+      
    }
 
 
    function _updateAddress(int64 tgId, address userAddress, string memory code_name_,string memory parent_name) internal {
-      require(tgIdToAddress[tgId] == address(0x0), "There's address connected to that TG ID already.");  // if cell is not empty revert
+      require(tgIdToAddress[tgId] == address(0x0), "There is address connected to that TG ID already");  // if cell is not empty revert
       bool flag = Turing.checkDictionaryTree(code_name_,parent_name);
       require(flag == true);
       tgIdToAddress[tgId] = userAddress;
@@ -84,7 +92,6 @@ contract Leg10n is Ownable, AccessControl {
        
       require (msg.value == _passportFee, "Request fee is not paid");
 
-      
       address parent_address = codename_wallets[parent_name];
       users[msg.sender] = User(applyerAddress, applyerTg, false, parent_address,code_name_,public_key);
       // TODO: add codename_wallets[username] = msg.sender;
@@ -93,7 +100,6 @@ contract Leg10n is Ownable, AccessControl {
 
       emit joinRequested(applyerTg, msg.sender, parent_address);
       emit joinRequestedIndexedTG(applyerTg, msg.sender, parent_address);
-
 
       chain[parent_address][msg.sender] = false;
       _updateAddress(applyerTg,applyerAddress,code_name_,parent_name); 
@@ -114,7 +120,6 @@ contract Leg10n is Ownable, AccessControl {
       users[user_address].validatorAddress = msg.sender;
       chain[parent_address][user_address] = true;
       emit relationChanged(parent_address,user_address,true);
-
     //  _updateAddress(applyerTg,user_address,code_name_);
    }
 
@@ -155,6 +160,18 @@ contract Leg10n is Ownable, AccessControl {
       //delete chain[msg.sender][child_address];
       emit requestDenied(_tgId,user_address);
    }  
+
+   
+   function _devInitAdmin(address admin_, int64 tgid_, string memory public_key_) internal  {
+      tgIdToAddress[tgid_] = admin_;
+      codename_wallets["Adam"] = admin_;
+      users[admin_] = User(admin_, tgid_, true, admin_,"Adam",public_key_);
+      users[admin_].valid = true;
+      users[admin_].validatorAddress = msg.sender;
+      address zero = GetWalletByNickName("0");
+      chain[zero][admin_] = true;
+      emit Initialized(admin_);
+   }
 
 
    /**
