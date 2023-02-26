@@ -40,6 +40,10 @@ constructor(address dictionary_) {
         return legion;
     }
 
+
+
+    
+    // TODO - change to interface
     /**
      * @dev allow owner of factory to accept joins within child Legion contracts. Typically there is a probable sitation where
      * original deployer or admin of organisation has been compromised and his profile no longer exists. In such scenario recruiting mechanism
@@ -47,11 +51,12 @@ constructor(address dictionary_) {
      * @param legion_ address of organisation contract
      * @param user_to_join user who need to be accepted.
      */
+    /*
     function _dev_acceptJoin(address legion_, int64 user_to_join, string memory parent_name) public onlyOwner  {
         Leg10n L = Leg10n(legion_);
         L.AcceptJoin(user_to_join,parent_name);
 
     }
-
+    */
 
 }

@@ -10,8 +10,7 @@ async function main() {
 
 
   console.log(hre.network.name);
-  let murs_account = ethers.utils.getAddress("0x383A9e83E36796106EaC11E8c2Fbe8b92Ff46D3a");
-  let bot_account = ethers.utils.getAddress("0x0E5279edeD9Fe8281eB0f7277e51068c6DA2fa31");
+  const null_address = await hre.ethers.utils.getAddress("0x0000000000000000000000000000000000000000");
   let account_owner = await hre.ethers.getSigner();
   const balance = await ethers.provider.getBalance(account_owner.address);
 
@@ -30,14 +29,20 @@ async function main() {
   const dictionary_entity = await Dictionary.deploy();
   console.log("dictionary address: ", dictionary_entity.address);
 
+  const A_test_ = await dictionary_entity.connect(owner)
+  .GetCapitalFromString("Adam");
+  console.log("A test:", A_test_);
+
   const Legion = await hre.ethers.getContractFactory("Leg10n");
-  const legion_entity = await Legion.deploy(dictionary_entity.address);
+  const legion_entity = await Legion.deploy(dictionary_entity.address,null_address,0,"");
   console.log("legion address: ", legion_entity.address);
 
   // retriving passport fee:
+  /*
   const passportFee = await legion_entity.connect(owner)
   .GetPassportFee();
   console.log("passport fee:", passportFee);
+*/
 
   const A_test = await dictionary_entity.connect(owner)
   .GetCapitalFromString("Adam");

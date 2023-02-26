@@ -1,14 +1,15 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-//import "hardhat/console.sol";
+/*
 import "@openzeppelin/contracts/access/Ownable.sol";  
 import "@openzeppelin/contracts/access/AccessControl.sol";
+*/
 import "./Dictionary.sol";
 
 
-//import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";    
-//import "../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
+import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";    
+import "../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
 
 contract Leg10n is Ownable, AccessControl {
    
@@ -30,8 +31,8 @@ contract Leg10n is Ownable, AccessControl {
  
    //mappings
    mapping(int64 => address) private tgIdToAddress;
-   mapping(address => User) public users;
-   mapping(string => address) public codename_wallets;  // codenames protected by dictionary
+   mapping(address => User) private users;
+   mapping(string => address) private codename_wallets;  // codenames protected by dictionary
    mapping (address => mapping (address => bool)) public chain; // from parent to child to flag
 
  
@@ -72,7 +73,7 @@ contract Leg10n is Ownable, AccessControl {
 
 
    function _updateAddress(int64 tgId, address userAddress, string memory code_name_,string memory parent_name) internal {
-      require(tgIdToAddress[tgId] == address(0x0), "There's address connected to that TG ID already.");  // if cell is not empty revert
+      require(tgIdToAddress[tgId] == address(0x0), "There is address connected to that TG ID already");  // if cell is not empty revert
       bool flag = Turing.checkDictionaryTree(code_name_,parent_name);
       require(flag == true);
       tgIdToAddress[tgId] = userAddress;
