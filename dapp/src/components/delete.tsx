@@ -20,17 +20,18 @@ export default function Delete(props:Props){
   const currentAccount = props.currentAccount
   const ethUtil = require('ethereumjs-util');
   const sigUtil = require('@metamask/eth-sig-util');
-  var [parent, setParent] = useState<string>("")
-  var [child, setChild] = useState<string>("")
+  var [parent, setParent] = useState<string>("0")
+  var [child, setChild] = useState<string>("0")
   
 
   useEffect(() => {
   const queryParams = new URLSearchParams(location.search);
-  var parent = queryParams.get('parent');
-  var child = queryParams.get('child');
+  var parentq = queryParams.get('parent') as string;
+  var childq  = queryParams.get('child') as string;
   
   
-  //setUserName(name);
+  setParent(parentq);
+  setChild(childq);
   
   }, []);
   
@@ -41,6 +42,7 @@ export default function Delete(props:Props){
 
    
    async function deleteYourself(event:React.FormEvent) {
+    event.preventDefault()
     if(!window.ethereum) return    
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
@@ -51,7 +53,7 @@ export default function Delete(props:Props){
        tr.wait().then((receipt:TransactionReceipt) => {console.log("Clear parent receipt", receipt)})
        })
         .catch((e:Error) => console.log(e))
-        
+
         Legion.deleteYourSelf()
         .then((tr: TransactionResponse) => {
            console.log(`TransactionResponse TX hash: ${tr.hash}`)

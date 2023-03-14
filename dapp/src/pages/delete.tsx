@@ -136,7 +136,7 @@ const Home: NextPage = () => {
           <Heading my={4}  fontSize='xl'>Deletion</Heading>
           <Delete 
             currentAccount={currentAccount}
-            addressContract='0x11d16C0a62A2FF2dD11BA13AEd77C974be065b00'
+            addressContract='0x1B63D3207cD0d2F3971f7f1E4E31Cc9240A8c5f5'
           />
         </Box>
 
