@@ -1,6 +1,8 @@
 # Leg10n
 
 # Idea
+https://miro.com/app/board/uXjVPoxgaGk=/
+
 
 # Go artifacts
 ```
