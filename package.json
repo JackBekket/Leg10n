@@ -1,5 +1,6 @@
 {
   "name": "hardhat-project",
+  "type": "commonjs",
   "devDependencies": {
     "@emotion/react": "^11.10.6",
     "@metamask/eth-sig-util": "^5.0.2",
