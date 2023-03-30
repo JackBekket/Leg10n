@@ -46,6 +46,10 @@ tg_id может быть дополнительно зашифрован клю
 
 https://leg10n.vercel.app/requestJoin
 
+https://leg10n.vercel.app/acceptRequest
+
+
+
 
 ### 2. Приватная Коммуникация
 
