@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 // in-direct imports
 
 import "./Leg10n.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+//import "@openzeppelin/contracts/access/Ownable.sol";
 
 
 // direct imports
