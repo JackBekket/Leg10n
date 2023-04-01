@@ -7,12 +7,14 @@ import TelegramBot from "node-telegram-bot-api";
 
 import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
+import TelegramChat from './telebot_2'
 
 
 interface Props {
     addressContract: string,
     currentAccount: string | undefined
     //tg_token: string
+    //doesFileExist: boolean;
 }
 
 //const token = process.env.TELEGRAM_KEY!;
@@ -146,11 +148,7 @@ export default function EncryptMessage(props:Props){
 
   async function sendMessage(event:React.FormEvent) {
     event.preventDefault()
-    const bot = new TelegramBot(token, { polling: false });
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-
-    bot.sendMessage(tgid_to, message_text);
+    //TelegramChat.
   }
 
   /*

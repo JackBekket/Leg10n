@@ -10,19 +10,16 @@ import {ethers} from "ethers"
 //import EncryptMessage from '../components/telesend'
 import TelegramMessage from '../components/telebot_2'
 
-import type { GetServerSideProps } from "next";
-
-import fs from "fs"; // our server-only import
+//import type { GetServerSideProps } from "next";
 
 
-type Props = {
 
-    doesFileExist: boolean;
-}
+
+
 
 declare let window:any
 
-
+/*
 export const getServerSideProps: GetServerSideProps = async () => {
     const fileExists = fs.existsSync("/some-file"); 
   
@@ -32,6 +29,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
     };
   };
+*/
 
 const Home: NextPage = () => {
   const [balance, setBalance] = useState<string | undefined>()
@@ -162,7 +160,7 @@ const Home: NextPage = () => {
         <Box  mb={0} p={4} w='100%' borderWidth="1px" borderRadius="lg">
           <Heading my={4}  fontSize='xl'>Encrypt message</Heading>
           <TelegramMessage 
-            doesFileExist={doesFileExist}
+
           />
         </Box>
        

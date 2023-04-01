@@ -1,54 +1,38 @@
 import React, { useState } from "react";
-import TelegramBot from "node-telegram-bot-api";
-import type { GetServerSideProps } from "next";
-
-import fs from "fs"; // our server-only import
-
-const token = "YOUR_TELEGRAM_BOT_TOKEN";
-const chat_id = "";
-
-type Props = {
-
-    doesFileExist: boolean;
-}
-
-const TelegramMessage = (props:Props) => {
 
 
+
+
+const TelegramChat = () => {
   const [message, setMessage] = useState("");
+  const chatid = "yourchatid"; // replace with your actual chatid
+  const tg_bot = process.env.TELEGRAM_KEY;
 
-
-   const getServerSideProps: GetServerSideProps = async () => {
-    const fileExists = fs.existsSync("/some-file"); 
-  
-    return {
-      props: {
-        doesFileExist: fileExists,
-      },
-    };
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(event.target.value);
   };
 
+  const handleSendMessage = async () => {
+    //var url1 = 'https://api.telegram.org/bot'
+    const url = `https://api.telegram.org/bot${tg_bot}/sendMessage?chatid=${chatid}&text=${message}`;
+    // replace <yourbottoken> with your actual bot token
 
-
-
-  /*
-  const handleInputChange = (e) => {
-    setMessage(e.target.value);
-  };
-  */
-
-  const handleSendMessage = () => {
-    const bot = new TelegramBot(token, { polling: false });
-    bot.sendMessage(chat_id, message);
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+    setMessage("");
   };
 
   return (
     <div>
+      <input type="text" value={message} onChange={handleInputChange} />
       <button onClick={handleSendMessage}>Send Message</button>
-      <div>File exists?: {doesFileExist ? "Yes" : "No"}</div>;
     </div>
-    
   );
 };
 
-export default TelegramMessage;
+export default TelegramChat;
