@@ -167,7 +167,7 @@ export default function EncryptMessage(props:Props){
 
   async function handleSendMessage (event:React.FormEvent) {
     //var url1 = 'https://api.telegram.org/bot'
-    var chatid = tgid_to;
+    var chatid = parseInt(tgid_to);
     var message = message_text;
     const url = `https://api.telegram.org/bot${tg_bot}/sendMessage?chatid=${chatid}&text=${message}`;
     // replace <yourbottoken> with your actual bot token
