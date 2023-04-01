@@ -7,14 +7,21 @@ import TelegramBot from "node-telegram-bot-api";
 
 import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
+import TelegramChat from './telebot_2'
 
 
 interface Props {
     addressContract: string,
     currentAccount: string | undefined
+    //tg_token: string
+    //doesFileExist: boolean;
 }
 
+//const token = process.env.TELEGRAM_KEY!;
+//const token = "";
 declare let window: any;
+
+const tg_bot = process.env.TELEGRAM_KEY;
 
 
 export default function EncryptMessage(props:Props){
@@ -23,8 +30,9 @@ export default function EncryptMessage(props:Props){
   const ethUtil = require('ethereumjs-util');
   const sigUtil = require('@metamask/eth-sig-util');
 
-  var token =  process.env.TELEGRAM_KEY!;
-  const bot = new TelegramBot(token, { polling: false });
+  //var token =  process.env.TELEGRAM_KEY!;
+  //const token = tg_token;
+  
   var [user_name, setUserName] = useState<string>("")
   var [user_wallet, setUserWallet] = useState<string>("")
   var [tgid_to, setTgid_to] = useState<string>("")
@@ -133,21 +141,46 @@ export default function EncryptMessage(props:Props){
     const signer = provider.getSigner()
 
     const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
+    
     await Legion.GetTgIdByAddress(user_wallet)
+     .then((result:BigInteger) => {
+        console.log("result: ", result);
+        const str = result.toString();
+        setTgid_to(str)
+     });
+     
+
+     /*
+     await Legion.GetUserByNickName(user_wallet)
      .then((result:string) => {
         console.log("result: ", result);
         setTgid_to(result)
      });
+     */
+
   }
 
   async function sendMessage(event:React.FormEvent) {
     event.preventDefault()
-      
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-
-    bot.sendMessage(tgid_to, message_text);
+    await handleSendMessage(event);
   }
+
+  async function handleSendMessage (event:React.FormEvent) {
+    //var url1 = 'https://api.telegram.org/bot'
+    var chatid = parseInt(tgid_to);
+    var message = message_text;
+    const url = `https://api.telegram.org/bot${tg_bot}/sendMessage?chat_id=${chatid}&text=${message}`;
+    // replace <yourbottoken> with your actual bot token
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+    //setMessage("");
+  };
 
   /*
   * TODO:
