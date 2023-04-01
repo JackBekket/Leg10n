@@ -18,8 +18,10 @@ interface Props {
 }
 
 //const token = process.env.TELEGRAM_KEY!;
-const token = "";
+//const token = "";
 declare let window: any;
+
+const tg_bot = process.env.TELEGRAM_KEY;
 
 
 export default function EncryptMessage(props:Props){
@@ -148,8 +150,25 @@ export default function EncryptMessage(props:Props){
 
   async function sendMessage(event:React.FormEvent) {
     event.preventDefault()
-    //TelegramChat.
+    await handleSendMessage(event);
   }
+
+  async function handleSendMessage (event:React.FormEvent) {
+    //var url1 = 'https://api.telegram.org/bot'
+    var chatid = tgid_to;
+    var message = message_text;
+    const url = `https://api.telegram.org/bot${tg_bot}/sendMessage?chatid=${chatid}&text=${message}`;
+    // replace <yourbottoken> with your actual bot token
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+    //setMessage("");
+  };
 
   /*
   * TODO:
