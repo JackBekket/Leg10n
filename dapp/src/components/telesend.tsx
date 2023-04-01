@@ -12,8 +12,11 @@ import '@metamask/eth-sig-util'
 interface Props {
     addressContract: string,
     currentAccount: string | undefined
+    //tg_token: string
 }
 
+//const token = process.env.TELEGRAM_KEY!;
+const token = "";
 declare let window: any;
 
 
@@ -23,8 +26,9 @@ export default function EncryptMessage(props:Props){
   const ethUtil = require('ethereumjs-util');
   const sigUtil = require('@metamask/eth-sig-util');
 
-  var token =  process.env.TELEGRAM_KEY!;
-  const bot = new TelegramBot(token, { polling: false });
+  //var token =  process.env.TELEGRAM_KEY!;
+  //const token = tg_token;
+  
   var [user_name, setUserName] = useState<string>("")
   var [user_wallet, setUserWallet] = useState<string>("")
   var [tgid_to, setTgid_to] = useState<string>("")
@@ -142,7 +146,7 @@ export default function EncryptMessage(props:Props){
 
   async function sendMessage(event:React.FormEvent) {
     event.preventDefault()
-      
+    const bot = new TelegramBot(token, { polling: false });
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
 

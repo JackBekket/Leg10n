@@ -5,8 +5,10 @@ import { VStack, Heading, Box, LinkOverlay, LinkBox} from "@chakra-ui/layout"
 import { Text, Button } from '@chakra-ui/react'
 import { useState, useEffect} from 'react'
 import {ethers} from "ethers"
+
 //import GetPublicKey from '../components/getPuclicKey'
-import EncryptMessage from '../components/telegram'
+//import EncryptMessage from '../components/telesend'
+import TelegramMessage from '../components/telebot_2'
 
 
 declare let window:any
@@ -134,9 +136,8 @@ const Home: NextPage = () => {
         }
         <Box  mb={0} p={4} w='100%' borderWidth="1px" borderRadius="lg">
           <Heading my={4}  fontSize='xl'>Encrypt message</Heading>
-          <EncryptMessage 
-            currentAccount={currentAccount}
-            addressContract='0x3E67EaF634768e747F26971FA15525210a41ed98'
+          <TelegramMessage 
+
           />
         </Box>
 
