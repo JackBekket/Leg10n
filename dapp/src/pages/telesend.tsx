@@ -10,14 +10,38 @@ import {ethers} from "ethers"
 //import EncryptMessage from '../components/telesend'
 import TelegramMessage from '../components/telebot_2'
 
+import type { GetServerSideProps } from "next";
+
+import fs from "fs"; // our server-only import
+
+
+type Props = {
+
+    doesFileExist: boolean;
+}
 
 declare let window:any
+
+
+export const getServerSideProps: GetServerSideProps = async () => {
+    const fileExists = fs.existsSync("/some-file"); 
+  
+    return {
+      props: {
+        doesFileExist: fileExists,
+      },
+    };
+  };
 
 const Home: NextPage = () => {
   const [balance, setBalance] = useState<string | undefined>()
   const [currentAccount, setCurrentAccount] = useState<string | undefined>()
   const [chainId, setChainId] = useState<number | undefined>()
   const [chainname, setChainName] = useState<string | undefined>()
+
+
+
+
 
   useEffect(() => {
     if(!currentAccount || !ethers.utils.isAddress(currentAccount)) return
@@ -134,13 +158,15 @@ const Home: NextPage = () => {
         </Box>
         :<></>
         }
+        
         <Box  mb={0} p={4} w='100%' borderWidth="1px" borderRadius="lg">
           <Heading my={4}  fontSize='xl'>Encrypt message</Heading>
           <TelegramMessage 
-
+            doesFileExist={doesFileExist}
           />
         </Box>
-
+       
+        
         
 
      
