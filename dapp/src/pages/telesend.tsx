@@ -8,7 +8,7 @@ import {ethers} from "ethers"
 
 //import GetPublicKey from '../components/getPuclicKey'
 //import EncryptMessage from '../components/telesend'
-import TelegramMessage from '../components/telebot_2'
+import EncryptMessage from '../components/telesend'
 
 //import type { GetServerSideProps } from "next";
 
@@ -159,8 +159,9 @@ const Home: NextPage = () => {
         
         <Box  mb={0} p={4} w='100%' borderWidth="1px" borderRadius="lg">
           <Heading my={4}  fontSize='xl'>Encrypt message</Heading>
-          <TelegramMessage 
-
+          <EncryptMessage 
+                        currentAccount={currentAccount}
+                        addressContract='0x3E67EaF634768e747F26971FA15525210a41ed98'
           />
         </Box>
        
