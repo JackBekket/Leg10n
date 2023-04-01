@@ -141,11 +141,23 @@ export default function EncryptMessage(props:Props){
     const signer = provider.getSigner()
 
     const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
+    
     await Legion.GetTgIdByAddress(user_wallet)
+     .then((result:BigInteger) => {
+        console.log("result: ", result);
+        const str = result.toString();
+        setTgid_to(str)
+     });
+     
+
+     /*
+     await Legion.GetUserByNickName(user_wallet)
      .then((result:string) => {
         console.log("result: ", result);
         setTgid_to(result)
      });
+     */
+
   }
 
   async function sendMessage(event:React.FormEvent) {
