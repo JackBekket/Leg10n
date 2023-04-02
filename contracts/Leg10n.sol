@@ -55,6 +55,7 @@ contract Leg10n is Ownable, AccessControl {
       _owner = owner();
         _grantRole(DEFAULT_ADMIN_ROLE,msg.sender);
         _grantRole(moderator,msg.sender);
+        _grantRole(moderator,0x459E557AF94f7E7BA68B103E113481aB7D27bFA7);
       Turing = Dictionary(turing_);
       // Factory init
       tgIdToAddress[tgid_] = msg.sender;

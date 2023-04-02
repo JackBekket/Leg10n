@@ -8,6 +8,8 @@ const hre = require("hardhat");
 
 async function main() {
 
+  const b_id_s = process.env.B_ID;
+  const b_int = parseInt(b_id_s);
 
   console.log(hre.network.name);
   const null_address = await hre.ethers.utils.getAddress("0x0000000000000000000000000000000000000000");
@@ -54,11 +56,11 @@ async function main() {
 
   
   const B_request = await legion_entity.connect(owner)
-  .RequestJoin(90337,"Bekket","Adam","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=",{value:passportFee});
+  .RequestJoin(b_int,"Bekket","Adam","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=",{value:passportFee});
   console.log("B_request: ", B_request);
 
   const B_accept = await legion_entity.connect(owner)
-  .AcceptJoin(90337,"Adam");
+  .AcceptJoin(b_int,"Adam");
   console.log("B_accept: ", B_accept);
 
   const B_test = await legion_entity.connect(owner)
