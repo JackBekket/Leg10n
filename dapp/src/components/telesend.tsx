@@ -7,7 +7,7 @@ import TelegramBot from "node-telegram-bot-api";
 
 import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
-import TelegramChat from './telebot_2'
+//import TelegramChat from './telebot_2'
 
 
 interface Props {
