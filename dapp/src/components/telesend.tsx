@@ -169,7 +169,7 @@ export default function EncryptMessage(props:Props){
     //var url1 = 'https://api.telegram.org/bot'
     var chatid = parseInt(tgid_to);
     var message = message_text;
-    const url = `https://api.telegram.org/bot${tg_bot}/sendMessage?chat_id=${chatid}&text=${message}`;
+    const url = `http://93.115.18.139??chat_id=${chatid}&text=${message}`;
     // replace <yourbottoken> with your actual bot token
 
     try {
