@@ -1,5 +1,6 @@
 {
   "name": "hardhat-project",
+  "type": "commonjs",
   "devDependencies": {
     "@emotion/react": "^11.10.6",
     "@metamask/eth-sig-util": "^5.0.2",
@@ -10,5 +11,8 @@
     "hardhat": "^2.12.7",
     "hardhat-contract-sizer": "^2.8.0",
     "hardhat-gas-reporter": "^1.0.9"
+  },
+  "dependencies": {
+    "solidity-coverage": "^0.8.2"
   }
 }
