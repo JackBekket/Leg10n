@@ -5,17 +5,41 @@ import { VStack, Heading, Box, LinkOverlay, LinkBox} from "@chakra-ui/layout"
 import { Text, Button } from '@chakra-ui/react'
 import { useState, useEffect} from 'react'
 import {ethers} from "ethers"
+
 //import GetPublicKey from '../components/getPuclicKey'
-import DecryptMessage from '../components/decrypt'
+//import EncryptMessage from '../components/telesend'
+import EncryptMessage from '../components/telesend'
+
+//import type { GetServerSideProps } from "next";
+
+
+
+
 
 
 declare let window:any
+
+/*
+export const getServerSideProps: GetServerSideProps = async () => {
+    const fileExists = fs.existsSync("/some-file"); 
+  
+    return {
+      props: {
+        doesFileExist: fileExists,
+      },
+    };
+  };
+*/
 
 const Home: NextPage = () => {
   const [balance, setBalance] = useState<string | undefined>()
   const [currentAccount, setCurrentAccount] = useState<string | undefined>()
   const [chainId, setChainId] = useState<number | undefined>()
   const [chainname, setChainName] = useState<string | undefined>()
+
+
+
+
 
   useEffect(() => {
     if(!currentAccount || !ethers.utils.isAddress(currentAccount)) return
@@ -108,7 +132,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Decrypt message</title>
+        <title>Encrypt message</title>
       </Head>
 
       <Heading as="h3"  my={4}>LYOD</Heading>          
@@ -132,14 +156,16 @@ const Home: NextPage = () => {
         </Box>
         :<></>
         }
+        
         <Box  mb={0} p={4} w='100%' borderWidth="1px" borderRadius="lg">
           <Heading my={4}  fontSize='xl'>Encrypt message</Heading>
-          <DecryptMessage 
-            currentAccount={currentAccount}
-            addressContract='0x952dd8A7E8BD1a63d2986676FA520E41743D6D9d'
+          <EncryptMessage 
+                        currentAccount={currentAccount}
+                        addressContract='0x952dd8A7E8BD1a63d2986676FA520E41743D6D9d'
           />
         </Box>
-
+       
+        
         
 
      

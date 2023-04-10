@@ -260,7 +260,7 @@ contract Leg10n is Ownable, AccessControl {
         users[user_address].valid = false;
         chain[parent_address][msg.sender] = false;
     }
-
+    
     /**
      *  @dev setting fee for applying for passport
      */

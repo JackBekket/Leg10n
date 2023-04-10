@@ -6,7 +6,7 @@ import { Text, Button } from '@chakra-ui/react'
 import { useState, useEffect} from 'react'
 import {ethers} from "ethers"
 //import GetPublicKey from '../components/getPuclicKey'
-import DecryptMessage from '../components/decrypt'
+import Delete from '../components/delete'
 
 
 declare let window:any
@@ -108,7 +108,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Decrypt message</title>
+        <title>Deletion</title>
       </Head>
 
       <Heading as="h3"  my={4}>LYOD</Heading>          
@@ -133,8 +133,8 @@ const Home: NextPage = () => {
         :<></>
         }
         <Box  mb={0} p={4} w='100%' borderWidth="1px" borderRadius="lg">
-          <Heading my={4}  fontSize='xl'>Encrypt message</Heading>
-          <DecryptMessage 
+          <Heading my={4}  fontSize='xl'>Deletion</Heading>
+          <Delete 
             currentAccount={currentAccount}
             addressContract='0x952dd8A7E8BD1a63d2986676FA520E41743D6D9d'
           />

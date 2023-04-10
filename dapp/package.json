@@ -25,9 +25,14 @@
     "@emotion/styled": "^11.10.6",
     "@ethereumjs/util": "^8.0.3",
     "@metamask/eth-sig-util": "^5.0.2",
+    "@types/node-telegram-bot-api": "^0.61.5",
     "@types/react": "^18.0.28",
     "ethereumjs-util": "^7.1.5",
     "ethers": "^5.7.2",
-    "framer-motion": "^9.0.4"
+    "framer-motion": "^9.0.4",
+    "fs": "^0.0.1-security",
+    "net": "^1.0.2",
+    "node-telegram-bot-api": "^0.61.0",
+    "tls": "^0.0.1"
   }
 }

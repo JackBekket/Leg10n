@@ -8,6 +8,8 @@ const hre = require("hardhat");
 
 async function main() {
 
+  const b_id_s = process.env.B_ID;
+  const b_int = parseInt(b_id_s);
 
   console.log(hre.network.name);
   const null_address = await hre.ethers.utils.getAddress("0x0000000000000000000000000000000000000000");
@@ -38,11 +40,11 @@ async function main() {
   console.log("legion address: ", legion_entity.address);
 
   // retriving passport fee:
-  /*
+  
   const passportFee = await legion_entity.connect(owner)
   .GetPassportFee();
   console.log("passport fee:", passportFee);
-*/
+
 
   const A_test = await dictionary_entity.connect(owner)
   .GetCapitalFromString("Adam");
@@ -52,19 +54,19 @@ async function main() {
   .GetWalletByNickName("Adam");
   console.log("Adam address: ", A_address_test);
 
-  /*
+  
   const B_request = await legion_entity.connect(owner)
-  .RequestJoin(90337,"Bekket","Adam","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=",{value:passportFee});
+  .RequestJoin(b_int,"Bekket","Adam","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=",{value:passportFee});
   console.log("B_request: ", B_request);
 
   const B_accept = await legion_entity.connect(owner)
-  .AcceptJoin(90337,"Adam");
+  .AcceptJoin(b_int,"Adam");
   console.log("B_accept: ", B_accept);
 
   const B_test = await legion_entity.connect(owner)
   .GetWalletByNickName("Bekket");
   console.log("B address: ", B_test);
-  */
+  
 
   //await ethereum.enable()
   //const provider = new ethers.providers.Web3Provider(window.ethereum);

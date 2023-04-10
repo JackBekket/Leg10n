@@ -142,7 +142,7 @@ const Home: NextPage = () => {
           <Heading my={4}  fontSize='xl'>Request join</Heading>
           <RequestJoin 
             currentAccount={currentAccount}
-            addressContract='0x1B63D3207cD0d2F3971f7f1E4E31Cc9240A8c5f5'
+            addressContract='0x952dd8A7E8BD1a63d2986676FA520E41743D6D9d'
           />
         </Box>
 
