@@ -7,6 +7,7 @@ import TelegramBot from "node-telegram-bot-api";
 
 import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
+import { get } from 'http'
 //import TelegramChat from './telebot_2'
 
 
@@ -132,6 +133,7 @@ export default function EncryptMessage(props:Props){
         console.log("result: ", result);
         setUserWallet(result)
      });
+     
   }
 
   async function getRemoteTgId(event:React.FormEvent) {
@@ -159,6 +161,10 @@ export default function EncryptMessage(props:Props){
      */
 
   }
+
+
+
+
 
   async function sendMessage(event:React.FormEvent) {
     event.preventDefault()
@@ -198,13 +204,14 @@ export default function EncryptMessage(props:Props){
       <Input id="tg_name" type="text" required placeholder='input codename *TO WHOM* you want to encrypt'  onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
       <Button isDisabled={!currentAccount} onClick={getRemoteAddress}>Get Sender Address</Button>
       <Text>{user_wallet}</Text>
-      <Button isDisabled={!currentAccount} onClick={getRemotePublicKey}>Get Sender Public Key</Button>
+      <Button isDisabled={!currentAccount || user_wallet == ""} onClick={getRemotePublicKey}>Get Sender Public Key</Button>
       <Text>{public_key}</Text>
-      <Button isDisabled={!currentAccount} onClick={getRemoteTgId}>Get chat_id</Button>
+      <Button isDisabled={!currentAccount || public_key == ""} onClick={getRemoteTgId}>Get chat_id</Button>
       <Text>{tgid_to}</Text>
       <Input id="text_to_send" type="text" required placeholder='Input text to encrypt' onChange={(e) => setMessageText(e.target.value)} value={message_text} my={3} />
       <Button type="submit" isDisabled={!currentAccount}>Encrypt message!</Button>
-      <Button isDisabled={!currentAccount} onClick={sendMessage}>SendMessage</Button>
+      <Button isDisabled ={!currentAccount || public_key == "" || tgid_to == "" || user_wallet == ""} onClick={sendMessage}>SendMessage</Button>
+   
     </FormControl>
     </form>
 
