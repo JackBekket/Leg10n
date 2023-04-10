@@ -26,23 +26,20 @@ export default function RequestJoin(props:Props){
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-  var id = queryParams.get('user_tg_id');   // get id as string from query
-  let int_id : number = +!id;                // similar to parseInt()
-  var name = queryParams.get('user_tg_name');
-  var p_name = queryParams.get('parent_name');  // TODO: set it
+  var id = queryParams.get('id');   // get id as string from query
+  let int_id : number = +id!;                // similar to parseInt()
+  var name = queryParams.get('codename');
+  var p_name  = queryParams.get('parent');  // TODO: set it
   /*
   if (p_name != "") {
     setParentName(p_name);
   }
   */
-
+setUserId(int_id);
+setParentName(p_name!);
+setUserName(name!);
   //let name_get : string = name;
-  
-  if (id == ""){
-    setUserId(0)
-  } else {
-    setUserId(int_id);
-  }
+
 
   
   

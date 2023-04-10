@@ -24,20 +24,16 @@ export default function AcceptJoin(props:Props){
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-  var id = queryParams.get('user_tg_id');   // get id as string from query
-  let int_id : number = +!id;                // similar to parseInt()
-  var name = queryParams.get('user_tg_name');
+  var id = queryParams.get('id');   // get id as string from query
+  let int_id : number = +id!;                // similar to parseInt()
+  var name = queryParams.get('parent');
   //let name_get : string = name;
   
-  if (id == ""){
-    setUserId(0)
-  } else {
-    setUserId(int_id);
-  }
 
   
   
-  //setUserName(name);      // @TODO: fix it  
+  setUserName(name!);
+  setUserId(int_id);
   
   }, []);
   

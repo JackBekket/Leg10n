@@ -26,10 +26,11 @@ export default function DecryptMessage(props:Props){
 
   useEffect(() => {
   const queryParams = new URLSearchParams(location.search);
-  var name = queryParams.get('user_tg_name');
+  var message = queryParams.get('q')
+
   
   
-  //setUserName(name);
+  setMessageText(message!);
   
   }, []);
   
