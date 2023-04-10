@@ -29,4 +29,8 @@ contract Leg10nMock is Leg10n {
     ) external {
         super._devInitAdmin(admin_, tgid_, public_key_);
     }
+
+    function deleteUser(address user_address) public {
+        super.DeleteUser(user_address);
+    }
 }
