@@ -42,10 +42,10 @@ export default function EncryptMessage(props:Props){
 
   useEffect(() => {
   const queryParams = new URLSearchParams(location.search);
-  var name = queryParams.get('user_tg_name');
-  
-  
-  //setUserName(name);
+  var name = queryParams.get('codename');
+  setUserName(name!);
+  var message = queryParams.get('text');
+  setMessageText(message!);
   
   }, []);
   
