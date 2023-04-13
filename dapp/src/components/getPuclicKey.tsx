@@ -36,6 +36,11 @@ export default function GetPublicKey(props:Props){
     const signer = provider.getSigner()
     await window.ethereum.enable()
     const accounts = await provider.listAccounts();
+    console.log("accounts: ", accounts);
+    console.log("account[0]", accounts[0]);
+    
+    
+    
     const pubkey = await provider.send('eth_getEncryptionPublicKey', [accounts[0]]);
     console.log(pubkey); // zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=
     setPublicKey(pubkey)
