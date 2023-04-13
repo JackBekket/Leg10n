@@ -18,7 +18,7 @@ contract Leg10n is Ownable, AccessControl {
 
     struct User {
         address userAddress;
-        int64 tgId; // unic Id for telegram (number)
+        string tgId;  // unic Id for telegram (number)
         bool valid;
         address validatorAddress;
         string codeName;
@@ -26,7 +26,7 @@ contract Leg10n is Ownable, AccessControl {
     }
 
     //mappings
-    mapping(int64 => address) private tgIdToAddress;
+    mapping(string => address) private tgIdToAddress;
     mapping(address => User) private users;
     mapping(string => address) private codename_wallets; // codenames protected by dictionary
     mapping(address => mapping(address => bool)) public chain; // from parent to child to flag
@@ -34,20 +34,20 @@ contract Leg10n is Ownable, AccessControl {
     // EVENTS
 
     event Initialized(address indexed admin);
-    event requestDenied(int64 applyerTg, address wallet);
+    event requestDenied(string applyerTg, address wallet);
 
     event joinRequested(
-        int64 applyerTg,
+        string applyerTg,
         address wallet_address,
         address indexed parent_address
     );
     event joinRequestedIndexedTG(
-        int64 applyerTg,
+        string applyerTg,
         address wallet_address,
         address indexed parent_address
     );
     event requestAccepted(
-        int64 indexed applyerTg,
+        string indexed applyerTg,
         address user_address,
         address parent_address
     );
@@ -63,7 +63,7 @@ contract Leg10n is Ownable, AccessControl {
     constructor(
         address turing_,
         address admin_,
-        int64 tgid_,
+        string memory tgid_,
         string memory public_key_
     ) Ownable() {
         _passportFee = 2000000000000000 wei;
@@ -83,11 +83,11 @@ contract Leg10n is Ownable, AccessControl {
             "zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ="
         );
         // determine if contract deployed standalone or through factory contract
-        if (admin_ == address(0x0) || tgid_ == 0) {
+        if (admin_ == address(0x0)) {
             // standalone deploy, deployer is admin
             _devInitAdmin(
                 msg.sender,
-                1234,
+                tgid_,
                 "zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ="
             );
         } else {
@@ -97,7 +97,7 @@ contract Leg10n is Ownable, AccessControl {
     }
 
     function _updateAddress(
-        int64 tgId,
+        string memory tgId,
         address userAddress,
         string memory code_name_,
         string memory parent_name
@@ -119,7 +119,7 @@ contract Leg10n is Ownable, AccessControl {
      * @param parent_name  code_name of parent_node
      */
     function RequestJoin(
-        int64 applyerTg,
+        string memory applyerTg,
         string memory code_name_,
         string memory parent_name,
         string memory public_key
@@ -153,7 +153,7 @@ contract Leg10n is Ownable, AccessControl {
      * @param applyerTg tgid of user who want to join
      * @param parent_name code_name of parent_node
      */
-    function AcceptJoin(int64 applyerTg, string memory parent_name) public {
+    function AcceptJoin(string memory applyerTg, string memory parent_name) public {
         address parent_address = codename_wallets[parent_name];
         require(parent_address == msg.sender, "only parent_name can accept it");
         address user_address = GetUserWalletByID(applyerTg);
@@ -170,7 +170,7 @@ contract Leg10n is Ownable, AccessControl {
      *     @notice This function decline application end erase junk data
      *
      */
-    function DeclineRequest(int64 tgid) public {
+    function DeclineRequest(string memory tgid) public {
         address child_address = GetUserWalletByID(tgid);
         //int64 parent_id = GetTgIdByAddress(msg.sender);
         //string memory parent_name = users[msg.sender].codeName;
@@ -194,7 +194,7 @@ contract Leg10n is Ownable, AccessControl {
      *  it does not clear chain of command
      */
     function devDeleteUser(address user_address) public onlyRole(moderator) {
-        int64 _tgId = users[user_address].tgId;
+        string memory _tgId = users[user_address].tgId;
         string memory user_name_ = users[user_address].codeName;
         uint chainID = block.chainid;
         require(chainID == uint(5), "this function work's only for testnet");
@@ -207,7 +207,7 @@ contract Leg10n is Ownable, AccessControl {
 
     function _devInitAdmin(
         address admin_,
-        int64 tgid_,
+        string memory tgid_,
         string memory public_key_
     ) internal {
         tgIdToAddress[tgid_] = admin_;
@@ -224,7 +224,7 @@ contract Leg10n is Ownable, AccessControl {
      *  @dev This function is a service function which allow delete profile of user. It does not clear command chain, so it's required to call ClearParent first
      */
     function DeleteUser(address user_address) internal {
-        int64 _tgId = users[user_address].tgId;
+        string memory _tgId = users[user_address].tgId;
         string memory user_name_ = users[user_address].codeName;
         delete users[user_address];
         delete tgIdToAddress[_tgId];
@@ -275,13 +275,13 @@ contract Leg10n is Ownable, AccessControl {
         return _passportFee;
     }
 
-    function GetUserWalletByID(int64 tgId_) public view returns (address) {
+    function GetUserWalletByID(string memory tgId_) public view returns (address) {
         return tgIdToAddress[tgId_];
     }
 
     function GetTgIdByAddress(
         address user_wallet
-    ) public view returns (int64 tgid) {
+    ) public view returns (string memory tgid) {
         User memory u = GetUserByAddress(user_wallet);
         tgid = u.tgId;
         return tgid;
@@ -310,7 +310,7 @@ contract Leg10n is Ownable, AccessControl {
         return u;
     }
 
-    function GetUserByTgId(int64 tgId_) public view returns (User memory) {
+    function GetUserByTgId(string memory tgId_) public view returns (User memory) {
         address wallet = GetUserWalletByID(tgId_);
         User memory u = users[wallet];
         return u;

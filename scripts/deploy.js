@@ -56,7 +56,7 @@ async function main() {
 
   
   const B_request = await legion_entity.connect(owner)
-  .RequestJoin(b_int,"Bekket","Adam","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=",{value:passportFee});
+  .RequestJoin(b_int,"Bot","Adam","zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=",{value:passportFee});
   console.log("B_request: ", B_request);
 
   const B_accept = await legion_entity.connect(owner)
@@ -64,18 +64,9 @@ async function main() {
   console.log("B_accept: ", B_accept);
 
   const B_test = await legion_entity.connect(owner)
-  .GetWalletByNickName("Bekket");
+  .GetWalletByNickName("Bot");
   console.log("B address: ", B_test);
   
-
-  //await ethereum.enable()
-  //const provider = new ethers.providers.Web3Provider(window.ethereum);
-  /*
-  const accounts = await provider.listAccounts();
-  const pubkey = await provider.send('eth_getEncryptionPublicKey', [accounts[0]]);
-  console.log("public key is: ", pubkey);
-  console.log(pubkey); // zpKOsHVU1YdbTKwZJ4u/YBSsu+q6VxJvTfnU8LLCmCg=
-  */
 
 }
 

@@ -28,7 +28,7 @@ contract Factory is Ownable {
      */
     function DeployLegion(
         address admin_,
-        int64 tgid_,
+        string memory tgid_,
         string memory public_key_
     ) public returns (address) {
         address legion = address(
