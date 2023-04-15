@@ -26,9 +26,9 @@ contract Leg10n is Ownable, AccessControl {
     }
 
     //mappings
-    mapping(string => address) private tgIdToAddress;
+    mapping(string => address) public tgIdToAddress;
     mapping(address => User) private users;
-    mapping(string => address) private codename_wallets; // codenames protected by dictionary
+    mapping(string => address) public codename_wallets; // codenames protected by dictionary
     mapping(address => mapping(address => bool)) public chain; // from parent to child to flag
 
     // EVENTS
@@ -107,8 +107,9 @@ contract Leg10n is Ownable, AccessControl {
             "There is address connected to that TG ID already"
         ); // if cell is not empty revert
         bool flag = Turing.checkDictionaryTree(code_name_, parent_name);
-        require(flag == true);
+        require(flag == true, "dictionary error");
         tgIdToAddress[tgId] = userAddress;
+       // require(codename_wallets[code_name_] == address(0x0), "codename is already taken");
         codename_wallets[code_name_] = userAddress;
     }
 
@@ -140,12 +141,12 @@ contract Leg10n is Ownable, AccessControl {
         // TODO: add codename_wallets[username] = msg.sender;
         (bool feePaid, ) = _owner.call{value: _passportFee}("");
         require(feePaid, "Unable to transfer fee");
+        _updateAddress(applyerTg, applyerAddress, code_name_, parent_name);
 
         emit joinRequested(applyerTg, msg.sender, parent_address);
         emit joinRequestedIndexedTG(applyerTg, msg.sender, parent_address);
 
         chain[parent_address][msg.sender] = false;
-        //   _updateAddress(applyerTg, applyerAddress, code_name_, parent_name);
     }
 
     /**
@@ -163,7 +164,6 @@ contract Leg10n is Ownable, AccessControl {
         users[user_address].validatorAddress = msg.sender;
         chain[parent_address][user_address] = true;
         emit relationChanged(parent_address, user_address, true);
-        // _updateAddress(applyerTg,user_address,code_name_);
     }
 
     /**
@@ -197,7 +197,7 @@ contract Leg10n is Ownable, AccessControl {
         string memory _tgId = users[user_address].tgId;
         string memory user_name_ = users[user_address].codeName;
         uint chainID = block.chainid;
-        require(chainID == uint(5), "this function work's only for testnet");
+        require(chainID == uint(5), "testnet only");
         delete users[user_address];
         delete tgIdToAddress[_tgId];
         delete codename_wallets[user_name_];
