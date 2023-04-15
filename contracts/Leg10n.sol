@@ -9,7 +9,7 @@ import "./Dictionary.sol";
 
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 import "../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
-import "hardhat/console.sol";
+//import "hardhat/console.sol";
 
 contract Leg10n is Ownable, AccessControl {
     uint private _passportFee;

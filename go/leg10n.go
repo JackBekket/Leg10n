@@ -31,7 +31,7 @@ var (
 // Leg10nUser is an auto generated low-level Go binding around an user-defined struct.
 type Leg10nUser struct {
 	UserAddress      common.Address
-	TgId             int64
+	TgId             string
 	Valid            bool
 	ValidatorAddress common.Address
 	CodeName         string
@@ -40,7 +40,7 @@ type Leg10nUser struct {
 
 // Leg10nMetaData contains all meta data concerning the Leg10n contract.
 var Leg10nMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"turing_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"admin_\",\"type\":\"address\"},{\"internalType\":\"int64\",\"name\":\"tgid_\",\"type\":\"int64\"},{\"internalType\":\"string\",\"name\":\"public_key_\",\"type\":\"string\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"admin\",\"type\":\"address\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"int64\",\"name\":\"applyerTg\",\"type\":\"int64\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet_address\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"joinRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"int64\",\"name\":\"applyerTg\",\"type\":\"int64\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet_address\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"joinRequestedIndexedTG\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"high_node\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"low_node\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"pravda\",\"type\":\"bool\"}],\"name\":\"relationChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"int64\",\"name\":\"applyerTg\",\"type\":\"int64\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"requestAccepted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"int64\",\"name\":\"applyerTg\",\"type\":\"int64\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet\",\"type\":\"address\"}],\"name\":\"requestDenied\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"int64\",\"name\":\"applyerTg\",\"type\":\"int64\"},{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"}],\"name\":\"AcceptJoin\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"child_name\",\"type\":\"string\"}],\"name\":\"ClearParent\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"DEFAULT_ADMIN_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int64\",\"name\":\"tgid\",\"type\":\"int64\"}],\"name\":\"DeclineRequest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"GetOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"GetPassportFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"}],\"name\":\"GetPublicKeyByAddress\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_wallet\",\"type\":\"address\"}],\"name\":\"GetTgIdByAddress\",\"outputs\":[{\"internalType\":\"int64\",\"name\":\"tgid\",\"type\":\"int64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_wallet\",\"type\":\"address\"}],\"name\":\"GetUserByAddress\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"int64\",\"name\":\"tgId\",\"type\":\"int64\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"user_name_\",\"type\":\"string\"}],\"name\":\"GetUserByNickName\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"int64\",\"name\":\"tgId\",\"type\":\"int64\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int64\",\"name\":\"tgId_\",\"type\":\"int64\"}],\"name\":\"GetUserByTgId\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"int64\",\"name\":\"tgId\",\"type\":\"int64\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int64\",\"name\":\"tgId_\",\"type\":\"int64\"}],\"name\":\"GetUserWalletByID\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"user_name_\",\"type\":\"string\"}],\"name\":\"GetWalletByNickName\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int64\",\"name\":\"applyerTg\",\"type\":\"int64\"},{\"internalType\":\"string\",\"name\":\"code_name_\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"name\":\"RequestJoin\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"passportFee_\",\"type\":\"uint256\"}],\"name\":\"SetPassportFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"chain\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"deleteYourSelf\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"}],\"name\":\"devDeleteUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getModeratorIdentifier\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleAdmin\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"moderator\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"renounceRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"turing_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"admin_\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgid_\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key_\",\"type\":\"string\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"admin\",\"type\":\"address\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet_address\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"joinRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet_address\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"joinRequestedIndexedTG\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"high_node\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"low_node\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"pravda\",\"type\":\"bool\"}],\"name\":\"relationChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"requestAccepted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet\",\"type\":\"address\"}],\"name\":\"requestDenied\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"}],\"name\":\"AcceptJoin\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"child_name\",\"type\":\"string\"}],\"name\":\"ClearParent\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"DEFAULT_ADMIN_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"tgid\",\"type\":\"string\"}],\"name\":\"DeclineRequest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"GetOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"GetPassportFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"}],\"name\":\"GetPublicKeyByAddress\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_wallet\",\"type\":\"address\"}],\"name\":\"GetTgIdByAddress\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"tgid\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_wallet\",\"type\":\"address\"}],\"name\":\"GetUserByAddress\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgId\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"user_name_\",\"type\":\"string\"}],\"name\":\"GetUserByNickName\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgId\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"tgId_\",\"type\":\"string\"}],\"name\":\"GetUserByTgId\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgId\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"tgId_\",\"type\":\"string\"}],\"name\":\"GetUserWalletByID\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"user_name_\",\"type\":\"string\"}],\"name\":\"GetWalletByNickName\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"code_name_\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"name\":\"RequestJoin\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"passportFee_\",\"type\":\"uint256\"}],\"name\":\"SetPassportFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"chain\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"name\":\"codename_wallets\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"deleteYourSelf\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"}],\"name\":\"devDeleteUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getModeratorIdentifier\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleAdmin\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"moderator\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"renounceRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"name\":\"tgIdToAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
 }
 
 // Leg10nABI is the input ABI used to generate the binding from.
@@ -315,16 +315,16 @@ func (_Leg10n *Leg10nCallerSession) GetPublicKeyByAddress(user_address common.Ad
 
 // GetTgIdByAddress is a free data retrieval call binding the contract method 0x61cabe37.
 //
-// Solidity: function GetTgIdByAddress(address user_wallet) view returns(int64 tgid)
-func (_Leg10n *Leg10nCaller) GetTgIdByAddress(opts *bind.CallOpts, user_wallet common.Address) (int64, error) {
+// Solidity: function GetTgIdByAddress(address user_wallet) view returns(string tgid)
+func (_Leg10n *Leg10nCaller) GetTgIdByAddress(opts *bind.CallOpts, user_wallet common.Address) (string, error) {
 	var out []interface{}
 	err := _Leg10n.contract.Call(opts, &out, "GetTgIdByAddress", user_wallet)
 
 	if err != nil {
-		return *new(int64), err
+		return *new(string), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(int64)).(*int64)
+	out0 := *abi.ConvertType(out[0], new(string)).(*string)
 
 	return out0, err
 
@@ -332,21 +332,21 @@ func (_Leg10n *Leg10nCaller) GetTgIdByAddress(opts *bind.CallOpts, user_wallet c
 
 // GetTgIdByAddress is a free data retrieval call binding the contract method 0x61cabe37.
 //
-// Solidity: function GetTgIdByAddress(address user_wallet) view returns(int64 tgid)
-func (_Leg10n *Leg10nSession) GetTgIdByAddress(user_wallet common.Address) (int64, error) {
+// Solidity: function GetTgIdByAddress(address user_wallet) view returns(string tgid)
+func (_Leg10n *Leg10nSession) GetTgIdByAddress(user_wallet common.Address) (string, error) {
 	return _Leg10n.Contract.GetTgIdByAddress(&_Leg10n.CallOpts, user_wallet)
 }
 
 // GetTgIdByAddress is a free data retrieval call binding the contract method 0x61cabe37.
 //
-// Solidity: function GetTgIdByAddress(address user_wallet) view returns(int64 tgid)
-func (_Leg10n *Leg10nCallerSession) GetTgIdByAddress(user_wallet common.Address) (int64, error) {
+// Solidity: function GetTgIdByAddress(address user_wallet) view returns(string tgid)
+func (_Leg10n *Leg10nCallerSession) GetTgIdByAddress(user_wallet common.Address) (string, error) {
 	return _Leg10n.Contract.GetTgIdByAddress(&_Leg10n.CallOpts, user_wallet)
 }
 
 // GetUserByAddress is a free data retrieval call binding the contract method 0x1892fd78.
 //
-// Solidity: function GetUserByAddress(address user_wallet) view returns((address,int64,bool,address,string,string))
+// Solidity: function GetUserByAddress(address user_wallet) view returns((address,string,bool,address,string,string))
 func (_Leg10n *Leg10nCaller) GetUserByAddress(opts *bind.CallOpts, user_wallet common.Address) (Leg10nUser, error) {
 	var out []interface{}
 	err := _Leg10n.contract.Call(opts, &out, "GetUserByAddress", user_wallet)
@@ -363,21 +363,21 @@ func (_Leg10n *Leg10nCaller) GetUserByAddress(opts *bind.CallOpts, user_wallet c
 
 // GetUserByAddress is a free data retrieval call binding the contract method 0x1892fd78.
 //
-// Solidity: function GetUserByAddress(address user_wallet) view returns((address,int64,bool,address,string,string))
+// Solidity: function GetUserByAddress(address user_wallet) view returns((address,string,bool,address,string,string))
 func (_Leg10n *Leg10nSession) GetUserByAddress(user_wallet common.Address) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByAddress(&_Leg10n.CallOpts, user_wallet)
 }
 
 // GetUserByAddress is a free data retrieval call binding the contract method 0x1892fd78.
 //
-// Solidity: function GetUserByAddress(address user_wallet) view returns((address,int64,bool,address,string,string))
+// Solidity: function GetUserByAddress(address user_wallet) view returns((address,string,bool,address,string,string))
 func (_Leg10n *Leg10nCallerSession) GetUserByAddress(user_wallet common.Address) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByAddress(&_Leg10n.CallOpts, user_wallet)
 }
 
 // GetUserByNickName is a free data retrieval call binding the contract method 0x0d48cae8.
 //
-// Solidity: function GetUserByNickName(string user_name_) view returns((address,int64,bool,address,string,string))
+// Solidity: function GetUserByNickName(string user_name_) view returns((address,string,bool,address,string,string))
 func (_Leg10n *Leg10nCaller) GetUserByNickName(opts *bind.CallOpts, user_name_ string) (Leg10nUser, error) {
 	var out []interface{}
 	err := _Leg10n.contract.Call(opts, &out, "GetUserByNickName", user_name_)
@@ -394,22 +394,22 @@ func (_Leg10n *Leg10nCaller) GetUserByNickName(opts *bind.CallOpts, user_name_ s
 
 // GetUserByNickName is a free data retrieval call binding the contract method 0x0d48cae8.
 //
-// Solidity: function GetUserByNickName(string user_name_) view returns((address,int64,bool,address,string,string))
+// Solidity: function GetUserByNickName(string user_name_) view returns((address,string,bool,address,string,string))
 func (_Leg10n *Leg10nSession) GetUserByNickName(user_name_ string) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByNickName(&_Leg10n.CallOpts, user_name_)
 }
 
 // GetUserByNickName is a free data retrieval call binding the contract method 0x0d48cae8.
 //
-// Solidity: function GetUserByNickName(string user_name_) view returns((address,int64,bool,address,string,string))
+// Solidity: function GetUserByNickName(string user_name_) view returns((address,string,bool,address,string,string))
 func (_Leg10n *Leg10nCallerSession) GetUserByNickName(user_name_ string) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByNickName(&_Leg10n.CallOpts, user_name_)
 }
 
-// GetUserByTgId is a free data retrieval call binding the contract method 0xc1cada78.
+// GetUserByTgId is a free data retrieval call binding the contract method 0x1a519ce8.
 //
-// Solidity: function GetUserByTgId(int64 tgId_) view returns((address,int64,bool,address,string,string))
-func (_Leg10n *Leg10nCaller) GetUserByTgId(opts *bind.CallOpts, tgId_ int64) (Leg10nUser, error) {
+// Solidity: function GetUserByTgId(string tgId_) view returns((address,string,bool,address,string,string))
+func (_Leg10n *Leg10nCaller) GetUserByTgId(opts *bind.CallOpts, tgId_ string) (Leg10nUser, error) {
 	var out []interface{}
 	err := _Leg10n.contract.Call(opts, &out, "GetUserByTgId", tgId_)
 
@@ -423,24 +423,24 @@ func (_Leg10n *Leg10nCaller) GetUserByTgId(opts *bind.CallOpts, tgId_ int64) (Le
 
 }
 
-// GetUserByTgId is a free data retrieval call binding the contract method 0xc1cada78.
+// GetUserByTgId is a free data retrieval call binding the contract method 0x1a519ce8.
 //
-// Solidity: function GetUserByTgId(int64 tgId_) view returns((address,int64,bool,address,string,string))
-func (_Leg10n *Leg10nSession) GetUserByTgId(tgId_ int64) (Leg10nUser, error) {
+// Solidity: function GetUserByTgId(string tgId_) view returns((address,string,bool,address,string,string))
+func (_Leg10n *Leg10nSession) GetUserByTgId(tgId_ string) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByTgId(&_Leg10n.CallOpts, tgId_)
 }
 
-// GetUserByTgId is a free data retrieval call binding the contract method 0xc1cada78.
+// GetUserByTgId is a free data retrieval call binding the contract method 0x1a519ce8.
 //
-// Solidity: function GetUserByTgId(int64 tgId_) view returns((address,int64,bool,address,string,string))
-func (_Leg10n *Leg10nCallerSession) GetUserByTgId(tgId_ int64) (Leg10nUser, error) {
+// Solidity: function GetUserByTgId(string tgId_) view returns((address,string,bool,address,string,string))
+func (_Leg10n *Leg10nCallerSession) GetUserByTgId(tgId_ string) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByTgId(&_Leg10n.CallOpts, tgId_)
 }
 
-// GetUserWalletByID is a free data retrieval call binding the contract method 0x7cec446b.
+// GetUserWalletByID is a free data retrieval call binding the contract method 0x15905bdd.
 //
-// Solidity: function GetUserWalletByID(int64 tgId_) view returns(address)
-func (_Leg10n *Leg10nCaller) GetUserWalletByID(opts *bind.CallOpts, tgId_ int64) (common.Address, error) {
+// Solidity: function GetUserWalletByID(string tgId_) view returns(address)
+func (_Leg10n *Leg10nCaller) GetUserWalletByID(opts *bind.CallOpts, tgId_ string) (common.Address, error) {
 	var out []interface{}
 	err := _Leg10n.contract.Call(opts, &out, "GetUserWalletByID", tgId_)
 
@@ -454,17 +454,17 @@ func (_Leg10n *Leg10nCaller) GetUserWalletByID(opts *bind.CallOpts, tgId_ int64)
 
 }
 
-// GetUserWalletByID is a free data retrieval call binding the contract method 0x7cec446b.
+// GetUserWalletByID is a free data retrieval call binding the contract method 0x15905bdd.
 //
-// Solidity: function GetUserWalletByID(int64 tgId_) view returns(address)
-func (_Leg10n *Leg10nSession) GetUserWalletByID(tgId_ int64) (common.Address, error) {
+// Solidity: function GetUserWalletByID(string tgId_) view returns(address)
+func (_Leg10n *Leg10nSession) GetUserWalletByID(tgId_ string) (common.Address, error) {
 	return _Leg10n.Contract.GetUserWalletByID(&_Leg10n.CallOpts, tgId_)
 }
 
-// GetUserWalletByID is a free data retrieval call binding the contract method 0x7cec446b.
+// GetUserWalletByID is a free data retrieval call binding the contract method 0x15905bdd.
 //
-// Solidity: function GetUserWalletByID(int64 tgId_) view returns(address)
-func (_Leg10n *Leg10nCallerSession) GetUserWalletByID(tgId_ int64) (common.Address, error) {
+// Solidity: function GetUserWalletByID(string tgId_) view returns(address)
+func (_Leg10n *Leg10nCallerSession) GetUserWalletByID(tgId_ string) (common.Address, error) {
 	return _Leg10n.Contract.GetUserWalletByID(&_Leg10n.CallOpts, tgId_)
 }
 
@@ -528,6 +528,37 @@ func (_Leg10n *Leg10nSession) Chain(arg0 common.Address, arg1 common.Address) (b
 // Solidity: function chain(address , address ) view returns(bool)
 func (_Leg10n *Leg10nCallerSession) Chain(arg0 common.Address, arg1 common.Address) (bool, error) {
 	return _Leg10n.Contract.Chain(&_Leg10n.CallOpts, arg0, arg1)
+}
+
+// CodenameWallets is a free data retrieval call binding the contract method 0x6e312028.
+//
+// Solidity: function codename_wallets(string ) view returns(address)
+func (_Leg10n *Leg10nCaller) CodenameWallets(opts *bind.CallOpts, arg0 string) (common.Address, error) {
+	var out []interface{}
+	err := _Leg10n.contract.Call(opts, &out, "codename_wallets", arg0)
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// CodenameWallets is a free data retrieval call binding the contract method 0x6e312028.
+//
+// Solidity: function codename_wallets(string ) view returns(address)
+func (_Leg10n *Leg10nSession) CodenameWallets(arg0 string) (common.Address, error) {
+	return _Leg10n.Contract.CodenameWallets(&_Leg10n.CallOpts, arg0)
+}
+
+// CodenameWallets is a free data retrieval call binding the contract method 0x6e312028.
+//
+// Solidity: function codename_wallets(string ) view returns(address)
+func (_Leg10n *Leg10nCallerSession) CodenameWallets(arg0 string) (common.Address, error) {
+	return _Leg10n.Contract.CodenameWallets(&_Leg10n.CallOpts, arg0)
 }
 
 // GetModeratorIdentifier is a free data retrieval call binding the contract method 0x5d1ce88f.
@@ -716,24 +747,55 @@ func (_Leg10n *Leg10nCallerSession) SupportsInterface(interfaceId [4]byte) (bool
 	return _Leg10n.Contract.SupportsInterface(&_Leg10n.CallOpts, interfaceId)
 }
 
-// AcceptJoin is a paid mutator transaction binding the contract method 0xb233e5eb.
+// TgIdToAddress is a free data retrieval call binding the contract method 0x86e81ba5.
 //
-// Solidity: function AcceptJoin(int64 applyerTg, string parent_name) returns()
-func (_Leg10n *Leg10nTransactor) AcceptJoin(opts *bind.TransactOpts, applyerTg int64, parent_name string) (*types.Transaction, error) {
+// Solidity: function tgIdToAddress(string ) view returns(address)
+func (_Leg10n *Leg10nCaller) TgIdToAddress(opts *bind.CallOpts, arg0 string) (common.Address, error) {
+	var out []interface{}
+	err := _Leg10n.contract.Call(opts, &out, "tgIdToAddress", arg0)
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// TgIdToAddress is a free data retrieval call binding the contract method 0x86e81ba5.
+//
+// Solidity: function tgIdToAddress(string ) view returns(address)
+func (_Leg10n *Leg10nSession) TgIdToAddress(arg0 string) (common.Address, error) {
+	return _Leg10n.Contract.TgIdToAddress(&_Leg10n.CallOpts, arg0)
+}
+
+// TgIdToAddress is a free data retrieval call binding the contract method 0x86e81ba5.
+//
+// Solidity: function tgIdToAddress(string ) view returns(address)
+func (_Leg10n *Leg10nCallerSession) TgIdToAddress(arg0 string) (common.Address, error) {
+	return _Leg10n.Contract.TgIdToAddress(&_Leg10n.CallOpts, arg0)
+}
+
+// AcceptJoin is a paid mutator transaction binding the contract method 0x9b45179f.
+//
+// Solidity: function AcceptJoin(string applyerTg, string parent_name) returns()
+func (_Leg10n *Leg10nTransactor) AcceptJoin(opts *bind.TransactOpts, applyerTg string, parent_name string) (*types.Transaction, error) {
 	return _Leg10n.contract.Transact(opts, "AcceptJoin", applyerTg, parent_name)
 }
 
-// AcceptJoin is a paid mutator transaction binding the contract method 0xb233e5eb.
+// AcceptJoin is a paid mutator transaction binding the contract method 0x9b45179f.
 //
-// Solidity: function AcceptJoin(int64 applyerTg, string parent_name) returns()
-func (_Leg10n *Leg10nSession) AcceptJoin(applyerTg int64, parent_name string) (*types.Transaction, error) {
+// Solidity: function AcceptJoin(string applyerTg, string parent_name) returns()
+func (_Leg10n *Leg10nSession) AcceptJoin(applyerTg string, parent_name string) (*types.Transaction, error) {
 	return _Leg10n.Contract.AcceptJoin(&_Leg10n.TransactOpts, applyerTg, parent_name)
 }
 
-// AcceptJoin is a paid mutator transaction binding the contract method 0xb233e5eb.
+// AcceptJoin is a paid mutator transaction binding the contract method 0x9b45179f.
 //
-// Solidity: function AcceptJoin(int64 applyerTg, string parent_name) returns()
-func (_Leg10n *Leg10nTransactorSession) AcceptJoin(applyerTg int64, parent_name string) (*types.Transaction, error) {
+// Solidity: function AcceptJoin(string applyerTg, string parent_name) returns()
+func (_Leg10n *Leg10nTransactorSession) AcceptJoin(applyerTg string, parent_name string) (*types.Transaction, error) {
 	return _Leg10n.Contract.AcceptJoin(&_Leg10n.TransactOpts, applyerTg, parent_name)
 }
 
@@ -758,45 +820,45 @@ func (_Leg10n *Leg10nTransactorSession) ClearParent(parent_name string, child_na
 	return _Leg10n.Contract.ClearParent(&_Leg10n.TransactOpts, parent_name, child_name)
 }
 
-// DeclineRequest is a paid mutator transaction binding the contract method 0x00d396ed.
+// DeclineRequest is a paid mutator transaction binding the contract method 0x286b2e54.
 //
-// Solidity: function DeclineRequest(int64 tgid) returns()
-func (_Leg10n *Leg10nTransactor) DeclineRequest(opts *bind.TransactOpts, tgid int64) (*types.Transaction, error) {
+// Solidity: function DeclineRequest(string tgid) returns()
+func (_Leg10n *Leg10nTransactor) DeclineRequest(opts *bind.TransactOpts, tgid string) (*types.Transaction, error) {
 	return _Leg10n.contract.Transact(opts, "DeclineRequest", tgid)
 }
 
-// DeclineRequest is a paid mutator transaction binding the contract method 0x00d396ed.
+// DeclineRequest is a paid mutator transaction binding the contract method 0x286b2e54.
 //
-// Solidity: function DeclineRequest(int64 tgid) returns()
-func (_Leg10n *Leg10nSession) DeclineRequest(tgid int64) (*types.Transaction, error) {
+// Solidity: function DeclineRequest(string tgid) returns()
+func (_Leg10n *Leg10nSession) DeclineRequest(tgid string) (*types.Transaction, error) {
 	return _Leg10n.Contract.DeclineRequest(&_Leg10n.TransactOpts, tgid)
 }
 
-// DeclineRequest is a paid mutator transaction binding the contract method 0x00d396ed.
+// DeclineRequest is a paid mutator transaction binding the contract method 0x286b2e54.
 //
-// Solidity: function DeclineRequest(int64 tgid) returns()
-func (_Leg10n *Leg10nTransactorSession) DeclineRequest(tgid int64) (*types.Transaction, error) {
+// Solidity: function DeclineRequest(string tgid) returns()
+func (_Leg10n *Leg10nTransactorSession) DeclineRequest(tgid string) (*types.Transaction, error) {
 	return _Leg10n.Contract.DeclineRequest(&_Leg10n.TransactOpts, tgid)
 }
 
-// RequestJoin is a paid mutator transaction binding the contract method 0xb44cf600.
+// RequestJoin is a paid mutator transaction binding the contract method 0xc54080c5.
 //
-// Solidity: function RequestJoin(int64 applyerTg, string code_name_, string parent_name, string public_key) payable returns()
-func (_Leg10n *Leg10nTransactor) RequestJoin(opts *bind.TransactOpts, applyerTg int64, code_name_ string, parent_name string, public_key string) (*types.Transaction, error) {
+// Solidity: function RequestJoin(string applyerTg, string code_name_, string parent_name, string public_key) payable returns()
+func (_Leg10n *Leg10nTransactor) RequestJoin(opts *bind.TransactOpts, applyerTg string, code_name_ string, parent_name string, public_key string) (*types.Transaction, error) {
 	return _Leg10n.contract.Transact(opts, "RequestJoin", applyerTg, code_name_, parent_name, public_key)
 }
 
-// RequestJoin is a paid mutator transaction binding the contract method 0xb44cf600.
+// RequestJoin is a paid mutator transaction binding the contract method 0xc54080c5.
 //
-// Solidity: function RequestJoin(int64 applyerTg, string code_name_, string parent_name, string public_key) payable returns()
-func (_Leg10n *Leg10nSession) RequestJoin(applyerTg int64, code_name_ string, parent_name string, public_key string) (*types.Transaction, error) {
+// Solidity: function RequestJoin(string applyerTg, string code_name_, string parent_name, string public_key) payable returns()
+func (_Leg10n *Leg10nSession) RequestJoin(applyerTg string, code_name_ string, parent_name string, public_key string) (*types.Transaction, error) {
 	return _Leg10n.Contract.RequestJoin(&_Leg10n.TransactOpts, applyerTg, code_name_, parent_name, public_key)
 }
 
-// RequestJoin is a paid mutator transaction binding the contract method 0xb44cf600.
+// RequestJoin is a paid mutator transaction binding the contract method 0xc54080c5.
 //
-// Solidity: function RequestJoin(int64 applyerTg, string code_name_, string parent_name, string public_key) payable returns()
-func (_Leg10n *Leg10nTransactorSession) RequestJoin(applyerTg int64, code_name_ string, parent_name string, public_key string) (*types.Transaction, error) {
+// Solidity: function RequestJoin(string applyerTg, string code_name_, string parent_name, string public_key) payable returns()
+func (_Leg10n *Leg10nTransactorSession) RequestJoin(applyerTg string, code_name_ string, parent_name string, public_key string) (*types.Transaction, error) {
 	return _Leg10n.Contract.RequestJoin(&_Leg10n.TransactOpts, applyerTg, code_name_, parent_name, public_key)
 }
 
@@ -1820,15 +1882,15 @@ func (it *Leg10nJoinRequestedIterator) Close() error {
 
 // Leg10nJoinRequested represents a JoinRequested event raised by the Leg10n contract.
 type Leg10nJoinRequested struct {
-	ApplyerTg     int64
+	ApplyerTg     string
 	WalletAddress common.Address
 	ParentAddress common.Address
 	Raw           types.Log // Blockchain specific contextual infos
 }
 
-// FilterJoinRequested is a free log retrieval operation binding the contract event 0x217213f52d0ada6519b1710cff4d5e622165afded08327f17577ff3c30371360.
+// FilterJoinRequested is a free log retrieval operation binding the contract event 0x435b683210e9cdb43126109baed7a6a387c609e0e13532755b51016e1b773a6b.
 //
-// Solidity: event joinRequested(int64 applyerTg, address wallet_address, address indexed parent_address)
+// Solidity: event joinRequested(string applyerTg, address wallet_address, address indexed parent_address)
 func (_Leg10n *Leg10nFilterer) FilterJoinRequested(opts *bind.FilterOpts, parent_address []common.Address) (*Leg10nJoinRequestedIterator, error) {
 
 	var parent_addressRule []interface{}
@@ -1843,9 +1905,9 @@ func (_Leg10n *Leg10nFilterer) FilterJoinRequested(opts *bind.FilterOpts, parent
 	return &Leg10nJoinRequestedIterator{contract: _Leg10n.contract, event: "joinRequested", logs: logs, sub: sub}, nil
 }
 
-// WatchJoinRequested is a free log subscription operation binding the contract event 0x217213f52d0ada6519b1710cff4d5e622165afded08327f17577ff3c30371360.
+// WatchJoinRequested is a free log subscription operation binding the contract event 0x435b683210e9cdb43126109baed7a6a387c609e0e13532755b51016e1b773a6b.
 //
-// Solidity: event joinRequested(int64 applyerTg, address wallet_address, address indexed parent_address)
+// Solidity: event joinRequested(string applyerTg, address wallet_address, address indexed parent_address)
 func (_Leg10n *Leg10nFilterer) WatchJoinRequested(opts *bind.WatchOpts, sink chan<- *Leg10nJoinRequested, parent_address []common.Address) (event.Subscription, error) {
 
 	var parent_addressRule []interface{}
@@ -1885,9 +1947,9 @@ func (_Leg10n *Leg10nFilterer) WatchJoinRequested(opts *bind.WatchOpts, sink cha
 	}), nil
 }
 
-// ParseJoinRequested is a log parse operation binding the contract event 0x217213f52d0ada6519b1710cff4d5e622165afded08327f17577ff3c30371360.
+// ParseJoinRequested is a log parse operation binding the contract event 0x435b683210e9cdb43126109baed7a6a387c609e0e13532755b51016e1b773a6b.
 //
-// Solidity: event joinRequested(int64 applyerTg, address wallet_address, address indexed parent_address)
+// Solidity: event joinRequested(string applyerTg, address wallet_address, address indexed parent_address)
 func (_Leg10n *Leg10nFilterer) ParseJoinRequested(log types.Log) (*Leg10nJoinRequested, error) {
 	event := new(Leg10nJoinRequested)
 	if err := _Leg10n.contract.UnpackLog(event, "joinRequested", log); err != nil {
@@ -1966,15 +2028,15 @@ func (it *Leg10nJoinRequestedIndexedTGIterator) Close() error {
 
 // Leg10nJoinRequestedIndexedTG represents a JoinRequestedIndexedTG event raised by the Leg10n contract.
 type Leg10nJoinRequestedIndexedTG struct {
-	ApplyerTg     int64
+	ApplyerTg     string
 	WalletAddress common.Address
 	ParentAddress common.Address
 	Raw           types.Log // Blockchain specific contextual infos
 }
 
-// FilterJoinRequestedIndexedTG is a free log retrieval operation binding the contract event 0x2f9961dc36e79933613fb931d5ca8392c911b25840b07276e17e19961d228240.
+// FilterJoinRequestedIndexedTG is a free log retrieval operation binding the contract event 0x71ec84cb0c406d66954dcb2481d75f63a94ed77283afa5657d56e68a20df3c52.
 //
-// Solidity: event joinRequestedIndexedTG(int64 applyerTg, address wallet_address, address indexed parent_address)
+// Solidity: event joinRequestedIndexedTG(string applyerTg, address wallet_address, address indexed parent_address)
 func (_Leg10n *Leg10nFilterer) FilterJoinRequestedIndexedTG(opts *bind.FilterOpts, parent_address []common.Address) (*Leg10nJoinRequestedIndexedTGIterator, error) {
 
 	var parent_addressRule []interface{}
@@ -1989,9 +2051,9 @@ func (_Leg10n *Leg10nFilterer) FilterJoinRequestedIndexedTG(opts *bind.FilterOpt
 	return &Leg10nJoinRequestedIndexedTGIterator{contract: _Leg10n.contract, event: "joinRequestedIndexedTG", logs: logs, sub: sub}, nil
 }
 
-// WatchJoinRequestedIndexedTG is a free log subscription operation binding the contract event 0x2f9961dc36e79933613fb931d5ca8392c911b25840b07276e17e19961d228240.
+// WatchJoinRequestedIndexedTG is a free log subscription operation binding the contract event 0x71ec84cb0c406d66954dcb2481d75f63a94ed77283afa5657d56e68a20df3c52.
 //
-// Solidity: event joinRequestedIndexedTG(int64 applyerTg, address wallet_address, address indexed parent_address)
+// Solidity: event joinRequestedIndexedTG(string applyerTg, address wallet_address, address indexed parent_address)
 func (_Leg10n *Leg10nFilterer) WatchJoinRequestedIndexedTG(opts *bind.WatchOpts, sink chan<- *Leg10nJoinRequestedIndexedTG, parent_address []common.Address) (event.Subscription, error) {
 
 	var parent_addressRule []interface{}
@@ -2031,9 +2093,9 @@ func (_Leg10n *Leg10nFilterer) WatchJoinRequestedIndexedTG(opts *bind.WatchOpts,
 	}), nil
 }
 
-// ParseJoinRequestedIndexedTG is a log parse operation binding the contract event 0x2f9961dc36e79933613fb931d5ca8392c911b25840b07276e17e19961d228240.
+// ParseJoinRequestedIndexedTG is a log parse operation binding the contract event 0x71ec84cb0c406d66954dcb2481d75f63a94ed77283afa5657d56e68a20df3c52.
 //
-// Solidity: event joinRequestedIndexedTG(int64 applyerTg, address wallet_address, address indexed parent_address)
+// Solidity: event joinRequestedIndexedTG(string applyerTg, address wallet_address, address indexed parent_address)
 func (_Leg10n *Leg10nFilterer) ParseJoinRequestedIndexedTG(log types.Log) (*Leg10nJoinRequestedIndexedTG, error) {
 	event := new(Leg10nJoinRequestedIndexedTG)
 	if err := _Leg10n.contract.UnpackLog(event, "joinRequestedIndexedTG", log); err != nil {
@@ -2258,16 +2320,16 @@ func (it *Leg10nRequestAcceptedIterator) Close() error {
 
 // Leg10nRequestAccepted represents a RequestAccepted event raised by the Leg10n contract.
 type Leg10nRequestAccepted struct {
-	ApplyerTg     int64
+	ApplyerTg     common.Hash
 	UserAddress   common.Address
 	ParentAddress common.Address
 	Raw           types.Log // Blockchain specific contextual infos
 }
 
-// FilterRequestAccepted is a free log retrieval operation binding the contract event 0x1eae2e277962887ad58eeeadb2b3aa51b47e4a8f2caabf46938991ab7d9e29e2.
+// FilterRequestAccepted is a free log retrieval operation binding the contract event 0x8db66134a3a9e5e82737f31cc0c08aa4dd0cb3c683f9ab659a3a9e74b80a126d.
 //
-// Solidity: event requestAccepted(int64 indexed applyerTg, address user_address, address parent_address)
-func (_Leg10n *Leg10nFilterer) FilterRequestAccepted(opts *bind.FilterOpts, applyerTg []int64) (*Leg10nRequestAcceptedIterator, error) {
+// Solidity: event requestAccepted(string indexed applyerTg, address user_address, address parent_address)
+func (_Leg10n *Leg10nFilterer) FilterRequestAccepted(opts *bind.FilterOpts, applyerTg []string) (*Leg10nRequestAcceptedIterator, error) {
 
 	var applyerTgRule []interface{}
 	for _, applyerTgItem := range applyerTg {
@@ -2281,10 +2343,10 @@ func (_Leg10n *Leg10nFilterer) FilterRequestAccepted(opts *bind.FilterOpts, appl
 	return &Leg10nRequestAcceptedIterator{contract: _Leg10n.contract, event: "requestAccepted", logs: logs, sub: sub}, nil
 }
 
-// WatchRequestAccepted is a free log subscription operation binding the contract event 0x1eae2e277962887ad58eeeadb2b3aa51b47e4a8f2caabf46938991ab7d9e29e2.
+// WatchRequestAccepted is a free log subscription operation binding the contract event 0x8db66134a3a9e5e82737f31cc0c08aa4dd0cb3c683f9ab659a3a9e74b80a126d.
 //
-// Solidity: event requestAccepted(int64 indexed applyerTg, address user_address, address parent_address)
-func (_Leg10n *Leg10nFilterer) WatchRequestAccepted(opts *bind.WatchOpts, sink chan<- *Leg10nRequestAccepted, applyerTg []int64) (event.Subscription, error) {
+// Solidity: event requestAccepted(string indexed applyerTg, address user_address, address parent_address)
+func (_Leg10n *Leg10nFilterer) WatchRequestAccepted(opts *bind.WatchOpts, sink chan<- *Leg10nRequestAccepted, applyerTg []string) (event.Subscription, error) {
 
 	var applyerTgRule []interface{}
 	for _, applyerTgItem := range applyerTg {
@@ -2323,9 +2385,9 @@ func (_Leg10n *Leg10nFilterer) WatchRequestAccepted(opts *bind.WatchOpts, sink c
 	}), nil
 }
 
-// ParseRequestAccepted is a log parse operation binding the contract event 0x1eae2e277962887ad58eeeadb2b3aa51b47e4a8f2caabf46938991ab7d9e29e2.
+// ParseRequestAccepted is a log parse operation binding the contract event 0x8db66134a3a9e5e82737f31cc0c08aa4dd0cb3c683f9ab659a3a9e74b80a126d.
 //
-// Solidity: event requestAccepted(int64 indexed applyerTg, address user_address, address parent_address)
+// Solidity: event requestAccepted(string indexed applyerTg, address user_address, address parent_address)
 func (_Leg10n *Leg10nFilterer) ParseRequestAccepted(log types.Log) (*Leg10nRequestAccepted, error) {
 	event := new(Leg10nRequestAccepted)
 	if err := _Leg10n.contract.UnpackLog(event, "requestAccepted", log); err != nil {
@@ -2404,14 +2466,14 @@ func (it *Leg10nRequestDeniedIterator) Close() error {
 
 // Leg10nRequestDenied represents a RequestDenied event raised by the Leg10n contract.
 type Leg10nRequestDenied struct {
-	ApplyerTg int64
+	ApplyerTg string
 	Wallet    common.Address
 	Raw       types.Log // Blockchain specific contextual infos
 }
 
-// FilterRequestDenied is a free log retrieval operation binding the contract event 0x7f25a59d906bf9fb883c74ad54e4b0e924fb0326f2f946caf2875485585d0fbf.
+// FilterRequestDenied is a free log retrieval operation binding the contract event 0xe444442b4fc5a03103c68bde16932de23949be11145d1b4707d817bfb5055738.
 //
-// Solidity: event requestDenied(int64 applyerTg, address wallet)
+// Solidity: event requestDenied(string applyerTg, address wallet)
 func (_Leg10n *Leg10nFilterer) FilterRequestDenied(opts *bind.FilterOpts) (*Leg10nRequestDeniedIterator, error) {
 
 	logs, sub, err := _Leg10n.contract.FilterLogs(opts, "requestDenied")
@@ -2421,9 +2483,9 @@ func (_Leg10n *Leg10nFilterer) FilterRequestDenied(opts *bind.FilterOpts) (*Leg1
 	return &Leg10nRequestDeniedIterator{contract: _Leg10n.contract, event: "requestDenied", logs: logs, sub: sub}, nil
 }
 
-// WatchRequestDenied is a free log subscription operation binding the contract event 0x7f25a59d906bf9fb883c74ad54e4b0e924fb0326f2f946caf2875485585d0fbf.
+// WatchRequestDenied is a free log subscription operation binding the contract event 0xe444442b4fc5a03103c68bde16932de23949be11145d1b4707d817bfb5055738.
 //
-// Solidity: event requestDenied(int64 applyerTg, address wallet)
+// Solidity: event requestDenied(string applyerTg, address wallet)
 func (_Leg10n *Leg10nFilterer) WatchRequestDenied(opts *bind.WatchOpts, sink chan<- *Leg10nRequestDenied) (event.Subscription, error) {
 
 	logs, sub, err := _Leg10n.contract.WatchLogs(opts, "requestDenied")
@@ -2458,9 +2520,9 @@ func (_Leg10n *Leg10nFilterer) WatchRequestDenied(opts *bind.WatchOpts, sink cha
 	}), nil
 }
 
-// ParseRequestDenied is a log parse operation binding the contract event 0x7f25a59d906bf9fb883c74ad54e4b0e924fb0326f2f946caf2875485585d0fbf.
+// ParseRequestDenied is a log parse operation binding the contract event 0xe444442b4fc5a03103c68bde16932de23949be11145d1b4707d817bfb5055738.
 //
-// Solidity: event requestDenied(int64 applyerTg, address wallet)
+// Solidity: event requestDenied(string applyerTg, address wallet)
 func (_Leg10n *Leg10nFilterer) ParseRequestDenied(log types.Log) (*Leg10nRequestDenied, error) {
 	event := new(Leg10nRequestDenied)
 	if err := _Leg10n.contract.UnpackLog(event, "requestDenied", log); err != nil {
