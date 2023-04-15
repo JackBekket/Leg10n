@@ -42,7 +42,7 @@ export default function GetPublicKey(props:Props){
     
     
     const pubkey = await provider.send('eth_getEncryptionPublicKey', [accounts[0]]);
-    console.log(pubkey); // zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=
+    console.log(pubkey); 
     setPublicKey(pubkey)
    }
 
