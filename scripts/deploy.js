@@ -44,7 +44,7 @@ async function main() {
   console.log("legion address: ", legion_entity.address);
 
   // retriving passport fee:
-  
+  /*
   const passportFee = await legion_entity.connect(owner)
   .GetPassportFee();
   //console.log("passport fee:", passportFee);
