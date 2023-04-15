@@ -47,8 +47,8 @@ async function main() {
   /*
   const passportFee = await legion_entity.connect(owner)
   .GetPassportFee();
-  console.log("passport fee:", passportFee);
-  */
+  //console.log("passport fee:", passportFee);
+  
 
   const A_address_test = await legion_entity.connect(owner)
   .GetWalletByNickName("Adam");
