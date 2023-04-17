@@ -18,14 +18,13 @@ declare let window: any;
 export default function AcceptJoin(props:Props){
   const addressContract = props.addressContract
   const currentAccount = props.currentAccount
-  var [user_id, setUserId] = useState(0)
+  var [user_id, setUserId] = useState<string>("")
   var [user_name, setUserName] = useState<string>("")
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
   var id = queryParams.get('id');   // get id as string from query
-  let int_id : number = +id!;                // similar to parseInt()
   var name = queryParams.get('parent');
   //let name_get : string = name;
   
@@ -33,7 +32,7 @@ export default function AcceptJoin(props:Props){
   
   
   setUserName(name!);
-  setUserId(int_id);
+  setUserId(id!);
   
   }, []);
   
@@ -58,7 +57,7 @@ export default function AcceptJoin(props:Props){
     <form onSubmit={acceptJoinRequest}>
     <FormControl>
       <FormLabel htmlFor='TGID'>Accept Joining </FormLabel>
-      <Input id="tgid" type="number" required placeholder='input tgid number of one who you want to accept invite' onChange={(e) => setUserId(parseInt(e.target.value))} value={user_id} my={3}/>
+      <Input id="tgid" type="text" required placeholder='input tgid number of one who you want to accept invite' onChange={(e) => setUserId(e.target.value)} value={user_id} my={3}/>
      
       <Input id="tg_name" type="text" required placeholder='Input your codename' onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
       <Button type="submit" isDisabled={!currentAccount}>Accept Join Request</Button>

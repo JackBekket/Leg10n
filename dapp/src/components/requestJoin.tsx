@@ -18,7 +18,7 @@ declare let window: any;
 export default function RequestJoin(props:Props){
   const addressContract = props.addressContract
   const currentAccount = props.currentAccount
-  var [user_id, setUserId] = useState(0)
+  var [user_id, setUserId] = useState<string>("")
   var [user_name, setUserName] = useState<string>("")
   var [parent_name, setParentName] = useState<string>("")
   var [public_key, setPublicKey] = useState<string>("")
@@ -26,8 +26,7 @@ export default function RequestJoin(props:Props){
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-  var id = queryParams.get('id');   // get id as string from query
-  let int_id : number = +id!;                // similar to parseInt()
+  var id = queryParams.get('id');   // get id as string from query                // similar to parseInt()
   var name = queryParams.get('codename');
   var p_name  = queryParams.get('parent');  // TODO: set it
   /*
@@ -35,9 +34,12 @@ export default function RequestJoin(props:Props){
     setParentName(p_name);
   }
   */
-setUserId(int_id);
+setUserId(id!);
 setParentName(p_name!);
 setUserName(name!);
+
+console.log("id")
+console.log(id)
   //let name_get : string = name;
 
 
@@ -72,9 +74,9 @@ setUserName(name!);
     <form onSubmit={sendJoinRequest}>
     <FormControl>
       <FormLabel htmlFor='TGID'> Join Request Form </FormLabel>
-      <Input id="tgid" type="number" required placeholder='Your ID'  onChange={(e) => setUserId(parseInt(e.target.value))} value={user_id} my={3}/>
+      <Input id="tgid" type="text" required placeholder='Your ID'  onChange={(e) => setUserId(e.target.value)} value={user_id} my={3}/>
       <Input id="tg_name" type="text" required placeholder='Your codename' onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
-      <Input id="parent_name" type="text" required placeholder="Codename of user who invite you" onChange={(e) => setParentName(e.target.value)} value={parent_name} my={3}/>
+      <Input id="parent_name" type="text" required placeholder="Codename of user who invited you" onChange={(e) => setParentName(e.target.value)} value={parent_name} my={3}/>
       <Input id="public_key" type="text" required placeholder='Paste your public key here' onChange={(e) => setPublicKey(e.target.value)} value={public_key} my={3}/>
       <Button type="submit" isDisabled={!currentAccount}>Apply for Join</Button>
     </FormControl>
