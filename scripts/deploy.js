@@ -5,13 +5,49 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
+const { ethers } = require('ethers');
+
+//const crypto = require('crypto');
+
+/*
+function idToHash(id) {
+
+  
+    const a = ethers.utils.toUtf8Bytes(id.toString());
+    const b = new ethers.utils.keccak256();
+    const c = b.update(a).digest();
+    const encodedStr = ethers.utils.hexlify(c);
+    return encodedStr;
+
+
+*/
 
 async function main() {
 
-
-  const b_id = process.env.B_AES_ID;
-  const b_public = process.env.B_PUBLIC_KEY;
+  const b_id = process.env.B_ID;
   console.log("b_id is: ", b_id);
+
+  const idToHash = (id) => {
+    console.log('id:', id);
+    const a = ethers.utils.toUtf8Bytes(id.toString());
+    console.log('a:', a);
+    const b = new ethers.utils.keccak256();
+    console.log('b:', b);
+    const c = b.update(a).digest();
+    console.log('c:', c);
+    const encodedStr = ethers.utils.hexlify(c);
+    console.log('encodedStr:', encodedStr);
+    return encodedStr;
+  }
+
+
+
+  const b_hash = idToHash(b_id);
+  console.log("b_hash is: ", b_hash);
+
+  const b_aes_id = process.env.B_AES_ID;
+  const b_public = process.env.B_PUBLIC_KEY;
+  console.log("b_id_aes is: ", b_aes_id);
   console.log("b_public is: ", b_public);
   //const b_id_s = process.env.B_ID;
   //const b_int = parseInt(b_id_s);
@@ -44,7 +80,7 @@ async function main() {
   console.log("legion address: ", legion_entity.address);
 
   // retriving passport fee:
-  /*
+  
   const passportFee = await legion_entity.connect(owner)
   .GetPassportFee();
   //console.log("passport fee:", passportFee);
@@ -56,11 +92,11 @@ async function main() {
 
   
   const B_request = await legion_entity.connect(owner)
-  .RequestJoin(b_id,"Bot","Adam",b_public,{value:passportFee});
+  .RequestJoin(b_aes_id,"Bot","Adam",b_public,{value:passportFee});
   console.log("B_request: ", B_request);
 
   const B_accept = await legion_entity.connect(owner)
-  .AcceptJoin(b_id,"Adam");
+  .AcceptJoin(b_aes_id,"Adam");
   console.log("B_accept: ", B_accept);
 
   const B_test = await legion_entity.connect(owner)
