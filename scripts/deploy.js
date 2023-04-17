@@ -31,11 +31,11 @@ async function main() {
     console.log('id:', id);
     const a = ethers.utils.toUtf8Bytes(id.toString());
     console.log('a:', a);
-    const b = new ethers.utils.keccak256();
+    const b = ethers.utils.keccak256(a);
     console.log('b:', b);
-    const c = b.update(a).digest();
-    console.log('c:', c);
-    const encodedStr = ethers.utils.hexlify(c);
+    //const c = b.update(a).digest();
+    //console.log('c:', c);
+    const encodedStr = ethers.utils.hexlify(b);
     console.log('encodedStr:', encodedStr);
     return encodedStr;
   }
@@ -55,7 +55,7 @@ async function main() {
   console.log(hre.network.name);
   const null_address = await hre.ethers.utils.getAddress("0x0000000000000000000000000000000000000000");
   let account_owner = await hre.ethers.getSigner();
-  const balance = await ethers.provider.getBalance(account_owner.address);
+  const balance = await hre.ethers.provider.getBalance(account_owner.address);
 
   console.log(ethers.utils.formatEther(balance), "ETH");
 
