@@ -5,21 +5,22 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
+const { ethers } = require('ethers');
 
 async function main() {
 
-
-  const b_id = process.env.B_AES_ID;
-  const b_public = process.env.B_PUBLIC_KEY;
+  const b_id = process.env.B_ID;
   console.log("b_id is: ", b_id);
+  const b_aes_id = process.env.B_AES_ID;
+  const b_public = process.env.B_PUBLIC_KEY;
+  console.log("b_id_aes is: ", b_aes_id);
   console.log("b_public is: ", b_public);
-  //const b_id_s = process.env.B_ID;
-  //const b_int = parseInt(b_id_s);
+
 
   console.log(hre.network.name);
   const null_address = await hre.ethers.utils.getAddress("0x0000000000000000000000000000000000000000");
   let account_owner = await hre.ethers.getSigner();
-  const balance = await ethers.provider.getBalance(account_owner.address);
+  const balance = await hre.ethers.provider.getBalance(account_owner.address);
 
   console.log(ethers.utils.formatEther(balance), "ETH");
 
@@ -40,11 +41,14 @@ async function main() {
   console.log("A test:", A_test_);
 
   const Legion = await hre.ethers.getContractFactory("Leg10n");
-  const legion_entity = await Legion.deploy(dictionary_entity.address,null_address,"0",b_public);
+  const legion_entity = await Legion.deploy(dictionary_entity.address,null_address,"0",b_public,b_id);
   console.log("legion address: ", legion_entity.address);
 
+
+
+
   // retriving passport fee:
-  /*
+  
   const passportFee = await legion_entity.connect(owner)
   .GetPassportFee();
   //console.log("passport fee:", passportFee);
@@ -56,17 +60,24 @@ async function main() {
 
   
   const B_request = await legion_entity.connect(owner)
-  .RequestJoin(b_id,"Bot","Adam",b_public,{value:passportFee});
+  .RequestJoin(b_aes_id,"Bot","Adam",b_public,b_id,{value:passportFee});
   console.log("B_request: ", B_request);
 
   const B_accept = await legion_entity.connect(owner)
-  .AcceptJoin(b_id,"Adam");
+  .AcceptJoin(b_aes_id,"Adam");
   console.log("B_accept: ", B_accept);
 
   const B_test = await legion_entity.connect(owner)
   .GetWalletByNickName("Bot");
   console.log("B address: ", B_test);
   
+  const hash_test_1 = await legion_entity.connect(owner)
+  .GetKeccakHash(b_id);
+  console.log("hash test 1: ", hash_test_1);
+
+  const hash_test_2 = await legion_entity.connect(owner)
+  .GetIdByHash(hash_test_1);
+  console.log("hash test 2: ", hash_test_2);
 
 }
 

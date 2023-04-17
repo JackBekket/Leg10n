@@ -36,11 +36,12 @@ type Leg10nUser struct {
 	ValidatorAddress common.Address
 	CodeName         string
 	PublicKey        string
+	IdHash           [32]byte
 }
 
 // Leg10nMetaData contains all meta data concerning the Leg10n contract.
 var Leg10nMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"turing_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"admin_\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgid_\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key_\",\"type\":\"string\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"admin\",\"type\":\"address\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet_address\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"joinRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet_address\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"joinRequestedIndexedTG\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"high_node\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"low_node\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"pravda\",\"type\":\"bool\"}],\"name\":\"relationChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"requestAccepted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet\",\"type\":\"address\"}],\"name\":\"requestDenied\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"}],\"name\":\"AcceptJoin\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"child_name\",\"type\":\"string\"}],\"name\":\"ClearParent\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"DEFAULT_ADMIN_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"tgid\",\"type\":\"string\"}],\"name\":\"DeclineRequest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"GetOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"GetPassportFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"}],\"name\":\"GetPublicKeyByAddress\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_wallet\",\"type\":\"address\"}],\"name\":\"GetTgIdByAddress\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"tgid\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_wallet\",\"type\":\"address\"}],\"name\":\"GetUserByAddress\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgId\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"user_name_\",\"type\":\"string\"}],\"name\":\"GetUserByNickName\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgId\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"tgId_\",\"type\":\"string\"}],\"name\":\"GetUserByTgId\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgId\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"tgId_\",\"type\":\"string\"}],\"name\":\"GetUserWalletByID\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"user_name_\",\"type\":\"string\"}],\"name\":\"GetWalletByNickName\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"code_name_\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"}],\"name\":\"RequestJoin\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"passportFee_\",\"type\":\"uint256\"}],\"name\":\"SetPassportFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"chain\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"name\":\"codename_wallets\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"deleteYourSelf\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"}],\"name\":\"devDeleteUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getModeratorIdentifier\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleAdmin\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"moderator\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"renounceRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"name\":\"tgIdToAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"turing_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"admin_\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgid_\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key_\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"plain_id\",\"type\":\"string\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"admin\",\"type\":\"address\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet_address\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"joinRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet_address\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"joinRequestedIndexedTG\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"high_node\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"low_node\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"pravda\",\"type\":\"bool\"}],\"name\":\"relationChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"parent_address\",\"type\":\"address\"}],\"name\":\"requestAccepted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"wallet\",\"type\":\"address\"}],\"name\":\"requestDenied\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"}],\"name\":\"AcceptJoin\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"child_name\",\"type\":\"string\"}],\"name\":\"ClearParent\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"DEFAULT_ADMIN_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"tgid\",\"type\":\"string\"}],\"name\":\"DeclineRequest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"hash_id\",\"type\":\"bytes32\"}],\"name\":\"GetIdByHash\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"text\",\"type\":\"string\"}],\"name\":\"GetKeccakHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"GetOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"GetPassportFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"}],\"name\":\"GetPublicKeyByAddress\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_wallet\",\"type\":\"address\"}],\"name\":\"GetTgIdByAddress\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"tgid\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_wallet\",\"type\":\"address\"}],\"name\":\"GetUserByAddress\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgId\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"id_hash\",\"type\":\"bytes32\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"user_name_\",\"type\":\"string\"}],\"name\":\"GetUserByNickName\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgId\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"id_hash\",\"type\":\"bytes32\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"tgId_\",\"type\":\"string\"}],\"name\":\"GetUserByTgId\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"tgId\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"validatorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"codeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"id_hash\",\"type\":\"bytes32\"}],\"internalType\":\"structLeg10n.User\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"tgId_\",\"type\":\"string\"}],\"name\":\"GetUserWalletByID\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"user_name_\",\"type\":\"string\"}],\"name\":\"GetWalletByNickName\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"applyerTg\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"code_name_\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"parent_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"public_key\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"plain_id\",\"type\":\"string\"}],\"name\":\"RequestJoin\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"passportFee_\",\"type\":\"uint256\"}],\"name\":\"SetPassportFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"chain\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"name\":\"codename_wallets\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"deleteYourSelf\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user_address\",\"type\":\"address\"}],\"name\":\"devDeleteUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getModeratorIdentifier\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleAdmin\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"hashToId\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"moderator\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"renounceRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"name\":\"tgIdToAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
 }
 
 // Leg10nABI is the input ABI used to generate the binding from.
@@ -220,6 +221,68 @@ func (_Leg10n *Leg10nCallerSession) DEFAULTADMINROLE() ([32]byte, error) {
 	return _Leg10n.Contract.DEFAULTADMINROLE(&_Leg10n.CallOpts)
 }
 
+// GetIdByHash is a free data retrieval call binding the contract method 0x841a65e1.
+//
+// Solidity: function GetIdByHash(bytes32 hash_id) view returns(string)
+func (_Leg10n *Leg10nCaller) GetIdByHash(opts *bind.CallOpts, hash_id [32]byte) (string, error) {
+	var out []interface{}
+	err := _Leg10n.contract.Call(opts, &out, "GetIdByHash", hash_id)
+
+	if err != nil {
+		return *new(string), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(string)).(*string)
+
+	return out0, err
+
+}
+
+// GetIdByHash is a free data retrieval call binding the contract method 0x841a65e1.
+//
+// Solidity: function GetIdByHash(bytes32 hash_id) view returns(string)
+func (_Leg10n *Leg10nSession) GetIdByHash(hash_id [32]byte) (string, error) {
+	return _Leg10n.Contract.GetIdByHash(&_Leg10n.CallOpts, hash_id)
+}
+
+// GetIdByHash is a free data retrieval call binding the contract method 0x841a65e1.
+//
+// Solidity: function GetIdByHash(bytes32 hash_id) view returns(string)
+func (_Leg10n *Leg10nCallerSession) GetIdByHash(hash_id [32]byte) (string, error) {
+	return _Leg10n.Contract.GetIdByHash(&_Leg10n.CallOpts, hash_id)
+}
+
+// GetKeccakHash is a free data retrieval call binding the contract method 0x9e026a3b.
+//
+// Solidity: function GetKeccakHash(string text) pure returns(bytes32)
+func (_Leg10n *Leg10nCaller) GetKeccakHash(opts *bind.CallOpts, text string) ([32]byte, error) {
+	var out []interface{}
+	err := _Leg10n.contract.Call(opts, &out, "GetKeccakHash", text)
+
+	if err != nil {
+		return *new([32]byte), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
+
+	return out0, err
+
+}
+
+// GetKeccakHash is a free data retrieval call binding the contract method 0x9e026a3b.
+//
+// Solidity: function GetKeccakHash(string text) pure returns(bytes32)
+func (_Leg10n *Leg10nSession) GetKeccakHash(text string) ([32]byte, error) {
+	return _Leg10n.Contract.GetKeccakHash(&_Leg10n.CallOpts, text)
+}
+
+// GetKeccakHash is a free data retrieval call binding the contract method 0x9e026a3b.
+//
+// Solidity: function GetKeccakHash(string text) pure returns(bytes32)
+func (_Leg10n *Leg10nCallerSession) GetKeccakHash(text string) ([32]byte, error) {
+	return _Leg10n.Contract.GetKeccakHash(&_Leg10n.CallOpts, text)
+}
+
 // GetOwner is a free data retrieval call binding the contract method 0x0ae50a39.
 //
 // Solidity: function GetOwner() view returns(address)
@@ -346,7 +409,7 @@ func (_Leg10n *Leg10nCallerSession) GetTgIdByAddress(user_wallet common.Address)
 
 // GetUserByAddress is a free data retrieval call binding the contract method 0x1892fd78.
 //
-// Solidity: function GetUserByAddress(address user_wallet) view returns((address,string,bool,address,string,string))
+// Solidity: function GetUserByAddress(address user_wallet) view returns((address,string,bool,address,string,string,bytes32))
 func (_Leg10n *Leg10nCaller) GetUserByAddress(opts *bind.CallOpts, user_wallet common.Address) (Leg10nUser, error) {
 	var out []interface{}
 	err := _Leg10n.contract.Call(opts, &out, "GetUserByAddress", user_wallet)
@@ -363,21 +426,21 @@ func (_Leg10n *Leg10nCaller) GetUserByAddress(opts *bind.CallOpts, user_wallet c
 
 // GetUserByAddress is a free data retrieval call binding the contract method 0x1892fd78.
 //
-// Solidity: function GetUserByAddress(address user_wallet) view returns((address,string,bool,address,string,string))
+// Solidity: function GetUserByAddress(address user_wallet) view returns((address,string,bool,address,string,string,bytes32))
 func (_Leg10n *Leg10nSession) GetUserByAddress(user_wallet common.Address) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByAddress(&_Leg10n.CallOpts, user_wallet)
 }
 
 // GetUserByAddress is a free data retrieval call binding the contract method 0x1892fd78.
 //
-// Solidity: function GetUserByAddress(address user_wallet) view returns((address,string,bool,address,string,string))
+// Solidity: function GetUserByAddress(address user_wallet) view returns((address,string,bool,address,string,string,bytes32))
 func (_Leg10n *Leg10nCallerSession) GetUserByAddress(user_wallet common.Address) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByAddress(&_Leg10n.CallOpts, user_wallet)
 }
 
 // GetUserByNickName is a free data retrieval call binding the contract method 0x0d48cae8.
 //
-// Solidity: function GetUserByNickName(string user_name_) view returns((address,string,bool,address,string,string))
+// Solidity: function GetUserByNickName(string user_name_) view returns((address,string,bool,address,string,string,bytes32))
 func (_Leg10n *Leg10nCaller) GetUserByNickName(opts *bind.CallOpts, user_name_ string) (Leg10nUser, error) {
 	var out []interface{}
 	err := _Leg10n.contract.Call(opts, &out, "GetUserByNickName", user_name_)
@@ -394,21 +457,21 @@ func (_Leg10n *Leg10nCaller) GetUserByNickName(opts *bind.CallOpts, user_name_ s
 
 // GetUserByNickName is a free data retrieval call binding the contract method 0x0d48cae8.
 //
-// Solidity: function GetUserByNickName(string user_name_) view returns((address,string,bool,address,string,string))
+// Solidity: function GetUserByNickName(string user_name_) view returns((address,string,bool,address,string,string,bytes32))
 func (_Leg10n *Leg10nSession) GetUserByNickName(user_name_ string) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByNickName(&_Leg10n.CallOpts, user_name_)
 }
 
 // GetUserByNickName is a free data retrieval call binding the contract method 0x0d48cae8.
 //
-// Solidity: function GetUserByNickName(string user_name_) view returns((address,string,bool,address,string,string))
+// Solidity: function GetUserByNickName(string user_name_) view returns((address,string,bool,address,string,string,bytes32))
 func (_Leg10n *Leg10nCallerSession) GetUserByNickName(user_name_ string) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByNickName(&_Leg10n.CallOpts, user_name_)
 }
 
 // GetUserByTgId is a free data retrieval call binding the contract method 0x1a519ce8.
 //
-// Solidity: function GetUserByTgId(string tgId_) view returns((address,string,bool,address,string,string))
+// Solidity: function GetUserByTgId(string tgId_) view returns((address,string,bool,address,string,string,bytes32))
 func (_Leg10n *Leg10nCaller) GetUserByTgId(opts *bind.CallOpts, tgId_ string) (Leg10nUser, error) {
 	var out []interface{}
 	err := _Leg10n.contract.Call(opts, &out, "GetUserByTgId", tgId_)
@@ -425,14 +488,14 @@ func (_Leg10n *Leg10nCaller) GetUserByTgId(opts *bind.CallOpts, tgId_ string) (L
 
 // GetUserByTgId is a free data retrieval call binding the contract method 0x1a519ce8.
 //
-// Solidity: function GetUserByTgId(string tgId_) view returns((address,string,bool,address,string,string))
+// Solidity: function GetUserByTgId(string tgId_) view returns((address,string,bool,address,string,string,bytes32))
 func (_Leg10n *Leg10nSession) GetUserByTgId(tgId_ string) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByTgId(&_Leg10n.CallOpts, tgId_)
 }
 
 // GetUserByTgId is a free data retrieval call binding the contract method 0x1a519ce8.
 //
-// Solidity: function GetUserByTgId(string tgId_) view returns((address,string,bool,address,string,string))
+// Solidity: function GetUserByTgId(string tgId_) view returns((address,string,bool,address,string,string,bytes32))
 func (_Leg10n *Leg10nCallerSession) GetUserByTgId(tgId_ string) (Leg10nUser, error) {
 	return _Leg10n.Contract.GetUserByTgId(&_Leg10n.CallOpts, tgId_)
 }
@@ -654,6 +717,37 @@ func (_Leg10n *Leg10nCallerSession) HasRole(role [32]byte, account common.Addres
 	return _Leg10n.Contract.HasRole(&_Leg10n.CallOpts, role, account)
 }
 
+// HashToId is a free data retrieval call binding the contract method 0x095f0773.
+//
+// Solidity: function hashToId(bytes32 ) view returns(string)
+func (_Leg10n *Leg10nCaller) HashToId(opts *bind.CallOpts, arg0 [32]byte) (string, error) {
+	var out []interface{}
+	err := _Leg10n.contract.Call(opts, &out, "hashToId", arg0)
+
+	if err != nil {
+		return *new(string), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(string)).(*string)
+
+	return out0, err
+
+}
+
+// HashToId is a free data retrieval call binding the contract method 0x095f0773.
+//
+// Solidity: function hashToId(bytes32 ) view returns(string)
+func (_Leg10n *Leg10nSession) HashToId(arg0 [32]byte) (string, error) {
+	return _Leg10n.Contract.HashToId(&_Leg10n.CallOpts, arg0)
+}
+
+// HashToId is a free data retrieval call binding the contract method 0x095f0773.
+//
+// Solidity: function hashToId(bytes32 ) view returns(string)
+func (_Leg10n *Leg10nCallerSession) HashToId(arg0 [32]byte) (string, error) {
+	return _Leg10n.Contract.HashToId(&_Leg10n.CallOpts, arg0)
+}
+
 // Moderator is a free data retrieval call binding the contract method 0x38743904.
 //
 // Solidity: function moderator() view returns(bytes32)
@@ -841,25 +935,25 @@ func (_Leg10n *Leg10nTransactorSession) DeclineRequest(tgid string) (*types.Tran
 	return _Leg10n.Contract.DeclineRequest(&_Leg10n.TransactOpts, tgid)
 }
 
-// RequestJoin is a paid mutator transaction binding the contract method 0xc54080c5.
+// RequestJoin is a paid mutator transaction binding the contract method 0x873f30c7.
 //
-// Solidity: function RequestJoin(string applyerTg, string code_name_, string parent_name, string public_key) payable returns()
-func (_Leg10n *Leg10nTransactor) RequestJoin(opts *bind.TransactOpts, applyerTg string, code_name_ string, parent_name string, public_key string) (*types.Transaction, error) {
-	return _Leg10n.contract.Transact(opts, "RequestJoin", applyerTg, code_name_, parent_name, public_key)
+// Solidity: function RequestJoin(string applyerTg, string code_name_, string parent_name, string public_key, string plain_id) payable returns()
+func (_Leg10n *Leg10nTransactor) RequestJoin(opts *bind.TransactOpts, applyerTg string, code_name_ string, parent_name string, public_key string, plain_id string) (*types.Transaction, error) {
+	return _Leg10n.contract.Transact(opts, "RequestJoin", applyerTg, code_name_, parent_name, public_key, plain_id)
 }
 
-// RequestJoin is a paid mutator transaction binding the contract method 0xc54080c5.
+// RequestJoin is a paid mutator transaction binding the contract method 0x873f30c7.
 //
-// Solidity: function RequestJoin(string applyerTg, string code_name_, string parent_name, string public_key) payable returns()
-func (_Leg10n *Leg10nSession) RequestJoin(applyerTg string, code_name_ string, parent_name string, public_key string) (*types.Transaction, error) {
-	return _Leg10n.Contract.RequestJoin(&_Leg10n.TransactOpts, applyerTg, code_name_, parent_name, public_key)
+// Solidity: function RequestJoin(string applyerTg, string code_name_, string parent_name, string public_key, string plain_id) payable returns()
+func (_Leg10n *Leg10nSession) RequestJoin(applyerTg string, code_name_ string, parent_name string, public_key string, plain_id string) (*types.Transaction, error) {
+	return _Leg10n.Contract.RequestJoin(&_Leg10n.TransactOpts, applyerTg, code_name_, parent_name, public_key, plain_id)
 }
 
-// RequestJoin is a paid mutator transaction binding the contract method 0xc54080c5.
+// RequestJoin is a paid mutator transaction binding the contract method 0x873f30c7.
 //
-// Solidity: function RequestJoin(string applyerTg, string code_name_, string parent_name, string public_key) payable returns()
-func (_Leg10n *Leg10nTransactorSession) RequestJoin(applyerTg string, code_name_ string, parent_name string, public_key string) (*types.Transaction, error) {
-	return _Leg10n.Contract.RequestJoin(&_Leg10n.TransactOpts, applyerTg, code_name_, parent_name, public_key)
+// Solidity: function RequestJoin(string applyerTg, string code_name_, string parent_name, string public_key, string plain_id) payable returns()
+func (_Leg10n *Leg10nTransactorSession) RequestJoin(applyerTg string, code_name_ string, parent_name string, public_key string, plain_id string) (*types.Transaction, error) {
+	return _Leg10n.Contract.RequestJoin(&_Leg10n.TransactOpts, applyerTg, code_name_, parent_name, public_key, plain_id)
 }
 
 // SetPassportFee is a paid mutator transaction binding the contract method 0xd2125bd2.

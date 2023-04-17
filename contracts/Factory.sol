@@ -29,10 +29,11 @@ contract Factory is Ownable {
     function DeployLegion(
         address admin_,
         string memory tgid_,
-        string memory public_key_
+        string memory public_key_,
+        string memory plain_id
     ) public returns (address) {
         address legion = address(
-            new Leg10n(dictionary, admin_, tgid_, public_key_)
+            new Leg10n(dictionary, admin_, tgid_, public_key_,plain_id)
         );
         //Leg10n L = Leg10n(legion);
 

@@ -18,15 +18,17 @@ contract Leg10n is Ownable, AccessControl {
 
     struct User {
         address userAddress;
-        string tgId;  // unic Id for telegram (number)
+        string tgId;  // unic Id for telegram (encrypted value)
         bool valid;
         address validatorAddress;
         string codeName;
         string public_key;
+        bytes32 id_hash;
     }
 
     //mappings
-    mapping(string => address) public tgIdToAddress;
+    mapping(string => address) public tgIdToAddress;     // encrypted id => address
+    mapping(bytes32 => string) public hashToId;          // hash of plain text id to encrypted_id
     mapping(address => User) private users;
     mapping(string => address) public codename_wallets; // codenames protected by dictionary
     mapping(address => mapping(address => bool)) public chain; // from parent to child to flag
@@ -64,13 +66,15 @@ contract Leg10n is Ownable, AccessControl {
         address turing_,
         address admin_,
         string memory tgid_,
-        string memory public_key_
+        string memory public_key_,
+        string memory plain_id
     ) Ownable() {
         _passportFee = 2000000000000000 wei;
         _owner = owner();
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(moderator, msg.sender);
         Turing = Dictionary(turing_);
+        bytes32 h_id = GetKeccakHash(plain_id);
         // Factory init
         tgIdToAddress[tgid_] = msg.sender;
         codename_wallets["0"] = msg.sender;
@@ -80,7 +84,8 @@ contract Leg10n is Ownable, AccessControl {
             true,
             msg.sender,
             "0",
-            "zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ="
+            "zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=",
+            h_id
         );
         // determine if contract deployed standalone or through factory contract
         if (admin_ == address(0x0)) {
@@ -88,11 +93,12 @@ contract Leg10n is Ownable, AccessControl {
             _devInitAdmin(
                 msg.sender,
                 tgid_,
-                "zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ="
+                "zjXCj9iuse3gHGaAIIgyaiCOsJpQWSCEBBac/zPGrgQ=",
+                plain_id
             );
         } else {
             // factory deploy, factory inputs admin credentials
-            _devInitAdmin(admin_, tgid_, public_key_);
+            _devInitAdmin(admin_, tgid_, public_key_,plain_id);
         }
     }
 
@@ -100,14 +106,26 @@ contract Leg10n is Ownable, AccessControl {
         string memory tgId,
         address userAddress,
         string memory code_name_,
-        string memory parent_name
+        string memory parent_name,
+        string memory plain_id
     ) internal {
+       bytes32 hash_id = GetKeccakHash(plain_id);
+
         require(
             tgIdToAddress[tgId] == address(0x0),
-            "There is address connected to that TG ID already"
+            "There is address connected to that ID already"
         ); // if cell is not empty revert
+        require(
+               bytes(hashToId[hash_id]).length == 0,
+               "This plain_id already registred"
+        );
         bool flag = Turing.checkDictionaryTree(code_name_, parent_name);
         require(flag == true, "dictionary error");
+        require(
+            codename_wallets[code_name_] == address(0x0),
+            "codename taken"
+        );
+        hashToId[hash_id] = tgId;
         tgIdToAddress[tgId] = userAddress;
        // require(codename_wallets[code_name_] == address(0x0), "codename is already taken");
         codename_wallets[code_name_] = userAddress;
@@ -123,25 +141,28 @@ contract Leg10n is Ownable, AccessControl {
         string memory applyerTg,
         string memory code_name_,
         string memory parent_name,
-        string memory public_key
+        string memory public_key,
+        string memory plain_id
     ) public payable {
         address applyerAddress = msg.sender; // ЛИЧНАЯ ПОДАЧА ПАСПОРТА В ТРЕТЬЕ ОКОШКО МФЦ
 
         require(msg.value == _passportFee, "Request fee is not paid");
 
         address parent_address = codename_wallets[parent_name];
+        bytes32 hash_id = GetKeccakHash(plain_id);
         users[msg.sender] = User(
             applyerAddress,
             applyerTg,
             false,
             parent_address,
             code_name_,
-            public_key
+            public_key,
+            hash_id
         );
         // TODO: add codename_wallets[username] = msg.sender;
         (bool feePaid, ) = _owner.call{value: _passportFee}("");
         require(feePaid, "Unable to transfer fee");
-        _updateAddress(applyerTg, applyerAddress, code_name_, parent_name);
+        _updateAddress(applyerTg, applyerAddress, code_name_, parent_name,plain_id);
 
         emit joinRequested(applyerTg, msg.sender, parent_address);
         emit joinRequestedIndexedTG(applyerTg, msg.sender, parent_address);
@@ -208,11 +229,13 @@ contract Leg10n is Ownable, AccessControl {
     function _devInitAdmin(
         address admin_,
         string memory tgid_,
-        string memory public_key_
+        string memory public_key_,
+        string memory plain_id
     ) internal {
         tgIdToAddress[tgid_] = admin_;
         codename_wallets["Adam"] = admin_;
-        users[admin_] = User(admin_, tgid_, true, admin_, "Adam", public_key_);
+        bytes32 hash_id = GetKeccakHash(plain_id);
+        users[admin_] = User(admin_, tgid_, true, admin_, "Adam", public_key_,hash_id);
         users[admin_].valid = true;
         users[admin_].validatorAddress = msg.sender;
         address zero = GetWalletByNickName("0");
@@ -330,5 +353,22 @@ contract Leg10n is Ownable, AccessControl {
 
     function getModeratorIdentifier() public pure returns (bytes32) {
         return moderator;
+    }
+
+    /**
+     * @dev return encrypted id associated with hash from plain text id
+     * @param hash_id hash id of plain text id
+     * 
+     */
+    function GetIdByHash(bytes32 hash_id) public view returns (string memory) {
+      return hashToId[hash_id];
+    }
+
+   /**
+    * 
+    * @dev get keccak256 hash from string
+    */
+   function GetKeccakHash(string memory text) public pure returns (bytes32) {
+        return keccak256(abi.encode(text));
     }
 }
