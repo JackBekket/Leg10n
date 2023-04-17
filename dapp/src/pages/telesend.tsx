@@ -161,7 +161,7 @@ const Home: NextPage = () => {
           <Heading my={4}  fontSize='xl'>Encrypt message</Heading>
           <EncryptMessage 
                         currentAccount={currentAccount}
-                        addressContract='0x36Ed9bc9473F1316ec15BCca45f49f4481A63c5e'
+                        addressContract='0x8EC577a576Dd4783645c134572bF4bC486176aD1'
           />
         </Box>
        
