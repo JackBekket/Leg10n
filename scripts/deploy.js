@@ -6,55 +6,16 @@
 // global scope, and execute the script.
 const hre = require("hardhat");
 const { ethers } = require('ethers');
-const { log } = require("console");
-
-//const crypto = require('crypto');
-
-/*
-function idToHash(id) {
-
-  
-    const a = ethers.utils.toUtf8Bytes(id.toString());
-    const b = new ethers.utils.keccak256();
-    const c = b.update(a).digest();
-    const encodedStr = ethers.utils.hexlify(c);
-    return encodedStr;
-
-
-*/
 
 async function main() {
 
   const b_id = process.env.B_ID;
   console.log("b_id is: ", b_id);
-
-  /*
-  const idToHash = (id) => {
-    console.log('id:', id);
-    const a = ethers.utils.toUtf8Bytes(id.toString());
-    console.log('a:', a);
-    const b = ethers.utils.keccak256(a);
-    console.log('b:', b);
-    //const c = b.update(a).digest();
-    //console.log('c:', c);
-    const encodedStr = ethers.utils.hexlify(b);
-    console.log('encodedStr:', encodedStr);
-    return encodedStr;
-  }
-
-    const b_hash = idToHash(b_id);
-  console.log("b_hash is: ", b_hash);
-  */
-
-
-
-
   const b_aes_id = process.env.B_AES_ID;
   const b_public = process.env.B_PUBLIC_KEY;
   console.log("b_id_aes is: ", b_aes_id);
   console.log("b_public is: ", b_public);
-  //const b_id_s = process.env.B_ID;
-  //const b_int = parseInt(b_id_s);
+
 
   console.log(hre.network.name);
   const null_address = await hre.ethers.utils.getAddress("0x0000000000000000000000000000000000000000");
