@@ -8,8 +8,9 @@ contract Leg10nMock is Leg10n {
         address turing_,
         address admin_,
         string memory tgid_,
-        string memory public_key_
-    ) Leg10n(turing_, admin_, tgid_, public_key_) {}
+        string memory public_key_,
+        string memory plain_id
+    ) Leg10n(turing_, admin_, tgid_, public_key_,plain_id) {}
 
     //open intrernal functions
 
@@ -17,17 +18,19 @@ contract Leg10nMock is Leg10n {
         string memory tgId,
         address userAddress,
         string memory code_name_,
-        string memory parent_name
+        string memory parent_name,
+        string memory plain_id
     ) external {
-        super._updateAddress(tgId, userAddress, code_name_, parent_name);
+        super._updateAddress(tgId, userAddress, code_name_, parent_name,plain_id);
     }
 
     function devInitAdmin(
         address admin_,
         string memory tgid_,
-        string memory public_key_
+        string memory public_key_,
+        string memory plain_id
     ) external {
-        super._devInitAdmin(admin_, tgid_, public_key_);
+        super._devInitAdmin(admin_, tgid_, public_key_,plain_id);
     }
 
     function deleteUser(address user_address) public {
