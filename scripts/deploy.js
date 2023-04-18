@@ -50,9 +50,6 @@ async function main() {
   const legion_entity = await Legion.deploy(dictionary_entity.address,null_address,"0",b_public,"0");
   console.log("legion address: ", legion_entity.address);
 
-
-
-
   // retriving passport fee:
   
   const passportFee = await legion_entity.connect(owner)
@@ -64,14 +61,14 @@ async function main() {
   .GetWalletByNickName("Adam");
   console.log("Adam address: ", A_address_test);
 
-  
+
   const B_request = await legion_entity.connect(owner)
   .RequestJoin(b_aes_id,"Bot","Adam",b_public,b_id_s2,{value:passportFee});
-  console.log("B_request: ", B_request);
+  //console.log("B_request: ", B_request);
 
   const B_accept = await legion_entity.connect(owner)
   .AcceptJoin(b_aes_id,"Adam");
-  console.log("B_accept: ", B_accept);
+  //console.log("B_accept: ", B_accept);
 
   const B_test = await legion_entity.connect(owner)
   .GetWalletByNickName("Bot");
@@ -89,15 +86,6 @@ async function main() {
   const get_test = await legion_entity.connect(owner)
   .GetIdByHash(hash_test_1);
   console.log("get id test: ", get_test);
-
-
-
-  
-  //const hash_test_4 = hre.ethers.utils.keccak256(b_id)
-
-  //const hash_test_4 = hre.ethers.utils.solidityKeccak256(b_id)
-  //console.log("hash test 4: ", hash_test_4);
-  
 
 }
 
