@@ -240,6 +240,7 @@ contract Leg10n is Ownable, AccessControl {
         users[admin_].validatorAddress = msg.sender;
         address zero = GetWalletByNickName("0");
         chain[zero][admin_] = true;
+        hashToId[hash_id] = tgid_;
         emit Initialized(admin_);
     }
 

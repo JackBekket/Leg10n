@@ -5,7 +5,7 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
-const { ethers } = require('ethers');
+//const { ethers } = require('ethers');
 
 async function main() {
 
@@ -41,7 +41,7 @@ async function main() {
   console.log("A test:", A_test_);
 
   const Legion = await hre.ethers.getContractFactory("Leg10n");
-  const legion_entity = await Legion.deploy(dictionary_entity.address,null_address,"0",b_public,b_id);
+  const legion_entity = await Legion.deploy(dictionary_entity.address,null_address,"0",b_public,"0");
   console.log("legion address: ", legion_entity.address);
 
 
@@ -78,6 +78,16 @@ async function main() {
   const hash_test_2 = await legion_entity.connect(owner)
   .GetIdByHash(hash_test_1);
   console.log("hash test 2: ", hash_test_2);
+
+  const hash_test_3 = hre.ethers.utils.hexlify(hash_test_1)
+  console.log("hash test 3: ", hash_test_3)
+
+  /*
+  const hash_test_4 = hre.ethers.utils.keccak256(b_id)
+
+  const hash_test_4 = hre.ethers.utils.solidityKeccak256(b_id)
+  console.log("hash test 4: ", hash_test_4);
+  */
 
 }
 
