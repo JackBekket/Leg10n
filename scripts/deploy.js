@@ -5,12 +5,18 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
+const web3 = require("web3");
 //const { ethers } = require('ethers');
 
 async function main() {
 
   const b_id = process.env.B_ID;
   console.log("b_id is: ", b_id);
+
+
+  const b_id_s2 = b_id.toString();
+  console.log("b_id_s2: ", b_id_s2);
+
   const b_aes_id = process.env.B_AES_ID;
   const b_public = process.env.B_PUBLIC_KEY;
   console.log("b_id_aes is: ", b_aes_id);
@@ -60,7 +66,7 @@ async function main() {
 
   
   const B_request = await legion_entity.connect(owner)
-  .RequestJoin(b_aes_id,"Bot","Adam",b_public,b_id,{value:passportFee});
+  .RequestJoin(b_aes_id,"Bot","Adam",b_public,b_id_s2,{value:passportFee});
   console.log("B_request: ", B_request);
 
   const B_accept = await legion_entity.connect(owner)
@@ -72,22 +78,26 @@ async function main() {
   console.log("B address: ", B_test);
   
   const hash_test_1 = await legion_entity.connect(owner)
-  .GetKeccakHash(b_id);
+  .GetKeccakHash(b_id_s2);
   console.log("hash test 1: ", hash_test_1);
 
-  const hash_test_2 = await legion_entity.connect(owner)
+  const hash_test_2 = hre.ethers.utils.hexlify(hash_test_1)
+  console.log("hash test 2: ", hash_test_2)
+
+
+
+  const get_test = await legion_entity.connect(owner)
   .GetIdByHash(hash_test_1);
-  console.log("hash test 2: ", hash_test_2);
+  console.log("get id test: ", get_test);
 
-  const hash_test_3 = hre.ethers.utils.hexlify(hash_test_1)
-  console.log("hash test 3: ", hash_test_3)
 
-  /*
-  const hash_test_4 = hre.ethers.utils.keccak256(b_id)
 
-  const hash_test_4 = hre.ethers.utils.solidityKeccak256(b_id)
-  console.log("hash test 4: ", hash_test_4);
-  */
+  
+  //const hash_test_4 = hre.ethers.utils.keccak256(b_id)
+
+  //const hash_test_4 = hre.ethers.utils.solidityKeccak256(b_id)
+  //console.log("hash test 4: ", hash_test_4);
+  
 
 }
 
