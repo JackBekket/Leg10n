@@ -19,6 +19,7 @@ export default function RequestJoin(props:Props){
   const addressContract = props.addressContract
   const currentAccount = props.currentAccount
   var [user_id, setUserId] = useState<string>("")
+  var [plain_id, setPlain] = useState<string>("")
   var [user_name, setUserName] = useState<string>("")
   var [parent_name, setParentName] = useState<string>("")
   var [public_key, setPublicKey] = useState<string>("")
@@ -26,7 +27,8 @@ export default function RequestJoin(props:Props){
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-  var id = queryParams.get('id');   // get id as string from query                // similar to parseInt()
+  var id = queryParams.get('id');  
+  var plainId = queryParams.get('plain');  // get id as string from query                // similar to parseInt()
   var name = queryParams.get('codename');
   var p_name  = queryParams.get('parent');  // TODO: set it
   /*
@@ -37,6 +39,7 @@ export default function RequestJoin(props:Props){
 setUserId(id!);
 setParentName(p_name!);
 setUserName(name!);
+setPlain(plainId!)
 
 console.log("id")
 console.log(id)
@@ -58,7 +61,7 @@ console.log(id)
 
     const Legion:Contract = new ethers.Contract(addressContract, abi, signer)
 
-    Legion.RequestJoin(user_id,user_name,parent_name, public_key,{value:ethers.utils.formatUnits(2000000000000000,"wei")})
+    Legion.RequestJoin(user_id,user_name,parent_name, public_key, plain_id, {value:ethers.utils.formatUnits(2000000000000000,"wei")})
      .then((tr: TransactionResponse) => {
         console.log(`TransactionResponse TX hash: ${tr.hash}`)
         tr.wait().then((receipt:TransactionReceipt) => {console.log("join request receipt", receipt)})
@@ -74,7 +77,8 @@ console.log(id)
     <form onSubmit={sendJoinRequest}>
     <FormControl>
       <FormLabel htmlFor='TGID'> Join Request Form </FormLabel>
-      <Input id="tgid" type="text" required placeholder='Your ID'  onChange={(e) => setUserId(e.target.value)} value={user_id} my={3}/>
+      <Input id="tgid" type="text" required placeholder='Your encrypted ID'  onChange={(e) => setUserId(e.target.value)} value={user_id} my={3}/>
+      <Input id="tgid" type="text" required placeholder='Your ID'  onChange={(e) => setPlain(e.target.value)} value={plain_id} my={3}/>
       <Input id="tg_name" type="text" required placeholder='Your codename' onChange={(e) => setUserName(e.target.value)} value={user_name} my={3}/>
       <Input id="parent_name" type="text" required placeholder="Codename of user who invited you" onChange={(e) => setParentName(e.target.value)} value={parent_name} my={3}/>
       <Input id="public_key" type="text" required placeholder='Paste your public key here' onChange={(e) => setPublicKey(e.target.value)} value={public_key} my={3}/>
