@@ -14,6 +14,8 @@ import { Contract } from 'ethers'
 import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
 
+import { usePageContext } from '../pages/PageContext'
+
 // TODO: проверить необходимость пропсов
 interface Props {
     addressContract: string
@@ -24,13 +26,13 @@ declare let window: any
 
 export default function EncryptMessage(props: Props) {
     const addressContract = props.addressContract
-    const currentAccount = props.currentAccount
     const ethUtil = require('ethereumjs-util')
     const sigUtil = require('@metamask/eth-sig-util')
     var [user_name, setUserName] = useState<string>('')
     var [user_wallet, setUserWallet] = useState<string>('')
     var [message_text, setMessageText] = useState<string>('')
-    var [public_key, setPublicKey] = useState<string>('')
+
+    const { currentAccount, public_key, setPublicKey } = usePageContext()
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search)

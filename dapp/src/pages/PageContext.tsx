@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { ethers } from 'ethers'
+import { ethers, Contract } from 'ethers'
 
 type PageContext = {
     balance: string | null
@@ -13,6 +13,9 @@ type PageContext = {
     onClickConnect: () => void
     onClickDisconnect: () => void
     addPolygonNetwork: () => void
+    public_key: string
+    setPublicKey: (s: string) => void
+    getPublicKeyClient: (e: React.FormEvent) => void
 }
 
 declare let window: any // WTF? Why should I do that?
@@ -22,6 +25,8 @@ const pageContext = createContext<PageContext>({} as PageContext)
 export const usePageContext = () => useContext(pageContext)
 
 export function PageContextProvider({ children = null as React.ReactNode }) {
+    //------------------------ ACCOUNT INFO ------------------------//
+
     const [balance, setBalance] = useState<string | null>('')
     const [currentAccount, setCurrentAccount] = useState<string | null>('')
     const [chainId, setChainId] = useState<number | null>(0)
@@ -110,6 +115,41 @@ export function PageContextProvider({ children = null as React.ReactNode }) {
         })
     }
 
+    //------------------------ GETTING PUBLIC KEY ------------------------//
+
+    const [public_key, setPublicKey] = useState<string>('')
+
+    async function getPublicKeyClient(event: React.FormEvent) {
+        event.preventDefault()
+        if (!window.ethereum) return
+
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+        // const signer = provider.getSigner()
+
+        await window.ethereum.enable()
+
+        const accounts = await provider.listAccounts()
+        const pubkey = await provider.send('eth_getEncryptionPublicKey', [accounts[0]])
+
+        // console.log(pubkey)
+        setPublicKey(pubkey)
+    }
+
+    // async function getPublicKey(user_address: string) {
+    //     if (!window.ethereum) return
+    //     const provider = new ethers.providers.Web3Provider(window.ethereum)
+    //     const signer = provider.getSigner()
+    //     const Legion: Contract = new ethers.Contract(addressContract, abi, signer)
+    //     Legion.GetPublicKeyByAddress(user_address).then((result: string) => {
+    //         console.log('public key assosiated with address: ', result)
+    //         setPublicKey(result)
+    //         console.log(result)
+    //         // return result;
+    //     })
+    //     return public_key
+    // }
+
     return (
         <pageContext.Provider
             value={{
@@ -123,7 +163,10 @@ export function PageContextProvider({ children = null as React.ReactNode }) {
                 setChainName,
                 onClickConnect,
                 onClickDisconnect,
-                addPolygonNetwork
+                addPolygonNetwork,
+                public_key,
+                setPublicKey,
+                getPublicKeyClient
             }}
         >
             {children}

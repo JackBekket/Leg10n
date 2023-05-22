@@ -1,10 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-//import NextLink from "next/link"
 import { VStack, Heading, Box, LinkOverlay, LinkBox } from '@chakra-ui/layout'
-import { Text, Button } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
-import { ethers } from 'ethers'
 import GetPublicKey from '../components/getPuclicKey'
 import RequestJoin from '../components/requestJoin'
 import { AccountInfo, WalletNumber } from '../components'
@@ -12,8 +8,7 @@ import { AccountInfo, WalletNumber } from '../components'
 import { usePageContext } from './PageContext'
 
 const Home: NextPage = () => {
-    const { currentAccount, onClickConnect, onClickDisconnect, balance, chainId, chainName } =
-        usePageContext()
+    const { currentAccount } = usePageContext()
 
     return (
         <>
@@ -31,7 +26,7 @@ const Home: NextPage = () => {
                     <Heading my={4} fontSize="xl">
                         Get public key associated to your wallet
                     </Heading>
-                    <GetPublicKey currentAccount={currentAccount} />
+                    <GetPublicKey />
                 </Box>
                 <Box mb={0} p={4} w="100%" borderWidth="1px" borderRadius="lg">
                     <Heading my={4} fontSize="xl">

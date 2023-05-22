@@ -17,6 +17,7 @@ import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
 import { get } from 'http'
 //import TelegramChat from './telebot_2'
+import { usePageContext } from '../pages/PageContext'
 
 // TODO: ПРОПСЫ ПРОВЕРЬ
 interface Props {
@@ -34,7 +35,6 @@ const tg_bot = process.env.TELEGRAM_KEY
 
 export default function EncryptMessage(props: Props) {
     const addressContract = props.addressContract
-    const currentAccount = props.currentAccount
     const ethUtil = require('ethereumjs-util')
     const sigUtil = require('@metamask/eth-sig-util')
 
@@ -45,7 +45,8 @@ export default function EncryptMessage(props: Props) {
     var [user_wallet, setUserWallet] = useState<string>('')
     var [tgid_to, setTgid_to] = useState<string>('')
     var [message_text, setMessageText] = useState<string>('')
-    var [public_key, setPublicKey] = useState<string>('')
+
+    const { currentAccount, public_key, setPublicKey } = usePageContext()
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search)

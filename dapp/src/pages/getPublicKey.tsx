@@ -12,8 +12,7 @@ import { AccountInfo, WalletNumber } from '@/components'
 declare let window: any
 
 const Home: NextPage = () => {
-    const { currentAccount, onClickConnect, onClickDisconnect, balance, chainId, chainName } =
-        usePageContext()
+    const { currentAccount } = usePageContext()
 
     return (
         <>
