@@ -13,9 +13,10 @@ import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { Contract } from 'ethers'
 import { TransactionResponse, TransactionReceipt } from '@ethersproject/abstract-provider'
 
+// TODO: ВОТ ТУТ ТОЖЕ ПОСМОТРИ ПОТОМ, МОЖЕТ ПРОПСЫ НЕ НУЖНО ВООБЩЕ ПЕРЕДАВАТЬ?
 interface Props {
     addressContract: string
-    currentAccount: string | undefined
+    currentAccount: string | null
 }
 
 declare let window: any
