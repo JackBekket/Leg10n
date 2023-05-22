@@ -55,14 +55,14 @@ const Home: NextPage = () => {
         }
 
         /*
-    //change from window.ethereum.enable() which is deprecated
-    //see docs: https://docs.metamask.io/guide/ethereum-provider.html#legacy-methods
-    window.ethereum.request({ method: 'eth_requestAccounts' })
-    .then((accounts:any)=>{
-      if(accounts.length>0) setCurrentAccount(accounts[0])
-    })
-    .catch('error',console.error)
-    */
+        //change from window.ethereum.enable() which is deprecated
+        //see docs: https://docs.metamask.io/guide/ethereum-provider.html#legacy-methods
+        window.ethereum.request({ method: 'eth_requestAccounts' })
+        .then((accounts:any)=>{
+        if(accounts.length>0) setCurrentAccount(accounts[0])
+        })
+        .catch('error',console.error)
+        */
 
         //we can do it using ethers.js
         const provider = new ethers.providers.Web3Provider(window.ethereum)
