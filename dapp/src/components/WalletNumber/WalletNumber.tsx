@@ -2,10 +2,10 @@ import React from 'react'
 // import cls from 'classnames'
 import { Box } from '@chakra-ui/layout'
 import { Button } from '@chakra-ui/react'
-import { usePageContext } from '../../pages/PageContext'
+import { useAppContext } from '../../pages/AppContext'
 
 export function WalletNumber() {
-    const { currentAccount, onClickConnect, onClickDisconnect } = usePageContext()
+    const { currentAccount, onClickConnect, onClickDisconnect } = useAppContext()
 
     return (
         <Box w="100%" my={4}>

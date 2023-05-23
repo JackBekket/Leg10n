@@ -2,19 +2,19 @@ import { useContext } from 'react'
 import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { Layout } from '../components/layout'
-import { PageContextProvider } from './PageContext'
+import { AppContextProvider } from './AppContext'
 import NoSSR from '@mpth/react-no-ssr'
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <NoSSR>
-            <PageContextProvider>
+            <AppContextProvider>
                 <ChakraProvider>
                     <Layout>
                         <Component {...pageProps}></Component>
                     </Layout>
                 </ChakraProvider>
-            </PageContextProvider>
+            </AppContextProvider>
         </NoSSR>
     )
 }

@@ -5,35 +5,40 @@ import { VStack, Heading, Box, LinkOverlay, LinkBox } from '@chakra-ui/layout'
 import { Text, Button } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
-import GetPublicKey from '../components/getPuclicKey'
-import { usePageContext } from './PageContext'
+//import GetPublicKey from '../components/getPuclicKey'
+import DecryptMessage from '../../components/decrypt'
+import { useAppContext } from '../AppContext'
 import { AccountInfo, WalletNumber } from '@/components'
 
 declare let window: any
 
 const Home: NextPage = () => {
-    const { currentAccount } = usePageContext()
+    const { currentAccount, legionAddress } = useAppContext()
 
     return (
         <>
             <Head>
-                <title>Metamask Public Key</title>
+                <title>Decrypt message</title>
             </Head>
 
             <Heading as="h3" my={4}>
-                Attach your wallet to tgid
+                LYOD
             </Heading>
 
             <VStack>
                 <WalletNumber />
+
                 <AccountInfo />
+
                 <Box mb={0} p={4} w="100%" borderWidth="1px" borderRadius="lg">
                     <Heading my={4} fontSize="xl">
-                        Get public key associated to your wallet
+                        Encrypt message
                     </Heading>
-                    <GetPublicKey currentAccount={currentAccount} />
+                    <DecryptMessage
+                        currentAccount={currentAccount}
+                        addressContract={legionAddress}
+                    />
                 </Box>
-                ...
             </VStack>
         </>
     )

@@ -6,16 +6,15 @@ import { Text, Button } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 //import GetPublicKey from '../components/getPuclicKey'
-import Delete from '../components/delete'
-import { usePageContext } from './PageContext'
-import { AccountInfo } from '../components/AccountInfo'
+import Delete from '../../components/delete'
+import { useAppContext } from '../AppContext'
+import { AccountInfo } from '../../components/AccountInfo'
 import { WalletNumber } from '@/components'
 
 declare let window: any
 
 const Home: NextPage = () => {
-    const { currentAccount, onClickConnect, onClickDisconnect, balance, chainId, chainName } =
-        usePageContext()
+    const { currentAccount, legionAddress } = useAppContext()
 
     return (
         <>
@@ -33,10 +32,7 @@ const Home: NextPage = () => {
                     <Heading my={4} fontSize="xl">
                         Deletion
                     </Heading>
-                    <Delete
-                        currentAccount={currentAccount}
-                        addressContract="0xf86C79Da432c84ce57f323DC2f6e852eCE48F1C1"
-                    />
+                    <Delete currentAccount={currentAccount} addressContract={legionAddress} />
                 </Box>
                 ...
             </VStack>

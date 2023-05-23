@@ -2,10 +2,10 @@ import React from 'react'
 // import cls from 'classnames'
 import { Heading, Box } from '@chakra-ui/layout'
 import { Text } from '@chakra-ui/react'
-import { usePageContext } from '../../pages/PageContext'
+import { useAppContext } from '../../pages/AppContext'
 
 export function AccountInfo() {
-    const { currentAccount, balance, chainId, chainName } = usePageContext()
+    const { currentAccount, balance, chainId, chainName } = useAppContext()
 
     return currentAccount ? (
         <Box mb={0} p={4} w="100%" borderWidth="1px" borderRadius="lg">

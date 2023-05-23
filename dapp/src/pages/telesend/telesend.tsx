@@ -8,8 +8,8 @@ import { ethers } from 'ethers'
 
 //import GetPublicKey from '../components/getPuclicKey'
 //import EncryptMessage from '../components/telesend'
-import EncryptMessage from '../components/telesend'
-import { usePageContext } from './PageContext'
+import EncryptMessage from '../../components/telesend'
+import { useAppContext } from '../AppContext'
 import { AccountInfo, WalletNumber } from '@/components'
 
 //import type { GetServerSideProps } from "next";
@@ -29,8 +29,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 */
 
 const Home: NextPage = () => {
-    const { currentAccount, onClickConnect, onClickDisconnect, balance, chainId, chainName } =
-        usePageContext()
+    const { currentAccount, legionAddress } = useAppContext()
 
     return (
         <>
@@ -50,7 +49,7 @@ const Home: NextPage = () => {
                     </Heading>
                     <EncryptMessage
                         currentAccount={currentAccount}
-                        addressContract="0xf86C79Da432c84ce57f323DC2f6e852eCE48F1C1"
+                        addressContract={legionAddress}
                     />
                 </Box>
                 ...

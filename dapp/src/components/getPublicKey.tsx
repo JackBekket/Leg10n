@@ -4,10 +4,10 @@ import { ethers } from 'ethers'
 //import { Contract } from "ethers"
 import 'ethereumjs-util'
 import '@metamask/eth-sig-util'
-import { usePageContext } from '../pages/PageContext'
+import { useAppContext } from '../pages/AppContext'
 
 export default function GetPublicKey() {
-    const { currentAccount, public_key, getPublicKeyClient } = usePageContext()
+    const { currentAccount, public_key, getPublicKeyClient } = useAppContext()
 
     return (
         <form onSubmit={getPublicKeyClient}>

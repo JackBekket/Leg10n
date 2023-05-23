@@ -12,7 +12,7 @@ import { parseEther } from 'ethers/lib/utils'
 import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { Contract } from 'ethers'
 import { TransactionResponse, TransactionReceipt } from '@ethersproject/abstract-provider'
-import { usePageContext } from '../pages/PageContext'
+import { useAppContext } from '../pages/AppContext'
 
 // TODO: ВОТ ТУТ ТОЖЕ ПОСМОТРИ ПОТОМ, МОЖЕТ ПРОПСЫ НЕ НУЖНО ВООБЩЕ ПЕРЕДАВАТЬ?
 interface Props {
@@ -29,7 +29,7 @@ export default function RequestJoin(props: Props) {
     var [user_name, setUserName] = useState<string>('')
     var [parent_name, setParentName] = useState<string>('')
 
-    const { currentAccount, public_key, setPublicKey } = usePageContext()
+    const { currentAccount, public_key, setPublicKey } = useAppContext()
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search)

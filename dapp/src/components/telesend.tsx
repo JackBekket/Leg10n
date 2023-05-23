@@ -17,7 +17,7 @@ import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
 import { get } from 'http'
 //import TelegramChat from './telebot_2'
-import { usePageContext } from '../pages/PageContext'
+import { useAppContext } from '../pages/AppContext'
 
 // TODO: ПРОПСЫ ПРОВЕРЬ
 interface Props {
@@ -46,7 +46,7 @@ export default function EncryptMessage(props: Props) {
     var [tgid_to, setTgid_to] = useState<string>('')
     var [message_text, setMessageText] = useState<string>('')
 
-    const { currentAccount, public_key, setPublicKey } = usePageContext()
+    const { currentAccount, public_key, setPublicKey, getPublicKey } = useAppContext()
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search)
@@ -86,20 +86,6 @@ export default function EncryptMessage(props: Props) {
         )
         // setMessageText(encryptMessage);
         return encryptedMessage
-    }
-
-    async function getPublicKey(user_address: string) {
-        if (!window.ethereum) return
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer = provider.getSigner()
-        const Legion: Contract = new ethers.Contract(addressContract, abi, signer)
-        Legion.GetPublicKeyByAddress(user_address).then((result: string) => {
-            console.log('public key assosiated with address: ', result)
-            setPublicKey(result)
-            console.log(result)
-            // return result;
-        })
-        return public_key
     }
 
     async function encryptMessage(event: React.FormEvent) {
