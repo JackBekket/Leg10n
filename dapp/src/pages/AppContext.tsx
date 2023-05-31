@@ -29,6 +29,7 @@ export const useAppContext = () => useContext(appContext)
 
 export function AppContextProvider({ children = null as React.ReactNode }) {
     const legionAddress = '0xf86C79Da432c84ce57f323DC2f6e852eCE48F1C1'
+
     //------------------------ ACCOUNT INFO ------------------------//
 
     const [balance, setBalance] = useState<string | null>('')

@@ -1,0 +1,16 @@
+.walletNumberContainer {
+    display: flex;
+    justify-content: center;
+
+    .disconnectButton {
+        border: 5px solid rgb(255, 0, 0);
+    }
+    .connectButton {
+        background-image: url(./icons/connect_metamask.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 10vw;
+        width: 25vw;
+        background-position: center;
+    }
+}

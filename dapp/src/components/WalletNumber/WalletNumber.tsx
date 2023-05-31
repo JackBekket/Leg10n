@@ -4,20 +4,20 @@ import { Box } from '@chakra-ui/layout'
 import { Button } from '@chakra-ui/react'
 import { useAppContext } from '../../pages/AppContext'
 
+import css from './WalletNumber.module.scss'
+
 export function WalletNumber() {
     const { currentAccount, onClickConnect, onClickDisconnect } = useAppContext()
 
     return (
-        <Box w="100%" my={4}>
+        <div className={css.walletNumberContainer}>
             {currentAccount ? (
-                <Button type="button" w="100%" onClick={onClickDisconnect}>
+                <button className={css.disconnectButton} onClick={onClickDisconnect}>
                     Account:{currentAccount}
-                </Button>
+                </button>
             ) : (
-                <Button type="button" w="100%" onClick={onClickConnect}>
-                    Connect MetaMask
-                </Button>
+                <div className={css.connectButton} onClick={onClickConnect}></div>
             )}
-        </Box>
+        </div>
     )
 }
