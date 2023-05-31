@@ -4,6 +4,7 @@ import { Layout } from '../components/layout'
 import { AppContextProvider } from './AppContext'
 import NoSSR from '@mpth/react-no-ssr'
 import '../index.scss'
+import { Menu } from '../components/Menu'
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <AppContextProvider>
                 <ChakraProvider>
                     <Layout>
+                        <Menu></Menu>
                         <Component {...pageProps}></Component>
                     </Layout>
                 </ChakraProvider>

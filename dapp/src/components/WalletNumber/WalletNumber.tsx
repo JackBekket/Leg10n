@@ -12,11 +12,12 @@ export function WalletNumber() {
     return (
         <div className={css.walletNumberContainer}>
             {currentAccount ? (
-                <button className={css.disconnectButton} onClick={onClickDisconnect}>
-                    Account:{currentAccount}
-                </button>
+                <div className={css.disconnectButton} onClick={onClickDisconnect}>
+                    <h4>Account:</h4>
+                    <h4 className={css.walletNumber}>{currentAccount}</h4>
+                </div>
             ) : (
-                <div className={css.connectButton} onClick={onClickConnect}></div>
+                <button className={css.connectButton} onClick={onClickConnect}></button>
             )}
         </div>
     )

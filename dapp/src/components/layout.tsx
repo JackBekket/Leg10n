@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import { Text, Center, Container, useColorModeValue } from '@chakra-ui/react'
 import Header from './header'
+import { Menu } from '../components/Menu'
 
 type Props = {
     children: ReactNode
@@ -9,7 +10,7 @@ type Props = {
 export function Layout(props: Props) {
     return (
         <div>
-            {/* <Header /> */}
+            {/* <Menu></Menu> */}
             {/* <Container maxW="container.md" py="8"> */}
             <Container maxW="100vw" py="8">
                 {props.children}

@@ -1,5 +1,9 @@
 .requestJoinContainer {
-    padding: 5vw 10vw;
+    padding: 5vw var(--main-padding);
     position: relative;
     z-index: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 18vw;
 }

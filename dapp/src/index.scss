@@ -1,7 +1,24 @@
+html {
+    font-family: 'Ubuntu', sans-serif;
+    // font-family: 'Zen Dots', cursive;
+    // font-family: 'Zen Dots', cursive;
+
+    /* COLORS */
+
+    --gentle-lime: #f2ff5e;
+
+    /* POSITIONS */
+
+    --main-padding: 8vw;
+}
+
 body {
+    font-family: 'Ubuntu', sans-serif;
+
     .chakra-container {
         padding: 0vw;
         // height: 100%;
+        font-family: 'Ubuntu', sans-serif;
     }
 }
 
@@ -14,6 +31,7 @@ body {
     background: linear-gradient(to bottom, rgb(0, 0, 0), white);
     position: relative;
     background-attachment: scroll;
+    font-family: 'Ubuntu', sans-serif;
 
     &::after {
         content: '';
