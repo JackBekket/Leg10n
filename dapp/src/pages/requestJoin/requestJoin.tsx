@@ -6,14 +6,14 @@ import RequestJoin from '~/components/requestJoin'
 import { AccountInfo, WalletNumber } from '~components'
 
 import { useAppContext } from '../AppContext'
-import styles from './RequestJoin.module.scss'
+import css from './requestJoin.module.scss'
 
 const JoinRequest: NextPage = () => {
     const { currentAccount, legionAddress } = useAppContext()
 
     return (
         <div className="page">
-            <div className={styles.requestJoinContainer}>
+            <div className={css.requestJoinContainer}>
                 <WalletNumber />
                 <AccountInfo />
                 <Box mb={0} p={4} w="100%" borderWidth="1px" borderRadius="lg">
