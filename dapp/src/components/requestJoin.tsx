@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-    Button,
-    Input,
-    NumberInput,
-    NumberInputField,
-    FormControl,
-    FormLabel
-} from '@chakra-ui/react'
+import { Button, Input, FormControl, FormLabel } from '@chakra-ui/react'
 import { ethers } from 'ethers'
 import { parseEther } from 'ethers/lib/utils'
 import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'

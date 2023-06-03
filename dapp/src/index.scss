@@ -1,11 +1,11 @@
 html {
     font-family: 'Ubuntu', sans-serif;
     // font-family: 'Zen Dots', cursive;
-    // font-family: 'Zen Dots', cursive;
 
     /* COLORS */
 
     --gentle-lime: #f2ff5e;
+    --lime: #ebff00;
 
     /* POSITIONS */
 
@@ -17,10 +17,18 @@ body {
 
     h3 {
         font-size: 1.5vw;
+
+        &.lemon {
+            color: var(--gentle-lime);
+        }
     }
 
     h5 {
         font-size: 1vw;
+
+        &.lemon {
+            color: var(--gentle-lime);
+        }
     }
 
     .chakra-container {

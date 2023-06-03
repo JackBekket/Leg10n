@@ -1,7 +1,6 @@
 .walletNumberContainer {
     display: flex;
     justify-content: center;
-    margin-bottom: 5vw;
 
     .disconnectButton {
         cursor: pointer;
@@ -9,6 +8,7 @@
         flex-direction: row;
         position: relative;
         font-family: 'Zen Dots', cursive;
+        margin-bottom: 5vw;
 
         h4 {
         }
