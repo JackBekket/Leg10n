@@ -20,7 +20,7 @@ export default function GetPublicKey() {
     ) : (
         // <div className={css.publicKeycontainer}>
         <div className={clsx(css.publicKeycontainer, { [css.active]: Boolean(!currentAccount) })}>
-            <h3>Get public key associated to your wallet</h3>
+            <h4>Get public key associated to your wallet</h4>
             <button onClick={getPublicKeyClient}>Get public key</button>
         </div>
     )

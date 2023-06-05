@@ -17,16 +17,19 @@ const JoinRequest: NextPage = () => {
                 <WalletNumber />
                 <AccountInfo />
                 <GetPublicKey />
-
-                <Box mb={0} p={4} w="100%" borderWidth="1px" borderRadius="lg">
-                    <Heading my={4} fontSize="xl">
-                        Request join
-                    </Heading>
-                    <RequestJoin currentAccount={currentAccount} addressContract={legionAddress} />
-                </Box>
+                <RequestJoin currentAccount={currentAccount} addressContract={legionAddress} />
             </div>
         </div>
     )
 }
 
 export default JoinRequest
+
+{
+    /* <Box mb={0} p={4} w="100%" borderWidth="1px" borderRadius="lg">
+                    <Heading my={4} fontSize="xl">
+                        Request join
+                    </Heading>
+                    <RequestJoin currentAccount={currentAccount} addressContract={legionAddress} />
+                </Box> */
+}

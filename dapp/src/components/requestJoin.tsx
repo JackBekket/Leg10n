@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Input, FormControl, FormLabel } from '@chakra-ui/react'
+import React, { useEffect } from 'react'
 import { ethers } from 'ethers'
 import { parseEther } from 'ethers/lib/utils'
 import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { Contract } from 'ethers'
 import { TransactionResponse, TransactionReceipt } from '@ethersproject/abstract-provider'
 import { useAppContext } from '../pages/AppContext'
-
-// TODO: ВОТ ТУТ ТОЖЕ ПОСМОТРИ ПОТОМ, МОЖЕТ ПРОПСЫ НЕ НУЖНО ВООБЩЕ ПЕРЕДАВАТЬ?
-interface Props {
-    addressContract: string
-    currentAccount: string | null
-}
+import { SimpleInput } from './SimpleInput'
+import { Form } from './Form'
 
 declare let window: any
 
-export default function RequestJoin(props: Props) {
-    const addressContract = props.addressContract
-    var [user_id, setUserId] = useState<string>('')
-    var [plain_id, setPlain] = useState<string>('')
-    var [user_name, setUserName] = useState<string>('')
-    var [parent_name, setParentName] = useState<string>('')
-
-    const { currentAccount, public_key, setPublicKey } = useAppContext()
+export default function RequestJoin() {
+    const {
+        public_key,
+        userId,
+        setUserId,
+        plainId,
+        setPlain,
+        userName,
+        setUserName,
+        parentName,
+        setParentName,
+        legionAddress
+    } = useAppContext()
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search)
@@ -52,9 +52,9 @@ export default function RequestJoin(props: Props) {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
-        const Legion: Contract = new ethers.Contract(addressContract, abi, signer)
+        const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
 
-        Legion.RequestJoin(user_id, user_name, parent_name, public_key, plain_id, {
+        Legion.RequestJoin(userId, userName, parentName, public_key, plainId, {
             value: ethers.utils.formatUnits(2000000000000000, 'wei')
         })
             .then((tr: TransactionResponse) => {
@@ -70,7 +70,18 @@ export default function RequestJoin(props: Props) {
     //http://localhost:3000?user_tg_id=1337&user_tg_name=Alice
 
     return (
-        <form onSubmit={sendJoinRequest}>
+        <Form title="Join Request">
+            <SimpleInput
+                placeholder="Your encrypted Telegram ID"
+                value={userId}
+                onChange={e => setUserId(e.target.value)}
+            ></SimpleInput>
+        </Form>
+    )
+}
+
+{
+    /* <form onSubmit={sendJoinRequest}>
             <FormControl>
                 <FormLabel htmlFor="TGID"> Join Request Form </FormLabel>
                 <Input
@@ -122,6 +133,5 @@ export default function RequestJoin(props: Props) {
                     Apply for Join
                 </Button>
             </FormControl>
-        </form>
-    )
+        </form> */
 }

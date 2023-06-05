@@ -9,11 +9,12 @@ html {
 
     /* POSITIONS */
 
-    --main-padding: 8vw;
+    --main-padding: 6vw;
 }
 
 body {
     font-family: 'Ubuntu', sans-serif;
+    height: 100vh;
 
     h3 {
         font-size: 1.5vw;
@@ -21,6 +22,10 @@ body {
         &.lemon {
             color: var(--gentle-lime);
         }
+    }
+
+    h4 {
+        font-size: 1.3vw;
     }
 
     h5 {
@@ -31,10 +36,25 @@ body {
         }
     }
 
+    h6 {
+        font-size: 0.7vw;
+    }
+
+    // h3,
+    // h5,
+    // h6 {
+    //     &.lemon {
+    //         color: var(--gentle-lime);
+    //     }
+    // } почему не работает так?
+
     .chakra-container {
         padding: 0vw;
         // height: 100%;
         font-family: 'Ubuntu', sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -42,7 +62,8 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    // justify-content: center;
+    align-items: center;
     color: white;
     background: linear-gradient(to bottom, rgb(0, 0, 0), white);
     position: relative;

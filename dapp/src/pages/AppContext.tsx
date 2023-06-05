@@ -19,6 +19,14 @@ type AppContext = {
     setPublicKey: (s: string) => void
     getPublicKeyClient: (e: React.FormEvent) => void
     getPublicKey: (s: string) => Promise<string | null>
+    userId: string
+    setUserId: (s: string) => void
+    plainId: string
+    setPlain: (s: string) => void
+    userName: string
+    setUserName: (s: string) => void
+    parentName: string
+    setParentName: (s: string) => void
 }
 
 declare let window: any // WTF? Why should I do that?
@@ -155,6 +163,13 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
         return public_key
     }
 
+    //------------------------ USERS INFO ------------------------//
+
+    var [userId, setUserId] = useState<string>('')
+    var [plainId, setPlain] = useState<string>('')
+    var [userName, setUserName] = useState<string>('')
+    var [parentName, setParentName] = useState<string>('')
+
     return (
         <appContext.Provider
             value={{
@@ -173,7 +188,15 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
                 public_key,
                 setPublicKey,
                 getPublicKeyClient,
-                getPublicKey
+                getPublicKey,
+                userId,
+                setUserId,
+                plainId,
+                setPlain,
+                userName,
+                setUserName,
+                parentName,
+                setParentName
             }}
         >
             {children}
