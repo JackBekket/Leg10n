@@ -170,6 +170,27 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
     var [userName, setUserName] = useState<string>('')
     var [parentName, setParentName] = useState<string>('')
 
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search)
+
+        var id = queryParams.get('id')
+        var plainId = queryParams.get('plain') // get id as string from query                // similar to parseInt()
+        var name = queryParams.get('codename')
+        var p_name = queryParams.get('parent') // TODO: set it
+
+        // if (p_name != '') {
+        //     setParentName(p_name)
+        // } шо цэ?
+
+        setUserId(id!)
+        setPlain(plainId!)
+        setUserName(name!)
+        setParentName(p_name!)
+
+        //let name_get : string = name;
+        //setUserName(name);      // @TODO: fix it
+    }, [])
+
     return (
         <appContext.Provider
             value={{

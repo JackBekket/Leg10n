@@ -8,6 +8,7 @@ import css from './SimpleInput.module.scss'
 export function SimpleInput({
     placeholder,
     className,
+    id,
     error,
     mandatory,
     value,
@@ -17,6 +18,7 @@ export function SimpleInput({
 }: {
     placeholder: string
     className?: string
+    id?: string
     error?: string
     mandatory?: boolean
     value: string
@@ -29,8 +31,9 @@ export function SimpleInput({
 
     return (
         <div className={css.simpleInputWrapper}>
-            <div className={clsx(css.InputWrapper, { [`css.${className}`]: className })}>
+            <div className={clsx(css.inputWrapper, { [`css.${className}`]: className })}>
                 <input
+                    id={id}
                     type={`${isPassword ? 'password' : isEmail ? 'email' : 'text'}`}
                     autoComplete="on"
                     placeholder={placeholder}

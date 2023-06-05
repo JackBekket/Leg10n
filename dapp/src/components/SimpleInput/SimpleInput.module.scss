@@ -1,0 +1,38 @@
+.simpleInputWrapper {
+    .inputWrapper {
+        input {
+            background-color: transparent;
+            color: black;
+            outline: none;
+            border-bottom: 2px solid var(--lime);
+            background: -webkit-linear-gradient(to right, #ebff00 5%, #4ff2c1 70%, #f2ff5e);
+            background: -moz-linear-gradient(to right, #ebff00 5%, #4ff2c1 70%, #f2ff5e);
+            background: linear-gradient(to right, #ebff00 5%, #4ff2c1 70%, #f2ff5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.8em;
+            width: 100%;
+            display: inline;
+            font-size: 0.8em;
+
+            &::placeholder {
+                background: -webkit-linear-gradient(to right, #ebff00 5%, #f2ff5e);
+                background: -moz-linear-gradient(to right, #ebff00 5%, #f2ff5e);
+                background: linear-gradient(to right, #ebff00 5%, #f2ff5e);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+
+        input:-webkit-autofill {
+        }
+
+        input[type='text'] {
+            width: 100%; // or any desired width
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            min-width: 23vw;
+        }
+    }
+}

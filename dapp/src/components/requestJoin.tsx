@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ethers } from 'ethers'
-import { parseEther } from 'ethers/lib/utils'
 import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { Contract } from 'ethers'
 import { TransactionResponse, TransactionReceipt } from '@ethersproject/abstract-provider'
+
 import { useAppContext } from '../pages/AppContext'
 import { SimpleInput } from './SimpleInput'
 import { Form } from './Form'
@@ -18,33 +18,10 @@ export default function RequestJoin() {
         plainId,
         setPlain,
         userName,
-        setUserName,
         parentName,
         setParentName,
         legionAddress
     } = useAppContext()
-
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search)
-
-        var id = queryParams.get('id')
-        var plainId = queryParams.get('plain') // get id as string from query                // similar to parseInt()
-        var name = queryParams.get('codename')
-        var p_name = queryParams.get('parent') // TODO: set it
-        /*
-  if (p_name != "") {
-    setParentName(p_name);
-  }
-  */
-        setUserId(id!)
-        setParentName(p_name!)
-        setUserName(name!)
-        setPlain(plainId!)
-
-        //let name_get : string = name;
-
-        //setUserName(name);      // @TODO: fix it
-    }, [])
 
     async function sendJoinRequest(event: React.FormEvent) {
         event.preventDefault()
@@ -70,12 +47,31 @@ export default function RequestJoin() {
     //http://localhost:3000?user_tg_id=1337&user_tg_name=Alice
 
     return (
-        <Form title="Join Request">
+        <Form title="Join Request" asyncHandler={sendJoinRequest} buttonText="APPLY FOR JOIN">
             <SimpleInput
+                id="tgid"
                 placeholder="Your encrypted Telegram ID"
+                setValue={setUserId}
                 value={userId}
-                onChange={e => setUserId(e.target.value)}
-            ></SimpleInput>
+            />
+            <SimpleInput placeholder="Your telegram ID" setValue={setPlain} value={plainId} />
+            <SimpleInput
+                id="parent_name"
+                placeholder="Inviter's codename"
+                setValue={setPlain}
+                value={plainId}
+            />
+            <SimpleInput
+                placeholder="Inviter's codename"
+                setValue={setParentName}
+                value={parentName}
+            />
+            <SimpleInput
+                placeholder="Your public key"
+                setValue={setParentName}
+                value={parentName}
+            />
+            {/* <button onClick={sendJoinRequest}></button> */}
         </Form>
     )
 }
