@@ -2,27 +2,23 @@
     font-family: 'Zen Dots', cursive, 'Ubuntu', bold;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-top: 2em;
+    // align-items: center;
+    // width: 100%;
+    z-index: 1;
+    max-width: 25vw;
 
-    h2 {
+    h4 {
         margin-bottom: 1em;
     }
 
     button {
-        // background-color: var(--lime);
         color: black;
         margin: 1em 0em;
-        // border-radius: 3vw;
         font-family: 'Bungee Inline', cursive;
-        // padding: 0.8em;
         background-image: url(./icons/formButton.svg);
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
-        // width: 35em;
-        // height: 6.5em;
         width: 25.1vw;
         height: 7vw;
 

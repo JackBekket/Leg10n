@@ -17,26 +17,11 @@ const Home: NextPage = () => {
     const { currentAccount, legionAddress } = useAppContext()
 
     return (
-        <>
-            <Head>
-                <title>Accept Request</title>
-            </Head>
-
-            <Heading as="h3" my={4}>
-                LYOD
-            </Heading>
-            <VStack>
-                <WalletNumber />
-                <AccountInfo />
-                <Box mb={0} p={4} w="100%" borderWidth="1px" borderRadius="lg">
-                    <Heading my={4} fontSize="xl">
-                        Accept join
-                    </Heading>
-                    <AcceptJoin currentAccount={currentAccount} addressContract={legionAddress} />
-                </Box>
-                ...
-            </VStack>
-        </>
+        <div className="page">
+            <WalletNumber />
+            <AccountInfo />
+            <AcceptJoin />
+        </div>
     )
 }
 

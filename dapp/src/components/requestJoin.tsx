@@ -71,7 +71,6 @@ export default function RequestJoin() {
                 setValue={setParentName}
                 value={parentName}
             />
-            {/* <button onClick={sendJoinRequest}></button> */}
         </Form>
     )
 }

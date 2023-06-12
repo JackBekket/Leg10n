@@ -9,6 +9,7 @@
         position: relative;
         font-family: 'Zen Dots', cursive;
         margin-bottom: 5vw;
+        justify-content: center;
 
         h4 {
         }
@@ -30,12 +31,14 @@
             background-image: url(./icons/fox.svg);
             background-repeat: no-repeat;
             background-size: cover;
-            right: 48.5%;
-            top: 195%;
+            // right: 48.5%;
+            // top: 195%;
+            top: 140%;
+            background-position: center center;
         }
     }
     .connectButton {
-        background-image: url(./icons/connect_metamask.svg);
+        background-image: url(./icons/connect_mtmsk.svg);
         background-repeat: no-repeat;
         background-size: contain;
         height: 10vw;
