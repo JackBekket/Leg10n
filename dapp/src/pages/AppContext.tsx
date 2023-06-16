@@ -191,6 +191,20 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
         //setUserName(name);      // @TODO: fix it
     }, [])
 
+    //------------------------ TELESEND / USER WALLET ------------------------//
+
+    async function getWalletByUsername(event: React.FormEvent) {
+        event.preventDefault()
+        if (!window.ethereum) return
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
+        Legion.GetWalletByNickName(userName).then((result: string) => {
+            console.log(result)
+            setUserWallet(result)
+        })
+    }
+
     return (
         <appContext.Provider
             value={{

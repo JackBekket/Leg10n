@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-    Button,
-    Input,
-    NumberInput,
-    NumberInputField,
-    FormControl,
-    FormLabel,
-    Text
-} from '@chakra-ui/react'
+import { Button, Input, FormControl, FormLabel, Text } from '@chakra-ui/react'
 import { ethers } from 'ethers'
 import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { Contract } from 'ethers'
@@ -19,22 +11,15 @@ import { get } from 'http'
 //import TelegramChat from './telebot_2'
 import { useAppContext } from '../pages/AppContext'
 
-// TODO: ПРОПСЫ ПРОВЕРЬ
-interface Props {
-    addressContract: string
-    currentAccount: string | null
-    //tg_token: string
-    //doesFileExist: boolean;
-}
-
 //const token = process.env.TELEGRAM_KEY!;
 //const token = "";
 declare let window: any
 
 const tg_bot = process.env.TELEGRAM_KEY
 
-export default function EncryptMessage(props: Props) {
-    const addressContract = props.addressContract
+export default function EncryptMessage() {
+    const { currentAccount, public_key, getPublicKey, legionAddress } = useAppContext()
+
     const ethUtil = require('ethereumjs-util')
     const sigUtil = require('@metamask/eth-sig-util')
 
@@ -46,8 +31,6 @@ export default function EncryptMessage(props: Props) {
     var [tgid_to, setTgid_to] = useState<string>('')
     var [message_text, setMessageText] = useState<string>('')
 
-    const { currentAccount, public_key, setPublicKey, getPublicKey } = useAppContext()
-
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search)
         var name = queryParams.get('codename')
@@ -56,22 +39,24 @@ export default function EncryptMessage(props: Props) {
         setMessageText(message!)
     }, [])
 
-    async function getWalletByUsername(event: React.FormEvent) {
-        event.preventDefault()
-        if (!window.ethereum) return
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer = provider.getSigner()
-        const Legion: Contract = new ethers.Contract(addressContract, abi, signer)
-        Legion.GetWalletByNickName(user_name).then((result: string) => {
-            console.log(result)
-            setUserWallet(result)
-        })
-    }
+    // async function getWalletByUsername(event: React.FormEvent) {
+    //     event.preventDefault()
+    //     if (!window.ethereum) return
+    //     const provider = new ethers.providers.Web3Provider(window.ethereum)
+    //     const signer = provider.getSigner()
+    //     const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
+    //     Legion.GetWalletByNickName(user_name).then((result: string) => {
+    //         console.log(result)
+    //         setUserWallet(result)
+    //     })
+    // }
 
     async function encryptText(plain_text: string, public_key: string) {
         if (!window.ethereum) return
+
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
+
         const encryptedMessage = ethUtil.bufferToHex(
             Buffer.from(
                 JSON.stringify(
@@ -110,7 +95,7 @@ export default function EncryptMessage(props: Props) {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
-        const Legion: Contract = new ethers.Contract(addressContract, abi, signer)
+        const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
         await Legion.GetWalletByNickName(user_name).then((result: string) => {
             console.log('result: ', result)
             setUserWallet(result)
@@ -123,7 +108,7 @@ export default function EncryptMessage(props: Props) {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
-        const Legion: Contract = new ethers.Contract(addressContract, abi, signer)
+        const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
 
         await Legion.GetTgIdByAddress(user_wallet).then((result: BigInteger) => {
             console.log('result: ', result)
