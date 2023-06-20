@@ -27,6 +27,9 @@ type AppContext = {
     setUserName: (s: string) => void
     parentName: string
     setParentName: (s: string) => void
+    userWallet: string
+    setUserWallet: (s: string) => void
+    getWalletByUsername: (e: React.FormEvent) => Promise<void>
 }
 
 declare let window: any // WTF? Why should I do that?
@@ -193,6 +196,8 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
 
     //------------------------ TELESEND / USER WALLET ------------------------//
 
+    const [userWallet, setUserWallet] = useState<string>('')
+
     async function getWalletByUsername(event: React.FormEvent) {
         event.preventDefault()
         if (!window.ethereum) return
@@ -231,7 +236,10 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
                 userName,
                 setUserName,
                 parentName,
-                setParentName
+                setParentName,
+                userWallet,
+                setUserWallet,
+                getWalletByUsername
             }}
         >
             {children}

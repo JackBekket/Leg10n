@@ -5,19 +5,20 @@ import { Contract } from 'ethers'
 import { TransactionResponse, TransactionReceipt } from '@ethersproject/abstract-provider'
 
 import { useAppContext } from '../pages/AppContext'
-import { SimpleInput } from './SimpleInput'
-import { Form } from './Form'
+import { Form, SimpleInput } from '@/components'
 
 declare let window: any
 
 export default function RequestJoin() {
     const {
         public_key,
+        setPublicKey,
         userId,
         setUserId,
         plainId,
         setPlain,
         userName,
+        setUserName,
         parentName,
         setParentName,
         legionAddress
@@ -54,79 +55,30 @@ export default function RequestJoin() {
                 setValue={setUserId}
                 value={userId}
             />
-            <SimpleInput placeholder="Your telegram ID" setValue={setPlain} value={plainId} />
             <SimpleInput
-                id="parent_name"
-                placeholder="Inviter's codename"
+                id="tgid"
+                placeholder="Your telegram ID"
                 setValue={setPlain}
                 value={plainId}
             />
             <SimpleInput
+                id="tg_name"
+                placeholder="Your codename"
+                setValue={setUserName}
+                value={userName}
+            />
+            <SimpleInput
+                id="parent_name"
                 placeholder="Inviter's codename"
                 setValue={setParentName}
                 value={parentName}
             />
             <SimpleInput
+                id="public_key"
                 placeholder="Your public key"
-                setValue={setParentName}
-                value={parentName}
+                setValue={setPublicKey}
+                value={public_key}
             />
         </Form>
     )
-}
-
-{
-    /* <form onSubmit={sendJoinRequest}>
-            <FormControl>
-                <FormLabel htmlFor="TGID"> Join Request Form </FormLabel>
-                <Input
-                    id="tgid"
-                    type="text"
-                    required
-                    placeholder="Your encrypted ID"
-                    onChange={e => setUserId(e.target.value)}
-                    value={user_id}
-                    my={3}
-                />
-                <Input
-                    id="tgid"
-                    type="text"
-                    required
-                    placeholder="Your ID"
-                    onChange={e => setPlain(e.target.value)}
-                    value={plain_id}
-                    my={3}
-                />
-                <Input
-                    id="tg_name"
-                    type="text"
-                    required
-                    placeholder="Your codename"
-                    onChange={e => setUserName(e.target.value)}
-                    value={user_name}
-                    my={3}
-                />
-                <Input
-                    id="parent_name"
-                    type="text"
-                    required
-                    placeholder="Codename of user who invited you"
-                    onChange={e => setParentName(e.target.value)}
-                    value={parent_name}
-                    my={3}
-                />
-                <Input
-                    id="public_key"
-                    type="text"
-                    required
-                    placeholder="Paste your public key here"
-                    onChange={e => setPublicKey(e.target.value)}
-                    value={public_key}
-                    my={3}
-                />
-                <Button type="submit" isDisabled={!currentAccount}>
-                    Apply for Join
-                </Button>
-            </FormControl>
-        </form> */
 }

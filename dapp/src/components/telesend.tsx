@@ -18,7 +18,16 @@ declare let window: any
 const tg_bot = process.env.TELEGRAM_KEY
 
 export default function EncryptMessage() {
-    const { currentAccount, public_key, getPublicKey, legionAddress } = useAppContext()
+    const {
+        currentAccount,
+        public_key,
+        getPublicKey,
+        legionAddress,
+        userWallet,
+        setUserWallet,
+        userName,
+        setUserName
+    } = useAppContext()
 
     const ethUtil = require('ethereumjs-util')
     const sigUtil = require('@metamask/eth-sig-util')
@@ -26,8 +35,6 @@ export default function EncryptMessage() {
     //var token =  process.env.TELEGRAM_KEY!;
     //const token = tg_token;
 
-    var [user_name, setUserName] = useState<string>('')
-    var [user_wallet, setUserWallet] = useState<string>('')
     var [tgid_to, setTgid_to] = useState<string>('')
     var [message_text, setMessageText] = useState<string>('')
 
@@ -37,19 +44,7 @@ export default function EncryptMessage() {
         setUserName(name!)
         var message = queryParams.get('text')
         setMessageText(message!)
-    }, [])
-
-    // async function getWalletByUsername(event: React.FormEvent) {
-    //     event.preventDefault()
-    //     if (!window.ethereum) return
-    //     const provider = new ethers.providers.Web3Provider(window.ethereum)
-    //     const signer = provider.getSigner()
-    //     const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
-    //     Legion.GetWalletByNickName(user_name).then((result: string) => {
-    //         console.log(result)
-    //         setUserWallet(result)
-    //     })
-    // }
+    }, [setUserName])
 
     async function encryptText(plain_text: string, public_key: string) {
         if (!window.ethereum) return
@@ -85,8 +80,8 @@ export default function EncryptMessage() {
     async function getRemotePublicKey(event: React.FormEvent) {
         event.preventDefault()
         if (!window.ethereum) return
-        if (!user_wallet) return
-        await getPublicKey(user_wallet)
+        if (!userWallet) return
+        await getPublicKey(userWallet)
     }
 
     async function getRemoteAddress(event: React.FormEvent) {
@@ -96,7 +91,7 @@ export default function EncryptMessage() {
         const signer = provider.getSigner()
 
         const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
-        await Legion.GetWalletByNickName(user_name).then((result: string) => {
+        await Legion.GetWalletByNickName(userName).then((result: string) => {
             console.log('result: ', result)
             setUserWallet(result)
         })
@@ -110,7 +105,7 @@ export default function EncryptMessage() {
 
         const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
 
-        await Legion.GetTgIdByAddress(user_wallet).then((result: BigInteger) => {
+        await Legion.GetTgIdByAddress(userWallet).then((result: BigInteger) => {
             console.log('result: ', result)
             const str = result.toString()
             setTgid_to(str)
@@ -156,6 +151,7 @@ export default function EncryptMessage() {
      * 2. those buttons should be disabled when those data getted
      * 3.
      */
+
     return (
         <form onSubmit={encryptMessage}>
             <FormControl>
@@ -166,15 +162,15 @@ export default function EncryptMessage() {
                     required
                     placeholder="input codename *TO WHOM* you want to encrypt"
                     onChange={e => setUserName(e.target.value)}
-                    value={user_name}
+                    value={userName}
                     my={3}
                 />
                 <Button isDisabled={!currentAccount} onClick={getRemoteAddress}>
                     Get Sender Address
                 </Button>
-                <Text>{user_wallet}</Text>
+                <Text>{userWallet}</Text>
                 <Button
-                    isDisabled={!currentAccount || user_wallet == ''}
+                    isDisabled={!currentAccount || userWallet == ''}
                     onClick={getRemotePublicKey}
                 >
                     Get Sender Public Key
@@ -198,7 +194,7 @@ export default function EncryptMessage() {
                 </Button>
                 <Button
                     isDisabled={
-                        !currentAccount || public_key == '' || tgid_to == '' || user_wallet == ''
+                        !currentAccount || public_key == '' || tgid_to == '' || userWallet == ''
                     }
                     onClick={sendMessage}
                 >

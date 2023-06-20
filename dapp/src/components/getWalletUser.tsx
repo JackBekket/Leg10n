@@ -1,24 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import {
-    Button,
-    Input,
-    NumberInput,
-    NumberInputField,
-    FormControl,
-    FormLabel,
-    Text
-} from '@chakra-ui/react'
-import { ethers } from 'ethers'
-import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
-import { Contract } from 'ethers'
+import React, { useEffect } from 'react'
+import { Button, Input, FormControl, FormLabel, Text } from '@chakra-ui/react'
 import { useAppContext } from '../pages/AppContext'
 
-declare let window: any
-
 export default function GetWalletByTelegramNickNameTG() {
-    const { currentAccount, legionAddress, userName, setUserName } = useAppContext()
-
-    var [user_wallet, setUserWallet] = useState<string>('')
+    const { currentAccount, userName, setUserName, userWallet, getWalletByUsername } =
+        useAppContext()
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search)
@@ -26,18 +12,6 @@ export default function GetWalletByTelegramNickNameTG() {
 
         //setUserName(name);
     }, [])
-
-    async function getWalletByUsername(event: React.FormEvent) {
-        event.preventDefault()
-        if (!window.ethereum) return
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer = provider.getSigner()
-        const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
-        Legion.GetWalletByNickName(userName).then((result: string) => {
-            console.log(result)
-            setUserWallet(result)
-        })
-    }
 
     return (
         <form onSubmit={getWalletByUsername}>
@@ -57,7 +31,7 @@ export default function GetWalletByTelegramNickNameTG() {
             </FormControl>
             <div>
                 <Text>
-                    <b>Ethereum address associated with this codename</b>: {user_wallet}
+                    <b>Ethereum address associated with this codename</b>: {userWallet}
                 </Text>
             </div>
         </form>

@@ -1,34 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import {
-    Button,
-    Input,
-    NumberInput,
-    NumberInputField,
-    FormControl,
-    FormLabel,
-    Text
-} from '@chakra-ui/react'
+import { Button, Input, FormControl, FormLabel, Text } from '@chakra-ui/react'
 import { ethers } from 'ethers'
-import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
-import { Contract } from 'ethers'
 import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
-
-// TODO: проверить пропсы
-interface Props {
-    addressContract: string
-    currentAccount: string | null
-}
+import { useAppContext } from '../pages/AppContext'
 
 declare let window: any
 
-export default function DecryptMessage(props: Props) {
-    const addressContract = props.addressContract
-    const currentAccount = props.currentAccount
+export default function DecryptMessage() {
+    const { currentAccount, legionAddress, userWallet, setUserWallet, userName, setUserName } =
+        useAppContext()
+
     const ethUtil = require('ethereumjs-util')
     const sigUtil = require('@metamask/eth-sig-util')
-    var [user_name, setUserName] = useState<string>('')
-    var [user_wallet, setUserWallet] = useState<string>('')
+
     var [message_text, setMessageText] = useState<string>('')
 
     useEffect(() => {
@@ -49,7 +34,7 @@ export default function DecryptMessage(props: Props) {
         setUserWallet(s_address)
 
         console.log('message text: ', message_text)
-        console.log('user_wallet: ', user_wallet)
+        console.log('user_wallet: ', userWallet)
 
         window.ethereum
             .request({
