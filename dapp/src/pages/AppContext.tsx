@@ -175,7 +175,6 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search)
-
         var id = queryParams.get('id')
         var plainId = queryParams.get('plain') // get id as string from query                // similar to parseInt()
         var name = queryParams.get('codename')

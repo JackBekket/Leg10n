@@ -1,4 +1,6 @@
 import type { NextPage } from 'next'
+import { ethers, Contract } from 'ethers'
+import { abi } from '../../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { useAppContext } from '../AppContext'
 import { AccountInfo, WalletNumber, Form, SimpleInput } from '@/components'
 
@@ -19,7 +21,28 @@ export const getServerSideProps: GetServerSideProps = async () => {
 */
 
 const Home: NextPage = () => {
-    const { currentAccount, legionAddress } = useAppContext()
+    const { currentAccount, legionAddress, userName, setUserName, userWallet, setUserWallet } =
+        useAppContext()
+
+    console.log('USER WALLET:', userWallet)
+    console.log('CURRENT ACCOUNT:', currentAccount)
+
+    async function getRemoteAddress(event: React.FormEvent) {
+        event.preventDefault()
+        if (!window.ethereum) return
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+
+        const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
+        await Legion.GetWalletByNickName(userName).then((result: string) => {
+            console.log('result: ', result)
+            setUserWallet(result)
+        })
+    }
+
+    async function recieverInfo() {
+        console.log('УСЁ УСПЕШНЯ')
+    }
 
     return (
         <div className="page">
@@ -27,14 +50,20 @@ const Home: NextPage = () => {
             <AccountInfo />
             <Form
                 title="Encrypt message"
-                asyncHandler={sendJoinRequest}
+                asyncHandler={recieverInfo}
                 buttonText="GET RECIEVER'S ADDRESS"
             >
                 <SimpleInput
-                    id="parent_name"
-                    placeholder="Inviter's codename"
-                    setValue={setPlain}
-                    value={plainId}
+                    id="tg_name"
+                    placeholder="Reciever's codename"
+                    setValue={setUserName}
+                    value={userName}
+                />
+                <SimpleInput
+                    id="tg_name"
+                    placeholder="Text for encryption"
+                    setValue={setUserName}
+                    value={userName}
                 />
             </Form>
         </div>

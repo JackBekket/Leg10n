@@ -40,11 +40,9 @@ export default function EncryptMessage() {
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search)
-        var name = queryParams.get('codename')
-        setUserName(name!)
         var message = queryParams.get('text')
         setMessageText(message!)
-    }, [setUserName])
+    }, [])
 
     async function encryptText(plain_text: string, public_key: string) {
         if (!window.ethereum) return
@@ -152,6 +150,9 @@ export default function EncryptMessage() {
      * 3.
      */
 
+    console.log('USER WALLET:', userWallet)
+    console.log('CURRENT ACCOUNT:', currentAccount)
+
     return (
         <form onSubmit={encryptMessage}>
             <FormControl>
@@ -170,13 +171,13 @@ export default function EncryptMessage() {
                 </Button>
                 <Text>{userWallet}</Text>
                 <Button
-                    isDisabled={!currentAccount || userWallet == ''}
+                    isDisabled={!currentAccount || userWallet === ''}
                     onClick={getRemotePublicKey}
                 >
                     Get Sender Public Key
                 </Button>
                 <Text>{public_key}</Text>
-                <Button isDisabled={!currentAccount || public_key == ''} onClick={getRemoteTgId}>
+                <Button isDisabled={!currentAccount || public_key === ''} onClick={getRemoteTgId}>
                     Get chat_id
                 </Button>
                 <Text>{tgid_to}</Text>
@@ -194,7 +195,7 @@ export default function EncryptMessage() {
                 </Button>
                 <Button
                     isDisabled={
-                        !currentAccount || public_key == '' || tgid_to == '' || userWallet == ''
+                        !currentAccount || public_key === '' || tgid_to === '' || userWallet === ''
                     }
                     onClick={sendMessage}
                 >
