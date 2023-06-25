@@ -11,6 +11,7 @@ import { useAppContext } from '../AppContext'
 import { AccountInfo } from '../../components/AccountInfo'
 import { WalletNumber } from '@/components'
 
+
 const Home: NextPage = () => {
     const { currentAccount, legionAddress } = useAppContext()
 

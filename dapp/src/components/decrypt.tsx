@@ -7,8 +7,19 @@ import { useAppContext } from '../pages/AppContext'
 
 declare let window: any
 
-export default function DecryptMessage() {
-    const { currentAccount, legionAddress, userWallet, setUserWallet, userName, setUserName } =
+
+interface DecryptMessageProps {
+    currentAccount: string | null;
+    addressContract: string;
+  }
+  
+
+  
+
+export default function DecryptMessage({ currentAccount, addressContract }: DecryptMessageProps) {
+//export default function DecryptMessage() {    
+
+    const { legionAddress, userWallet, setUserWallet, userName, setUserName } =
         useAppContext()
 
     const ethUtil = require('ethereumjs-util')

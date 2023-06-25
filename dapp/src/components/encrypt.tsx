@@ -9,6 +9,7 @@ import '@metamask/eth-sig-util'
 import { useAppContext } from '../pages/AppContext'
 
 // TODO: проверить необходимость пропсов
+// Bekket: проверил, без них компонент не ожидает, что ему че-то передадут и не компилиться
 interface Props {
     addressContract: string
     currentAccount: string | null
@@ -16,9 +17,9 @@ interface Props {
 
 declare let window: any
 
-export default function EncryptMessage() {
+export default function EncryptMessage({ currentAccount, addressContract }: Props) {
     const {
-        currentAccount,
+        
         legionAddress,
         userWallet,
         setUserWallet,
