@@ -1,10 +1,8 @@
 import type { NextPage } from 'next'
 import { ethers, Contract } from 'ethers'
-import clsx from 'clsx'
 import { abi } from '../../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { useAppContext } from '../../components/AppContext'
 import { AccountInfo, WalletNumber, Form, SimpleInput } from '@/components'
-import css from './telesend.module.scss'
 
 //import type { GetServerSideProps } from "next";
 
@@ -23,24 +21,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 */
 
 const Home: NextPage = () => {
-    const { currentAccount, legionAddress, userName, setUserName, userWallet, setUserWallet } =
-        useAppContext()
-
-    console.log('USER WALLET:', userWallet)
-    console.log('CURRENT ACCOUNT:', currentAccount)
-
-    async function getRemoteAddress(event: React.FormEvent) {
-        event.preventDefault()
-        if (!window.ethereum) return
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer = provider.getSigner()
-
-        const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
-        await Legion.GetWalletByNickName(userName).then((result: string) => {
-            console.log('result: ', result)
-            setUserWallet(result)
-        })
-    }
+    const { userName, setUserName, recieverName, setRecieverName } = useAppContext()
 
     async function recieverInfo() {
         console.log('УСЁ УСПЕШНЯ')
@@ -59,8 +40,8 @@ const Home: NextPage = () => {
                 <SimpleInput
                     id="tg_name"
                     placeholder="Reciever's codename"
-                    setValue={setUserName}
-                    value={userName}
+                    setValue={setRecieverName}
+                    value={recieverName}
                 />
                 <SimpleInput
                     id="tg_name"
@@ -74,17 +55,3 @@ const Home: NextPage = () => {
 }
 
 export default Home
-
-{
-    /* <VStack>
-                <WalletNumber />
-                <AccountInfo />
-                <Box mb={0} p={4} w="100%" borderWidth="1px" borderRadius="lg">
-                    <Heading my={4} fontSize="xl">
-                        Encrypt message
-                    </Heading>
-                    <EncryptMessage />
-                </Box>
-                ...
-            </VStack> */
-}

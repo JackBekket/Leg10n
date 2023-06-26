@@ -6,6 +6,7 @@ export default function GetWalletByTelegramNickNameTG() {
     const { currentAccount, userName, setUserName, userWallet, getWalletByUsername } =
         useAppContext()
 
+    // ПОТОМ УДОЛИ
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search)
         var name = queryParams.get('user_tg_name')

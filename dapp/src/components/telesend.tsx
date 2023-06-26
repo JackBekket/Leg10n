@@ -21,12 +21,15 @@ export default function EncryptMessage() {
     const {
         currentAccount,
         public_key,
-        getPublicKey,
-        legionAddress,
         userWallet,
-        setUserWallet,
+        tgid_to,
         userName,
-        setUserName
+        setUserName,
+        getRemoteAddress,
+        getRemotePublicKey,
+        getRemoteTgId,
+        recieverName,
+        setRecieverName
     } = useAppContext()
 
     const ethUtil = require('ethereumjs-util')
@@ -35,7 +38,6 @@ export default function EncryptMessage() {
     //var token =  process.env.TELEGRAM_KEY!;
     //const token = tg_token;
 
-    var [tgid_to, setTgid_to] = useState<string>('')
     var [message_text, setMessageText] = useState<string>('')
 
     useEffect(() => {
@@ -75,49 +77,6 @@ export default function EncryptMessage() {
         setMessageText(encrypted_text)
     }
 
-    async function getRemotePublicKey(event: React.FormEvent) {
-        event.preventDefault()
-        if (!window.ethereum) return
-        if (!userWallet) return
-        await getPublicKey(userWallet)
-    }
-
-    async function getRemoteAddress(event: React.FormEvent) {
-        event.preventDefault()
-        if (!window.ethereum) return
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer = provider.getSigner()
-
-        const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
-        await Legion.GetWalletByNickName(userName).then((result: string) => {
-            console.log('result: ', result)
-            setUserWallet(result)
-        })
-    }
-
-    async function getRemoteTgId(event: React.FormEvent) {
-        event.preventDefault()
-        if (!window.ethereum) return
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer = provider.getSigner()
-
-        const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
-
-        await Legion.GetTgIdByAddress(userWallet).then((result: BigInteger) => {
-            console.log('result: ', result)
-            const str = result.toString()
-            setTgid_to(str)
-        })
-
-        /*
-     await Legion.GetUserByNickName(user_wallet)
-     .then((result:string) => {
-        console.log("result: ", result);
-        setTgid_to(result)
-     });
-     */
-    }
-
     async function sendMessage(event: React.FormEvent) {
         event.preventDefault()
         await handleSendMessage(event)
@@ -150,9 +109,6 @@ export default function EncryptMessage() {
      * 3.
      */
 
-    console.log('USER WALLET:', userWallet)
-    console.log('CURRENT ACCOUNT:', currentAccount)
-
     return (
         <form onSubmit={encryptMessage}>
             <FormControl>
@@ -162,8 +118,8 @@ export default function EncryptMessage() {
                     type="text"
                     required
                     placeholder="input codename *TO WHOM* you want to encrypt"
-                    onChange={e => setUserName(e.target.value)}
-                    value={userName}
+                    onChange={e => setRecieverName(e.target.value)}
+                    value={recieverName}
                     my={3}
                 />
                 <Button isDisabled={!currentAccount} onClick={getRemoteAddress}>

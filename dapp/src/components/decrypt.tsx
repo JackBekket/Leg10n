@@ -8,8 +8,7 @@ import { useAppContext } from './AppContext'
 declare let window: any
 
 export default function DecryptMessage() {
-    const { currentAccount, legionAddress, userWallet, setUserWallet, userName, setUserName } =
-        useAppContext()
+    const { currentAccount, setUserWallet } = useAppContext()
 
     const ethUtil = require('ethereumjs-util')
     const sigUtil = require('@metamask/eth-sig-util')
@@ -32,9 +31,6 @@ export default function DecryptMessage() {
         let s_address = currentAccount!
         console.log('s_address: ', s_address)
         setUserWallet(s_address)
-
-        console.log('message text: ', message_text)
-        console.log('user_wallet: ', userWallet)
 
         window.ethereum
             .request({

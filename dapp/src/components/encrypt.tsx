@@ -19,13 +19,12 @@ declare let window: any
 export default function EncryptMessage() {
     const {
         currentAccount,
-        legionAddress,
         userWallet,
-        setUserWallet,
         userName,
         setUserName,
         public_key,
-        getPublicKey
+        getRemoteAddress,
+        getRemotePublicKey
     } = useAppContext()
 
     const ethUtil = require('ethereumjs-util')
@@ -67,26 +66,6 @@ export default function EncryptMessage() {
 
         var encrypted_text = await encryptText(message_text, public_key)
         setMessageText(encrypted_text)
-    }
-
-    async function getRemotePublicKey(event: React.FormEvent) {
-        event.preventDefault()
-        if (!window.ethereum) return
-        if (!userWallet) return
-        await getPublicKey(userWallet)
-    }
-
-    async function getRemoteAddress(event: React.FormEvent) {
-        event.preventDefault()
-        if (!window.ethereum) return
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer = provider.getSigner()
-
-        const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
-        await Legion.GetWalletByNickName(userName).then((result: string) => {
-            console.log('result: ', result)
-            setUserWallet(result)
-        })
     }
 
     // * TODO:
