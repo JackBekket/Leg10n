@@ -6,7 +6,7 @@ import { Contract } from 'ethers'
 import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
 
-import { useAppContext } from '../pages/AppContext'
+import { useAppContext } from './AppContext'
 
 // TODO: проверить необходимость пропсов
 interface Props {
@@ -37,7 +37,7 @@ export default function EncryptMessage() {
         const queryParams = new URLSearchParams(location.search)
         var name = queryParams.get('user_tg_name')
 
-        //setUserName(name);
+        // setUserName(name);
     }, [])
 
     async function encryptText(plain_text: string, public_key: string) {

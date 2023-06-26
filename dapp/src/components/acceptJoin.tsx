@@ -5,7 +5,7 @@ import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { Contract } from 'ethers'
 import { TransactionResponse, TransactionReceipt } from '@ethersproject/abstract-provider'
 
-import { useAppContext } from '../pages/AppContext'
+import { useAppContext } from './AppContext'
 import { Form } from './Form'
 import { SimpleInput } from './SimpleInput'
 

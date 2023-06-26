@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 //import GetPublicKey from '../components/getPuclicKey'
 import DecryptMessage from '../../components/decrypt'
-import { useAppContext } from '../AppContext'
+import { useAppContext } from '../../components/AppContext'
 import { AccountInfo, WalletNumber } from '@/components'
 
 declare let window: any
@@ -34,10 +34,7 @@ const Home: NextPage = () => {
                     <Heading my={4} fontSize="xl">
                         Encrypt message
                     </Heading>
-                    <DecryptMessage
-                        currentAccount={currentAccount}
-                        addressContract={legionAddress}
-                    />
+                    <DecryptMessage />
                 </Box>
             </VStack>
         </>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Button, Input, FormControl, FormLabel, Text } from '@chakra-ui/react'
-import { useAppContext } from '../pages/AppContext'
+import { useAppContext } from './AppContext'
 
 export default function GetWalletByTelegramNickNameTG() {
     const { currentAccount, userName, setUserName, userWallet, getWalletByUsername } =

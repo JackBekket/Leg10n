@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAppContext } from '../../pages/AppContext'
+import { useAppContext } from '../AppContext'
 
 import css from './AccountInfo.module.scss'
 

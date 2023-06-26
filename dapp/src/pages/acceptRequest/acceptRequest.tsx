@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 
 import AcceptJoin from '../../components/acceptJoin'
-import { useAppContext } from '../AppContext'
+import { useAppContext } from '../../components/AppContext'
 import { AccountInfo } from '../../components/AccountInfo'
 import { WalletNumber } from '@/components'
 

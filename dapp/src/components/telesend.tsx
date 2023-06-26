@@ -9,7 +9,7 @@ import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
 import { get } from 'http'
 //import TelegramChat from './telebot_2'
-import { useAppContext } from '../pages/AppContext'
+import { useAppContext } from './AppContext'
 
 //const token = process.env.TELEGRAM_KEY!;
 //const token = "";

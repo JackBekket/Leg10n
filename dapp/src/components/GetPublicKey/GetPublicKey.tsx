@@ -1,7 +1,7 @@
 import 'ethereumjs-util'
 import '@metamask/eth-sig-util'
 import clsx from 'clsx'
-import { useAppContext } from '../../pages/AppContext'
+import { useAppContext } from '../AppContext'
 
 import css from './GetPublicKey.module.scss'
 

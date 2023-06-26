@@ -2,7 +2,7 @@ import React from 'react'
 // import cls from 'classnames'
 import { Box } from '@chakra-ui/layout'
 import { Button } from '@chakra-ui/react'
-import { useAppContext } from '../../pages/AppContext'
+import { useAppContext } from '../AppContext'
 
 import css from './WalletNumber.module.scss'
 

@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 //import GetPublicKey from '../components/getPuclicKey'
 import Delete from '../../components/delete'
-import { useAppContext } from '../AppContext'
+import { useAppContext } from '../../components/AppContext'
 import { AccountInfo } from '../../components/AccountInfo'
 import { WalletNumber } from '@/components'
 

@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
 import { ethers, Contract } from 'ethers'
+import clsx from 'clsx'
 import { abi } from '../../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
-import { useAppContext } from '../AppContext'
+import { useAppContext } from '../../components/AppContext'
 import { AccountInfo, WalletNumber, Form, SimpleInput } from '@/components'
+import css from './telesend.module.scss'
 
 //import type { GetServerSideProps } from "next";
 
@@ -52,6 +54,7 @@ const Home: NextPage = () => {
                 title="Encrypt message"
                 asyncHandler={recieverInfo}
                 buttonText="GET RECIEVER'S ADDRESS"
+                className="lol"
             >
                 <SimpleInput
                     id="tg_name"

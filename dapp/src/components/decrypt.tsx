@@ -3,7 +3,7 @@ import { Button, Input, FormControl, FormLabel, Text } from '@chakra-ui/react'
 import { ethers } from 'ethers'
 import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
-import { useAppContext } from '../pages/AppContext'
+import { useAppContext } from './AppContext'
 
 declare let window: any
 
