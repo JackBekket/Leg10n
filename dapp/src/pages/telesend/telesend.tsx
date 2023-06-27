@@ -1,25 +1,10 @@
 import type { NextPage } from 'next'
-import { ethers, Contract } from 'ethers'
-import { abi } from '../../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { useAppContext } from '../../components/AppContext'
 import { AccountInfo, WalletNumber, Form, SimpleInput } from '@/components'
 import { FormEvent } from 'react'
-
 //import type { GetServerSideProps } from "next";
 
 declare let window: any
-
-/*
-export const getServerSideProps: GetServerSideProps = async () => {
-    const fileExists = fs.existsSync("/some-file"); 
-  
-    return {
-      props: {
-        doesFileExist: fileExists,
-      },
-    };
-  };
-*/
 
 const Home: NextPage = () => {
     const {
@@ -86,3 +71,15 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+/*
+export const getServerSideProps: GetServerSideProps = async () => {
+    const fileExists = fs.existsSync("/some-file"); 
+  
+    return {
+      props: {
+        doesFileExist: fileExists,
+      },
+    };
+  };
+*/
