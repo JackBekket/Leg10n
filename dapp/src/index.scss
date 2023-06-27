@@ -1,0 +1,95 @@
+html {
+    font-family: 'Ubuntu', sans-serif;
+    // font-family: 'Zen Dots', cursive;
+    // font-family: 'Bungee Inline', cursive;
+
+    /* COLORS */
+
+    --gentle-lime: #f2ff5e;
+    --lime: #ebff00;
+
+    /* POSITIONS */
+
+    --main-padding: 6vw;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    height: 100vh;
+
+    &::-webkit-scrollbar {
+        display: none;
+        width: 0 !important;
+    }
+
+    h3 {
+        font-size: 1.5vw;
+
+        &.lemon {
+            color: var(--gentle-lime);
+        }
+    }
+
+    h4 {
+        font-size: 1.25vw;
+    }
+
+    h5 {
+        font-size: 1vw;
+
+        &.lemon {
+            color: var(--gentle-lime);
+        }
+    }
+
+    h6 {
+        font-size: 0.7vw;
+    }
+
+    // h3,
+    // h5,
+    // h6 {
+    //     &.lemon {
+    //         color: var(--gentle-lime);
+    //     }
+    // } почему не работает так?
+
+    .chakra-container {
+        padding: 0vw;
+        // height: 100%;
+        font-family: 'Ubuntu', sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: linear-gradient(to bottom, rgb(0, 0, 0), white 100%);
+    // background: linear-gradient(to bottom, rgb(0, 0, 0) -1%, white);
+    position: relative;
+    background-attachment: scroll;
+    font-family: 'Ubuntu', sans-serif;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 18.3vw;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        background-image: url(./styles/icons/page_pattern.svg);
+        background-repeat: repeat;
+        background-size: contain;
+    }
+
+    button {
+    }
+}

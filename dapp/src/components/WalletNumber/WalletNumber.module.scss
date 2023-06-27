@@ -1,0 +1,48 @@
+.walletNumberContainer {
+    display: flex;
+    justify-content: center;
+
+    .disconnectButton {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        font-family: 'Zen Dots', cursive;
+        margin-bottom: 5vw;
+        justify-content: center;
+
+        h4 {
+        }
+
+        .walletNumber {
+            background: -webkit-linear-gradient(to right, #ebff00 5%, #4ff2c1 70%, #f2ff5e);
+            background: -moz-linear-gradient(to right, #ebff00 5%, #4ff2c1 70%, #f2ff5e);
+            background: linear-gradient(to right, #ebff00 5%, #4ff2c1 70%, #f2ff5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding-left: 0.8em;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            height: 2vw;
+            width: 2vw;
+            background-image: url(./icons/fox.svg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            // right: 48.5%;
+            // top: 195%;
+            top: 140%;
+            background-position: center center;
+        }
+    }
+    .connectButton {
+        background-image: url(./icons/connect_mtmsk.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 10vw;
+        width: 25vw;
+        background-position: center;
+    }
+}

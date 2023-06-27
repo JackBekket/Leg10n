@@ -1,0 +1,41 @@
+.retrievedPubKey {
+    display: flex;
+    flex-direction: row;
+    font-family: 'Zen Dots', cursive;
+    justify-content: center;
+    margin-bottom: 3vw;
+
+    h5 {
+        margin-right: 1em;
+    }
+}
+
+.publicKeycontainer {
+    font-family: 'Zen Dots', cursive;
+    margin-bottom: 0.69em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h4 {
+        margin-bottom: 0.7em;
+    }
+
+    button {
+        color: var(--lime);
+        padding: 0.8em 1.6em;
+        background-image: url(./icons/publicKeyButton.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        font-size: 1.1vw;
+    }
+
+    &.active {
+        button {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    }
+}

@@ -1,0 +1,26 @@
+.menu {
+    // height: 100%;
+    background-color: black;
+    padding: 2.5em var(--main-padding);
+    font-family: 'Zen Dots', cursive;
+    display: flex;
+    flex-direction: row;
+
+    .logo {
+        background-image: url(./icons/legion_logo.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 3vw;
+        background-position: center left;
+        flex: 1;
+    }
+
+    ul {
+        flex: 1.5;
+        color: var(--gentle-lime);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 1.3vw;
+    }
+}

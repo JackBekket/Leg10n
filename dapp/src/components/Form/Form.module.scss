@@ -1,0 +1,38 @@
+.formContainer {
+    font-family: 'Zen Dots', cursive, 'Ubuntu', bold;
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    // width: 100%;
+    z-index: 1;
+    max-width: 25vw;
+
+    h4 {
+        margin-bottom: 1em;
+    }
+
+    button {
+        color: black;
+        margin: 1em 0em;
+        font-family: 'Bungee Inline', cursive;
+        background-image: url(./icons/formButton.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        width: 25.1vw;
+        height: 7vw;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        font-size: 1.05vw;
+
+        .buttonText {
+            max-width: 12vw;
+            padding-top: 1.85em;
+        }
+
+        .longText {
+            padding-top: 1.4em;
+        }
+    }
+}

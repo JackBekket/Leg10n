@@ -9,14 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mpth/react-no-ssr": "^1.0.1",
     "@next/font": "13.1.6",
     "@types/node": "18.13.0",
     "@types/react-dom": "18.0.10",
+    "classnames": "^2.3.2",
+    "clsx": "^1.2.1",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "next": "13.1.6",
+    "prettier": "^2.8.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "sass": "^1.62.1",
     "typescript": "4.9.5"
   },
   "devDependencies": {
@@ -27,6 +32,7 @@
     "@metamask/eth-sig-util": "^5.0.2",
     "@types/node-telegram-bot-api": "^0.61.5",
     "@types/react": "^18.0.28",
+    "eslint-config-prettier": "^7.2.0",
     "ethereumjs-util": "^7.1.5",
     "ethers": "^5.7.2",
     "framer-motion": "^9.0.4",
