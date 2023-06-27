@@ -34,9 +34,9 @@ type AppContext = {
     setRecieverName: (s: string) => void
     setTgid_to: (s: string) => void
     getWalletByUsername: (e: React.FormEvent) => Promise<void>
-    getRemoteAddress: (e: React.FormEvent) => Promise<void>
-    getRemotePublicKey: (e: React.FormEvent) => Promise<void>
-    getRemoteTgId: (e: React.FormEvent) => Promise<void>
+    getRemoteAddress: (e: React.FormEvent) => Promise<void | null>
+    getRemotePublicKey: (e: React.FormEvent) => Promise<void | null>
+    getRemoteTgId: (e: React.FormEvent) => Promise<void | null>
     messageText: string
     setMessageText: (s: string) => void
 }
