@@ -3,6 +3,7 @@ import { ethers, Contract } from 'ethers'
 import { abi } from '../../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { useAppContext } from '../../components/AppContext'
 import { AccountInfo, WalletNumber, Form, SimpleInput } from '@/components'
+import { FormEvent } from 'react'
 
 //import type { GetServerSideProps } from "next";
 
@@ -21,10 +22,41 @@ export const getServerSideProps: GetServerSideProps = async () => {
 */
 
 const Home: NextPage = () => {
-    const { userName, setUserName, recieverName, setRecieverName } = useAppContext()
+    const {
+        recieverName,
+        setRecieverName,
+        messageText,
+        setMessageText,
+        getRemoteAddress,
+        getRemotePublicKey,
+        getRemoteTgId
+    } = useAppContext()
 
-    async function recieverInfo() {
-        console.log('УСЁ УСПЕШНЯ')
+    async function recieverInfo(e: FormEvent) {
+        // await Promise.all([getRemoteAddress(e), getRemotePublicKey(e), getRemoteTgId(e)]) - это если параллельно надо их выполнять
+
+        try {
+            getRemoteAddress(e)
+        } catch (error) {
+            console.log("couldn't get the reciever's address!")
+            console.error(error)
+        }
+
+        try {
+            getRemotePublicKey(e)
+        } catch (error) {
+            console.log("couldn't get the reciever's public key!")
+            console.error(error)
+        }
+
+        try {
+            getRemoteTgId(e)
+        } catch (error) {
+            console.log("couldn't get the reciever's telegram ID!")
+            console.error(error)
+        }
+
+        console.log('Готово, вы восхитительны!')
     }
 
     return (
@@ -35,7 +67,6 @@ const Home: NextPage = () => {
                 title="Encrypt message"
                 asyncHandler={recieverInfo}
                 buttonText="GET RECIEVER'S ADDRESS"
-                className="lol"
             >
                 <SimpleInput
                     id="tg_name"
@@ -46,8 +77,8 @@ const Home: NextPage = () => {
                 <SimpleInput
                     id="tg_name"
                     placeholder="Text for encryption"
-                    setValue={setUserName}
-                    value={userName}
+                    setValue={setMessageText}
+                    value={messageText}
                 />
             </Form>
         </div>

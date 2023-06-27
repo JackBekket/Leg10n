@@ -23,13 +23,13 @@ export default function EncryptMessage() {
         public_key,
         userWallet,
         tgid_to,
-        userName,
-        setUserName,
         getRemoteAddress,
         getRemotePublicKey,
         getRemoteTgId,
         recieverName,
-        setRecieverName
+        setRecieverName,
+        setMessageText,
+        messageText
     } = useAppContext()
 
     const ethUtil = require('ethereumjs-util')
@@ -37,14 +37,6 @@ export default function EncryptMessage() {
 
     //var token =  process.env.TELEGRAM_KEY!;
     //const token = tg_token;
-
-    var [message_text, setMessageText] = useState<string>('')
-
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search)
-        var message = queryParams.get('text')
-        setMessageText(message!)
-    }, [])
 
     async function encryptText(plain_text: string, public_key: string) {
         if (!window.ethereum) return
@@ -73,7 +65,7 @@ export default function EncryptMessage() {
         if (!window.ethereum) return
         if (!public_key) return
 
-        var encrypted_text = await encryptText(message_text, public_key)
+        var encrypted_text = await encryptText(messageText, public_key)
         setMessageText(encrypted_text)
     }
 
@@ -143,7 +135,7 @@ export default function EncryptMessage() {
                     required
                     placeholder="Input text to encrypt"
                     onChange={e => setMessageText(e.target.value)}
-                    value={message_text}
+                    value={messageText}
                     my={3}
                 />
                 <Button type="submit" isDisabled={!currentAccount}>
