@@ -18,12 +18,12 @@ contract Leg10n is Ownable, AccessControl {
 
     struct User {
         address userAddress;
-        string tgId;  // unic Id for telegram (encrypted value)
+        string tgId;  // unic Id for telegram (value encrypted by bot)
         bool valid;
         address validatorAddress;
         string codeName;
         string public_key;
-        bytes32 id_hash;
+        bytes32 id_hash;    // hash from plain id... possibly we need to make keccak256 functions work in front-end
     }
 
     //mappings
@@ -209,6 +209,7 @@ contract Leg10n is Ownable, AccessControl {
         emit requestDenied(tgid, child_address);
     }
 
+    // todo -- rework, make banhammer accesible for admin, add deletion of chain of command
     /**
      *  @dev This function is a service function which allow Owner to erase already approved passport
      *  and make clean state contract. NOT FOR USE IN PRODUCTION
@@ -257,6 +258,8 @@ contract Leg10n is Ownable, AccessControl {
         emit requestDenied(_tgId, user_address);
     }
 
+
+    // TODO: rework, make ClearParent and DeleteUser by single tx
     /**
      *  @dev delete yourself profile
      */
@@ -267,7 +270,7 @@ contract Leg10n is Ownable, AccessControl {
     }
 
     /**
-     *  @dev allow users to clear their parenthesis
+     *  @dev allow users to clear their parenthesis (chain of command)
      *  @param parent_name name of high node
      *  @param child_name username
      */
