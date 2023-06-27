@@ -40,6 +40,7 @@ export default function Delete(props: Props) {
         setChild(childq)
     }, [])
 
+    // todo -- сейчас он посылает последовательно 2 транзы, надо сделать удаление самого себя одной транзой (?) требуется редеплой контракта
     async function deleteYourself(event: React.FormEvent) {
         event.preventDefault()
         if (!window.ethereum) return
