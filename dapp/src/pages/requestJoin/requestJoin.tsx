@@ -3,7 +3,7 @@ import GetPublicKey from '~/components/GetPublicKey'
 import RequestJoin from '~/components/requestJoin'
 import { AccountInfo, WalletNumber } from '~components'
 
-import css from './requestJoin.module.scss'
+import css from './RequestJoin.module.scss'
 
 const JoinRequest: NextPage = () => {
     return (
