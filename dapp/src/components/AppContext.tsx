@@ -19,13 +19,13 @@ type AppContext = {
     setPublicKey: (s: string) => void
     getPublicKeyClient: (e: React.FormEvent) => void
     getPublicKey: (s: string) => Promise<string | null>
-    userId: string
+    userId: string | null
     setUserId: (s: string) => void
-    plainId: string
+    plainId: string | null
     setPlain: (s: string) => void
-    userName: string
+    userName: string | null
     setUserName: (s: string) => void
-    parentName: string
+    parentName: string | null
     setParentName: (s: string) => void
     userWallet: string
     setUserWallet: (s: string) => void
@@ -181,49 +181,34 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
 
     //------------------------ USERS INFO ------------------------//
 
-    var [userId, setUserId] = useState<string>('')
-    var [plainId, setPlain] = useState<string>('')
-    var [userName, setUserName] = useState<string>('')
-    var [parentName, setParentName] = useState<string>('')
-
-    useEffect(() => {
         const queryParams = new URLSearchParams(location.search)
         var id = queryParams.get('id')
-        var plainId = queryParams.get('plain') // get id as string from query                // similar to parseInt()
+        var plain = queryParams.get('plain') 
         var name = queryParams.get('codename')
-        var p_name = queryParams.get('parent') // TODO: set it
+        var p_name = queryParams.get('parent') 
+        const [userId, setUserId] = useState<string>(id!);
+        const [plainId, setPlain] = useState<string>(plain!);
+        const [userName, setUserName] = useState<string>(name!);
+        const [parentName, setParentName] = useState<string>(p_name!);
 
-        // if (p_name != '') {
-        //     setParentName(p_name)
-        // } шо цэ?
-
-        setUserId(id!)
-        setPlain(plainId!)
-        setUserName(name!)
-        setParentName(p_name!)
-
-        //let name_get : string = name;
-        //setUserName(name);      // @TODO: fix it
-    }, [])
-
+    
     //------------------------ TELESEND / USER WALLET ------------------------//
-
+    const name2 = queryParams.get('user_tg_name')
     const [userWallet, setUserWallet] = useState<string>('')
-    const [userTGName, setUserTGName] = useState<string>('')
+    const [userTGName, setUserTGName] = useState<string>(name2!)
 
-    const [recieverName, setRecieverName] = useState<string>('')
+    
     const [recieverPubKey, setRecieverPubKey] = useState<string>('')
     const [tgid_to, setTgid_to] = useState<string>('')
 
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search)
-        const name = queryParams.get('user_tg_name')
+    
+    
+    var receiver = queryParams.get('codename')
+    var message = queryParams.get('text')
+    const [messageText, setMessageText] = useState<string>(message!)
+    const [recieverName, setRecieverName] = useState<string>(receiver!)
+        
 
-        name && setUserTGName(name)
-
-        // вот тут, похоже, нужен стейт отдельный типа nickname, setNickname, чтобы не перемешивать с уже существующим userName, setUserName, т.к. это имя используется при вызове GetWalletByNickName и getWalletByUsername, где имя может быть и отправителя и получателя
-        // пока сделала для этого userTGName
-    }, [])
 
     async function getWalletByUsername(event: React.FormEvent) {
         // ФУНКЦИЯ нигде не используется кроме как в компоненте getWalletUser, которая вроде тоже нигде не используется
@@ -250,6 +235,7 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
 
     async function getRemoteAddress(event: React.FormEvent) {
         event.preventDefault()
+        console.log("hwieihfw")
         if (!window.ethereum || !userTGName || userTGName.trim() === '') return null
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
@@ -306,14 +292,11 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
      });
      */
     }
+    
+   
+       
 
-    const [messageText, setMessageText] = useState<string>('')
 
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search)
-        var message = queryParams.get('text')
-        setMessageText(message!)
-    }, [setMessageText])
 
     return (
         <appContext.Provider

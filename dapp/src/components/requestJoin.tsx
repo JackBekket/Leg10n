@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { ethers } from 'ethers'
 import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { Contract } from 'ethers'
@@ -23,6 +23,8 @@ export default function RequestJoin() {
         setParentName,
         legionAddress
     } = useAppContext()
+
+    
 
     async function sendJoinRequest(event: React.FormEvent) {
         event.preventDefault()
@@ -53,25 +55,25 @@ export default function RequestJoin() {
                 id="tgid"
                 placeholder="Your encrypted Telegram ID"
                 setValue={setUserId}
-                value={userId}
+                value={userId!}
             />
             <SimpleInput
                 id="tgid"
                 placeholder="Your telegram ID"
                 setValue={setPlain}
-                value={plainId}
+                value={plainId!}
             />
             <SimpleInput
                 id="tg_name"
                 placeholder="Your codename"
                 setValue={setUserName}
-                value={userName}
+                value={userName!}
             />
             <SimpleInput
                 id="parent_name"
                 placeholder="Inviter's codename"
                 setValue={setParentName}
-                value={parentName}
+                value={parentName!}
             />
             <SimpleInput
                 id="public_key"
