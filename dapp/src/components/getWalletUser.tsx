@@ -23,7 +23,7 @@ export default function GetWalletByTelegramNickNameTG() {
                     type="text"
                     required
                     onChange={e => setUserName(e.target.value)}
-                    value={userName}
+                    value={userName!}
                     my={3}
                 />
                 <Button type="submit" isDisabled={!currentAccount}>

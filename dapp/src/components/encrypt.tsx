@@ -83,7 +83,7 @@ export default function EncryptMessage() {
                     required
                     placeholder="input codename *TO WHOM* you want to encrypt"
                     onChange={e => setUserName(e.target.value)}
-                    value={userName}
+                    value={userName!}
                     my={3}
                 />
                 <Button isDisabled={!currentAccount} onClick={getRemoteAddress}>
