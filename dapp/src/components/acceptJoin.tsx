@@ -39,13 +39,13 @@ export default function AcceptJoin() {
                 id="tgid"
                 placeholder="TG-ID of the person you want to accept "
                 setValue={setUserId}
-                value={userId}
+                value={userId!}
             />
             <SimpleInput
                 id="tg_name"
                 placeholder="Your codename"
                 setValue={setUserName}
-                value={userName}
+                value={userName!}
             />
         </Form>
     )
