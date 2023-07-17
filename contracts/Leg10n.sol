@@ -209,7 +209,7 @@ contract Leg10n is Ownable, AccessControl {
         emit requestDenied(tgid, child_address);
     }
 
-    // todo -- rework, make banhammer accesible for admin, add deletion of chain of command
+    // TODO -- rework, make banhammer accesible for admin, add deletion of chain of command
     /**
      *  @dev This function is a service function which allow Owner to erase already approved passport
      *  and make clean state contract. NOT FOR USE IN PRODUCTION
@@ -263,9 +263,13 @@ contract Leg10n is Ownable, AccessControl {
     /**
      *  @dev delete yourself profile
      */
-    function deleteYourSelf() public {
+    function deleteYourSelf(
+        string memory parent_name,
+        string memory child_name
+        ) public {
+        ClearParent(parent_name,child_name);
         bool attached = users[msg.sender].valid;
-        require(attached == false, "call ClearParent first");
+        require(attached == false, "can't clear chain");
         DeleteUser(msg.sender);
     }
 

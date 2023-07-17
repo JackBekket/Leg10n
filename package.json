@@ -2,20 +2,20 @@
   "name": "hardhat-project",
   "type": "commonjs",
   "devDependencies": {
-    "@emotion/react": "^11.10.6",
-    "@metamask/eth-sig-util": "^5.0.2",
     "@nomicfoundation/hardhat-toolbox": "^2.0.1",
     "@nomiclabs/hardhat-waffle": "^2.0.5",
     "@openzeppelin/contracts": "^4.8.1",
-    "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
-    "ethers": "^5.7.2",
     "hardhat": "^2.12.7",
     "hardhat-contract-sizer": "^2.8.0",
-    "hardhat-gas-reporter": "^1.0.9",
-    "web3": "^1.9.0"
+    "solidity-coverage": "^0.8.2",
+    "hardhat-gas-reporter": "^1.0.9"
   },
   "dependencies": {
-    "solidity-coverage": "^0.8.2"
+    "@metamask/eth-sig-util": "^5.0.2",
+    "@emotion/react": "^11.10.6",
+    "crypto": "^1.0.1",
+    "ethers": "^5.7.2",
+    "web3": "^1.9.0"
   }
 }
