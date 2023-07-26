@@ -39,6 +39,12 @@ type AppContext = {
     getRemoteTgId: (e: React.FormEvent) => Promise<void | null>
     messageText: string
     setMessageText: (s: string) => void
+    incomingMessage: string
+    setIncomingMessage: (s: string) => void
+    outgoingMessage: string
+    setOutgoingMessage: (s: string) => void
+    userTGName: string
+    setUserTGName: (s: string) => void
 }
 
 declare let window: any // WTF? Why should I do that?
@@ -221,9 +227,10 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
 
         name && setUserTGName(name)
 
-        // вот тут, похоже, нужен стейт отдельный типа nickname, setNickname, чтобы не перемешивать с уже существующим userName, setUserName, т.к. это имя используется при вызове GetWalletByNickName и getWalletByUsername, где имя может быть и отправителя и получателя
+        // вот тут, похоже, нужен стейт отдельный типа nickname, setNickname, чтобы не перемешивать с уже существующим userName, setUserName,
+        // т.к. это имя используется при вызове GetWalletByNickName и getWalletByUsername, где имя может быть и отправителя и получателя
         // пока сделала для этого userTGName
-    }, [])
+    }, [userTGName])
 
     async function getWalletByUsername(event: React.FormEvent) {
         // ФУНКЦИЯ нигде не используется кроме как в компоненте getWalletUser, которая вроде тоже нигде не используется
@@ -307,13 +314,16 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
      */
     }
 
+    // const [messageText, setMessageText] = useState<string>('')
     const [messageText, setMessageText] = useState<string>('')
+    const [outgoingMessage, setOutgoingMessage] = useState<string>('')
+    const [incomingMessage, setIncomingMessage] = useState<string>('')
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search)
         var message = queryParams.get('text')
-        setMessageText(message!)
-    }, [setMessageText])
+        setIncomingMessage(message!)
+    }, [incomingMessage])
 
     return (
         <appContext.Provider
@@ -353,7 +363,13 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
                 getRemotePublicKey,
                 getRemoteTgId,
                 messageText,
-                setMessageText
+                setMessageText,
+                outgoingMessage,
+                setOutgoingMessage,
+                incomingMessage,
+                setIncomingMessage,
+                userTGName,
+                setUserTGName
             }}
         >
             {children}

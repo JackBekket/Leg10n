@@ -1,1 +1,45 @@
+:global(.page).telesend {
+    .buttonsContainer {
+        .encrypt,
+        .send {
+            z-index: 1;
+            color: black;
+            font-family: 'Bungee Inline', cursive;
+            background-image: url(../../styles/icons/sendButton.svg);
+            background-repeat: no-repeat;
+            // background-position: top 10px;
+            background-size: 95%;
+            position: relative;
+            font-size: 1.05vw;
+            height: 13.5vw;
+            width: 10vw;
+            top: 0;
 
+            border: 1px solid yellow;
+
+            .buttonText {
+                // max-width: 12vw;
+                padding-top: 2em;
+            }
+        }
+        .encrypt {
+            // transform: rotate(2deg) translate(30%, -43%);
+            transform: scaleX(-1);
+
+            span {
+                transform: scaleX(-1);
+                display: inline-block; // Necessary to apply transform to inline elements
+                transform-origin: center; // This line is important
+            }
+        }
+
+        .send {
+            // transform: rotate(-245deg) translate(-120%, 90%);
+            // background-image: url(../../styles/icons/sendButton.svg);
+            span {
+                transform-origin: center;
+                display: inline-block;
+            }
+        }
+    }
+}

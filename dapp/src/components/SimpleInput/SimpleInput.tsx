@@ -42,6 +42,7 @@ export function SimpleInput({
                         setInputFullness(Boolean(el.target.value.trim().length))
                         setInternalValue(el.target.value)
                         setValue(el.target.validity.valid ? el.target.value : '')
+                        console.log(value)
                     }}
                 />
             </div>

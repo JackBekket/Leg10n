@@ -1,9 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
 import css from './Form.module.scss'
-import { SimpleInput } from '../SimpleInput'
-
-import { useAppContext } from '../AppContext'
 
 export function Form({
     title,

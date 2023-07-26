@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Input, FormControl, FormLabel, Text } from '@chakra-ui/react'
 import { ethers } from 'ethers'
-import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
-import { Contract } from 'ethers'
-import TelegramBot from 'node-telegram-bot-api'
 
 import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
