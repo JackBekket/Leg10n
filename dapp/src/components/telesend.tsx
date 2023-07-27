@@ -19,7 +19,7 @@ export default function EncryptMessage() {
         currentAccount,
         public_key,
         userWallet,
-        tgid_to,
+        recieverTgId,
         getRemoteAddress,
         getRemotePublicKey,
         getRemoteTgId,
@@ -73,7 +73,7 @@ export default function EncryptMessage() {
 
     async function handleSendMessage(event: React.FormEvent) {
         //var url1 = 'https://api.telegram.org/bot'
-        var chatid = parseInt(tgid_to)
+        var chatid = parseInt(recieverTgId)
         var message = messageText
         const url = `http://93.115.18.139:8080?chat_id=${chatid}&text=${message}`
         //const url = `http://localhost:8080?chat_id=${chatid}&text=${message}`;
@@ -125,7 +125,7 @@ export default function EncryptMessage() {
                 <Button isDisabled={!currentAccount || public_key === ''} onClick={getRemoteTgId}>
                     Get chat_id
                 </Button>
-                <Text>{tgid_to}</Text>
+                <Text>{recieverTgId}</Text>
                 <Input
                     id="text_to_send"
                     type="text"
@@ -140,7 +140,10 @@ export default function EncryptMessage() {
                 </Button>
                 <Button
                     isDisabled={
-                        !currentAccount || public_key === '' || tgid_to === '' || userWallet === ''
+                        !currentAccount ||
+                        public_key === '' ||
+                        recieverTgId === '' ||
+                        userWallet === ''
                     }
                     onClick={sendMessage}
                 >

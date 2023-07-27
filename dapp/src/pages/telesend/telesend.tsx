@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { ethers } from 'ethers'
 import { useAppContext } from '../../components/AppContext'
 import { AccountInfo, WalletNumber, Form, SimpleInput } from '@/components'
-import { FormEvent } from 'react'
+import { FormEvent, useEffect } from 'react'
 import ethUtil from 'ethereumjs-util'
 import sigUtil from '@metamask/eth-sig-util'
 import clsx from 'clsx'
@@ -17,6 +17,7 @@ const Home: NextPage = () => {
     const {
         recieverName,
         setRecieverName,
+        recieverPubKey,
         messageText,
         setMessageText,
         outgoingMessage,
@@ -25,18 +26,18 @@ const Home: NextPage = () => {
         getRemotePublicKey,
         getRemoteTgId,
         public_key,
-        tgid_to,
+        recieverTgId,
         currentAccount,
         userWallet,
-        userTGName
+        recieverWallet
     } = useAppContext()
 
     async function recieverInfo(e: FormEvent) {
         // await Promise.all([getRemoteAddress(e), getRemotePublicKey(e), getRemoteTgId(e)]) - это если параллельно надо их выполнять
 
         try {
-            console.log('userTGName ' + userTGName)
             getRemoteAddress(e)
+            recieverWallet && console.log('recieverWallet ' + recieverWallet)
         } catch (error) {
             console.log("couldn't get the reciever's address!")
             console.error(error)
@@ -44,6 +45,7 @@ const Home: NextPage = () => {
 
         try {
             getRemotePublicKey(e)
+            recieverPubKey && console.log('recieverPubKey ' + recieverPubKey)
         } catch (error) {
             console.log("couldn't get the reciever's public key!")
             console.error(error)
@@ -51,12 +53,13 @@ const Home: NextPage = () => {
 
         try {
             getRemoteTgId(e)
+            recieverTgId && console.log('recieverTgId ' + recieverTgId)
         } catch (error) {
             console.log("couldn't get the reciever's telegram ID!")
             console.error(error)
         }
 
-        console.log('Готово, вы восхитительны!')
+        recieverWallet && recieverPubKey && recieverTgId && console.log('Готово, вы восхитительны!')
     }
 
     async function encryptText(plain_text: string, public_key: string) {
@@ -97,7 +100,7 @@ const Home: NextPage = () => {
 
     async function handleSendMessage(event: React.FormEvent) {
         //var url1 = 'https://api.telegram.org/bot'
-        var chatid = parseInt(tgid_to)
+        var chatid = parseInt(recieverTgId)
         var message = messageText
         const url = `http://93.115.18.139:8080?chat_id=${chatid}&text=${message}`
         //const url = `http://localhost:8080?chat_id=${chatid}&text=${message}`;
@@ -116,8 +119,8 @@ const Home: NextPage = () => {
     }
 
     // const isDisabledForSend =
-    //     !currentAccount || public_key === '' || tgid_to === '' || userWallet === ''
-    const isDisabledForSend = !currentAccount || !public_key || !tgid_to || !userWallet
+    //     !currentAccount || public_key === '' || recieverTgId === '' || userWallet === ''
+    const isDisabledForSend = !currentAccount || !public_key || !recieverTgId || !userWallet
 
     return (
         <div className={`page ${css.telesend}`}>

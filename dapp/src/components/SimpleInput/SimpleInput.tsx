@@ -35,7 +35,7 @@ export function SimpleInput({
                 <input
                     id={id}
                     type={`${isPassword ? 'password' : isEmail ? 'email' : 'text'}`}
-                    autoComplete="on"
+                    autoComplete="off"
                     placeholder={placeholder}
                     value={internalValue}
                     onChange={el => {

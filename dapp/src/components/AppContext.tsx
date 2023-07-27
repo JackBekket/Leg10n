@@ -29,10 +29,14 @@ type AppContext = {
     setParentName: (s: string) => void
     userWallet: string
     setUserWallet: (s: string) => void
-    tgid_to: string
     recieverName: string
     setRecieverName: (s: string) => void
-    setTgid_to: (s: string) => void
+    recieverWallet: string
+    setRecieverWallet: (s: string) => void
+    recieverPubKey: string
+    setRecieverPubKey: (s: string) => void
+    recieverTgId: string
+    setRecieverTgId: (s: string) => void
     getWalletByUsername: (e: React.FormEvent) => Promise<void>
     getRemoteAddress: (e: React.FormEvent) => Promise<void | null>
     getRemotePublicKey: (e: React.FormEvent) => Promise<void | null>
@@ -167,7 +171,9 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
         setPublicKey(pubkey)
     }
 
-    async function getPublicKey(user_address: string) {
+    async function getPublicKey(user_address: string, remote?: boolean) {
+        // TODO: ОТРАЗИТЬ НОВОВВЕДЕНИЯ В ТЕСТАХ
+
         if (!window.ethereum || !user_address || user_address.trim() === '') return null
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
@@ -176,13 +182,13 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
         try {
             await Legion.GetPublicKeyByAddress(user_address).then((result: string) => {
                 console.log('public key assosiated with address: ', result)
-                setPublicKey(result)
+                remote ? setRecieverPubKey(result) : setPublicKey(result)
                 console.log(result)
                 // return result;
             })
         } catch (error) {}
 
-        return public_key
+        return remote ? recieverPubKey : public_key
     }
 
     //------------------------ USERS INFO ------------------------//
@@ -218,22 +224,23 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
     const [userTGName, setUserTGName] = useState<string>('')
 
     const [recieverName, setRecieverName] = useState<string>('')
+    const [recieverWallet, setRecieverWallet] = useState<string>('')
     const [recieverPubKey, setRecieverPubKey] = useState<string>('')
-    const [tgid_to, setTgid_to] = useState<string>('')
+    const [recieverTgId, setRecieverTgId] = useState<string>('')
 
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search)
-        const name = queryParams.get('user_tg_name')
+    // useEffect(() => {
+    //     const queryParams = new URLSearchParams(location.search)
+    //     const name = queryParams.get('user_tg_name')
 
-        name && setUserTGName(name)
+    //     name && setUserTGName(name)
 
-        // вот тут, похоже, нужен стейт отдельный типа nickname, setNickname, чтобы не перемешивать с уже существующим userName, setUserName,
-        // т.к. это имя используется при вызове GetWalletByNickName и getWalletByUsername, где имя может быть и отправителя и получателя
-        // пока сделала для этого userTGName
-    }, [userTGName])
+    //     // вот тут, похоже, нужен стейт отдельный типа nickname, setNickname, чтобы не перемешивать с уже существующим userName, setUserName,
+    //     // т.к. это имя используется при вызове GetWalletByNickName и getWalletByUsername, где имя может быть и отправителя и получателя
+    //     // пока сделала для этого userTGName
+    // }, [userTGName])
 
     async function getWalletByUsername(event: React.FormEvent) {
-        // ФУНКЦИЯ нигде не используется кроме как в компоненте getWalletUser, которая вроде тоже нигде не используется
+        // QUESTION: функция нигде не используется кроме как в компоненте getWalletUser, которая вроде тоже нигде не используется
         event.preventDefault()
 
         if (!window.ethereum || !userTGName || userTGName.trim() === '') return
@@ -256,30 +263,41 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
     }
 
     async function getRemoteAddress(event: React.FormEvent) {
+        // Ранее эта функция принимала в себя userTGName, теперь я поменяла её на recieverName
+
+        // QUESTION: спроси у ребят, тождественны ли recieverName и то, что нужно передавать в GetWalletByNickName
+
         event.preventDefault()
-        if (!window.ethereum || !userTGName || userTGName.trim() === '') return null
+        if (!window.ethereum || !recieverName || recieverName.trim() === '') return null
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
         const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
 
         try {
-            await Legion.GetWalletByNickName(userTGName).then((result: string) => {
+            await Legion.GetWalletByNickName(recieverName).then((result: string) => {
                 console.log('result: ', result)
-                setUserWallet(result)
+                // setUserWallet(result)  QUESTION: реально ли мы хотим поместить эту инфу в userWallet? Ведь это запрашиваемый нами же адрес кошелька по имени пользователя
+
+                setRecieverWallet(result)
             })
         } catch (error) {
-            console.log("Problems with getting reciever's addres")
+            console.log("Problems with getting reciever's address wallet")
             console.error(error)
         }
     }
 
     async function getRemotePublicKey(event: React.FormEvent) {
         event.preventDefault()
-        if (!window.ethereum || !userWallet || userWallet.trim() === '') return null
+        // Здесь мы так же разделяем кошельки получателя и отправителя. Ранее использовался userWallet, теперь будет recieverWallet
+        if (!window.ethereum || !recieverWallet || recieverWallet.trim() === '') return null
 
         try {
-            await (userWallet && getPublicKey(userWallet))
+            // TODO: Тут надо проверить что происходит внутри getPublicKey и убедиться,
+            // что меняется состояние по правильному адресу кошелька (получателя), а не основного пользователя (отправителя)
+
+            await (recieverWallet && getPublicKey(recieverWallet))
+            console.log('recieverPubKey ', recieverPubKey)
         } catch (error) {
             console.log("Problems with getting reciever's public key!")
             console.error(error)
@@ -288,17 +306,21 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
 
     async function getRemoteTgId(event: React.FormEvent) {
         event.preventDefault()
-        if (!window.ethereum || !userWallet || userWallet.trim() === '') return null
+
+        // Здесь мы так же поменяли userWallet на recieverWallet
+
+        if (!window.ethereum || !recieverWallet || recieverWallet.trim() === '') return null
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
         const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
 
         try {
-            await Legion.GetTgIdByAddress(userWallet).then((result: BigInteger) => {
+            await Legion.GetTgIdByAddress(recieverWallet).then((result: BigInteger) => {
                 console.log('result: ', result)
                 const str = result.toString()
-                setTgid_to(str)
+                setRecieverTgId(str)
+                console.log('recieverTgId ' + recieverTgId)
             })
         } catch (error) {
             console.log("Problems with getting reciever's telegram ID!")
@@ -309,7 +331,7 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
      await Legion.GetUserByNickName(user_wallet)
      .then((result:string) => {
         console.log("result: ", result);
-        setTgid_to(result)
+        setRecieverTgId(result)
      });
      */
     }
@@ -354,10 +376,14 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
                 setParentName,
                 userWallet,
                 setUserWallet,
-                tgid_to,
-                setTgid_to,
+                recieverPubKey,
+                setRecieverPubKey,
+                recieverTgId,
+                setRecieverTgId,
                 recieverName,
                 setRecieverName,
+                recieverWallet,
+                setRecieverWallet,
                 getWalletByUsername,
                 getRemoteAddress,
                 getRemotePublicKey,
