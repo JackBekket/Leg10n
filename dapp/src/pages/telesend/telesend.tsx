@@ -91,7 +91,7 @@ const Home: NextPage = () => {
         if (!public_key) return
 
         const encrypted_text = await encryptText(outgoingMessage, public_key)
-        encrypted_text && setMessageText(encrypted_text)
+        encrypted_text && setOutgoingMessage(encrypted_text)
     }
 
     async function sendMessage(event: React.FormEvent) {
