@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { ethers, Contract } from 'ethers'
+import { ethers, Contract, Bytes } from 'ethers'
 import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 
 type AppContext = {
@@ -315,9 +315,10 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
         const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
 
         try {
-            await Legion.GetTgIdByAddress(recieverWallet).then((result: BigInteger) => {
-                console.log('resultTGID: ', result)
+            await Legion.GetTgIdByAddress(recieverWallet).then((result: Bytes) => {
+               //const plainID = Legion.GetIdByHash(result)
                 const str = result.toString()
+                console.log(str)
                 setRecieverTgId(str)
             })
         } catch (error) {

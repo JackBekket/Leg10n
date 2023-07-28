@@ -3,8 +3,8 @@ import { ethers } from 'ethers'
 import { useAppContext } from '../../components/AppContext'
 import { AccountInfo, WalletNumber, Form, SimpleInput } from '@/components'
 import { FormEvent, useEffect } from 'react'
-import ethUtil from 'ethereumjs-util'
-import sigUtil from '@metamask/eth-sig-util'
+import * as ethUtil from 'ethereumjs-util';
+import * as sigUtil from '@metamask/eth-sig-util'
 import clsx from 'clsx'
 //import type { GetServerSideProps } from "next";
 
@@ -86,11 +86,14 @@ const Home: NextPage = () => {
     }
 
     async function encryptMessage(event: React.FormEvent) {
+        console.log("tik")
+        console.log(public_key)
         event.preventDefault()
         if (!window.ethereum) return
-        if (!recieverPubKey) return
+        if (!public_key) return
 
-        const encrypted_text = await encryptText(outgoingMessage, recieverPubKey)
+        const encrypted_text = await encryptText(outgoingMessage, public_key)
+       console.log(encryptText)
         encrypted_text && setOutgoingMessage(encrypted_text)
     }
 
