@@ -296,7 +296,13 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
             // TODO: Тут надо проверить что происходит внутри getPublicKey и убедиться,
             // что меняется состояние по правильному адресу кошелька (получателя), а не основного пользователя (отправителя)
 
-            await (recieverWallet && getPublicKey(recieverWallet))
+            const recieverPubKey = await (recieverWallet && getPublicKey(recieverWallet))
+            // recieverPubKey && getRemotePublicKey(recieverPubKey)
+
+            console.log('recieverPubKey ', recieverPubKey)
+            console.log('typeOf recieverPubKey ', typeof recieverPubKey)
+
+            // if (recieverPubKey !== null)
         } catch (error) {
             console.log("Problems with getting reciever's public key!")
             console.error(error)
