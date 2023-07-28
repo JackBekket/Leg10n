@@ -63,7 +63,7 @@ const Home: NextPage = () => {
         recieverWallet && recieverPubKey && recieverTgId && console.log('Готово, вы восхитительны!')
     }
 
-    async function encryptText(plain_text: string, public_key: string) {
+    async function encryptText(plain_text: string, recieverPubliKey: string) {
         if (!window.ethereum) return
 
         const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -73,7 +73,7 @@ const Home: NextPage = () => {
             Buffer.from(
                 JSON.stringify(
                     sigUtil.encrypt({
-                        publicKey: public_key,
+                        publicKey: recieverPubliKey,
                         data: plain_text,
                         version: 'x25519-xsalsa20-poly1305'
                     })
@@ -88,9 +88,9 @@ const Home: NextPage = () => {
     async function encryptMessage(event: React.FormEvent) {
         event.preventDefault()
         if (!window.ethereum) return
-        if (!public_key) return
+        if (!recieverPubKey) return
 
-        const encrypted_text = await encryptText(outgoingMessage, public_key)
+        const encrypted_text = await encryptText(outgoingMessage, recieverPubKey)
         encrypted_text && setOutgoingMessage(encrypted_text)
     }
 
