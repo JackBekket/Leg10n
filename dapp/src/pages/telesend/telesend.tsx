@@ -37,7 +37,8 @@ const Home: NextPage = () => {
 
         try {
             getRemoteAddress(e)
-            recieverWallet && console.log('recieverWallet ' + recieverWallet)
+
+            recieverWallet && console.log('recieverWallet inside recieverInfo fn ' + recieverWallet)
         } catch (error) {
             console.log("couldn't get the reciever's address!")
             console.error(error)
@@ -45,7 +46,7 @@ const Home: NextPage = () => {
 
         try {
             getRemotePublicKey(e)
-            recieverPubKey && console.log('recieverPubKey ' + recieverPubKey)
+            recieverPubKey && console.log('recieverPubKey inside recieverInfo fn ' + recieverPubKey)
         } catch (error) {
             console.log("couldn't get the reciever's public key!")
             console.error(error)
@@ -53,7 +54,7 @@ const Home: NextPage = () => {
 
         try {
             getRemoteTgId(e)
-            recieverTgId && console.log('recieverTgId ' + recieverTgId)
+            recieverTgId && console.log('recieverTgId inside recieverInfo fn ' + recieverTgId)
         } catch (error) {
             console.log("couldn't get the reciever's telegram ID!")
             console.error(error)
@@ -89,7 +90,7 @@ const Home: NextPage = () => {
         if (!window.ethereum) return
         if (!public_key) return
 
-        const encrypted_text = await encryptText(messageText, public_key)
+        const encrypted_text = await encryptText(outgoingMessage, public_key)
         encrypted_text && setMessageText(encrypted_text)
     }
 
@@ -101,7 +102,7 @@ const Home: NextPage = () => {
     async function handleSendMessage(event: React.FormEvent) {
         //var url1 = 'https://api.telegram.org/bot'
         var chatid = parseInt(recieverTgId)
-        var message = messageText
+        var message = outgoingMessage
         const url = `http://93.115.18.139:8080?chat_id=${chatid}&text=${message}`
         //const url = `http://localhost:8080?chat_id=${chatid}&text=${message}`;
         // replace <yourbottoken> with your actual bot token

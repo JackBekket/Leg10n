@@ -181,7 +181,7 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
 
         try {
             await Legion.GetPublicKeyByAddress(user_address).then((result: string) => {
-                console.log('public key assosiated with address: ', result)
+                console.log('Public key inside getPublicKey: ', result)
                 remote ? setRecieverPubKey(result) : setPublicKey(result)
                 console.log(result)
                 // return result;
@@ -276,7 +276,7 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
 
         try {
             await Legion.GetWalletByNickName(recieverName).then((result: string) => {
-                console.log('result: ', result)
+                console.log('RemoteAddressWallet: ', result)
                 // setUserWallet(result)  QUESTION: реально ли мы хотим поместить эту инфу в userWallet? Ведь это запрашиваемый нами же адрес кошелька по имени пользователя
 
                 setRecieverWallet(result)
@@ -297,7 +297,6 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
             // что меняется состояние по правильному адресу кошелька (получателя), а не основного пользователя (отправителя)
 
             await (recieverWallet && getPublicKey(recieverWallet))
-            console.log('recieverPubKey ', recieverPubKey)
         } catch (error) {
             console.log("Problems with getting reciever's public key!")
             console.error(error)
@@ -317,10 +316,9 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
 
         try {
             await Legion.GetTgIdByAddress(recieverWallet).then((result: BigInteger) => {
-                console.log('result: ', result)
+                console.log('resultTGID: ', result)
                 const str = result.toString()
                 setRecieverTgId(str)
-                console.log('recieverTgId ' + recieverTgId)
             })
         } catch (error) {
             console.log("Problems with getting reciever's telegram ID!")
