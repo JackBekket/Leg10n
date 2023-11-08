@@ -27,13 +27,13 @@ contract Factory is Ownable {
      *  @dev deploy new instance of Legion contract
      */
     function DeployLegion(
-        address admin_,
-        string memory tgid_,
-        string memory public_key_,
-        string memory plain_id
+        address admin,
+       string memory initCodename,
+        string memory email,
+        string memory public_key_
     ) public returns (address) {
         address legion = address(
-            new Leg10n(dictionary, admin_, tgid_, public_key_,plain_id)
+            new Leg10n(admin, initCodename, public_key_, email)
         );
         //Leg10n L = Leg10n(legion);
 
