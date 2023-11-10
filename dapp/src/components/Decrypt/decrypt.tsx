@@ -3,8 +3,9 @@ import { Button, Input, FormControl, FormLabel, Text } from '@chakra-ui/react'
 import { ethers } from 'ethers'
 import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
-import { useAppContext } from './AppContext'
-
+import { useAppContext } from './../AppContext'
+import { SimpleInput } from './../SimpleInput'
+import css from './Decrypt.module.scss'
 declare let window: any
 
 export default function DecryptMessage() {
@@ -37,10 +38,10 @@ export default function DecryptMessage() {
                 method: 'eth_decrypt',
                 params: [message_text, s_address]
             })
-            .then(
-                (result: string) => setMessageText(result)
-                // console.log('The decrypted message is:', decryptedMessage)
-            )
+            .then((result: string) => {
+                setMessageText(result);
+                console.log('The decrypted message is:', result);
+            })
             .catch((error: TypeError) => console.log(error.message))
         // setMessageText(encryptMessage);
         // return decryptedMessage;
@@ -53,22 +54,27 @@ export default function DecryptMessage() {
     }
 
     return (
-        <form onSubmit={decryptMessage}>
-            <FormControl>
-                <FormLabel htmlFor="TGID">Input cyphered text to decrypt</FormLabel>
-                <Input
+        <div className={css.decryptContainer}>
+     <h4>Decrypt your message</h4>
+               
+     <SimpleInput
                     id="text to send"
-                    type="text"
-                    required
                     placeholder="Input text to decrypt"
-                    onChange={e => setMessageText(e.target.value)}
+                    setValue={setMessageText}
                     value={message_text}
-                    my={3}
                 />
-                <Button type="submit" isDisabled={!currentAccount}>
-                    Decrypt message!
-                </Button>
-            </FormControl>
-        </form>
+                 <div className={css.buttonLast}>
+                <button onClick={decryptMessage} className={css.buttonLast}> 
+                   <span> Decrypt message!</span>
+                </button>
+                </div>
+                <div>
+                <h3>Decrypted text:</h3> 
+                </div>
+                <div className={css.Wrap}>
+                    {message_text}
+                </div>
+         </div>
+      
     )
 }

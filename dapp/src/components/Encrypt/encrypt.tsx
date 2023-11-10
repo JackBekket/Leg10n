@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Input, FormControl, FormLabel, Text } from '@chakra-ui/react'
 import { ethers } from 'ethers'
-import { abi } from '../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
+import { abi } from '../../../../artifacts/contracts/Leg10n.sol/Leg10n.json'
 import { Contract } from 'ethers'
 import '@ethereumjs/util'
 import '@metamask/eth-sig-util'
 
-import { useAppContext } from './AppContext'
+import { useAppContext } from './../AppContext'
+import { SimpleInput } from './../SimpleInput'
+
+import css from './Encrypt.module.scss'
 
 // TODO: проверить необходимость пропсов
 interface Props {
@@ -19,6 +22,7 @@ declare let window: any
 export default function EncryptMessage() {
     const {
         currentAccount,
+        recieverWallet,
         userWallet,
         userName,
         setUserName,
@@ -65,6 +69,7 @@ export default function EncryptMessage() {
         if (!public_key) return
 
         var encrypted_text = await encryptText(message_text, public_key)
+        console.log(encrypted_text)
         setMessageText(encrypted_text)
     }
 
@@ -74,39 +79,52 @@ export default function EncryptMessage() {
     // * 3.
 
     return (
-        <form onSubmit={encryptMessage}>
-            <FormControl>
-                <FormLabel htmlFor="TGID">Message encrypting</FormLabel>
-                <Input
+       
+            <div className={css.encryptContainer}>
+                <h4>Encrypt your message</h4>
+                <SimpleInput
                     id="tg_name"
-                    type="text"
-                    required
-                    placeholder="input codename *TO WHOM* you want to encrypt"
-                    onChange={e => setUserName(e.target.value)}
+                    placeholder="Enter reciever's codename"
+                    setValue={setUserName}
                     value={userName}
-                    my={3}
                 />
-                <Button isDisabled={!currentAccount} onClick={getRemoteAddress}>
-                    Get Sender Address
-                </Button>
-                <Text>{userWallet}</Text>
-                <Button isDisabled={!currentAccount} onClick={getRemotePublicKey}>
-                    Get Sender Public Key
-                </Button>
+                 <button   disabled={userName === null}
+                style={{ cursor: userName === null ? 'not-allowed' : 'pointer' }}
+                 onClick={getRemoteAddress}>
+                    Get Receiver Address
+                </button>
+                <Text>{recieverWallet}</Text>
+                <button disabled={recieverWallet === ""}
+                style={{ cursor: recieverWallet === "" ? 'not-allowed' : 'pointer' }}
+                onClick={getRemotePublicKey}>  
+                Get Receiver Public Key
+                </button> 
+
                 <Text>{public_key}</Text>
-                <Input
+                <SimpleInput
                     id="text_to_send"
-                    type="text"
-                    required
                     placeholder="Input text to encrypt"
-                    onChange={e => setMessageText(e.target.value)}
+                    setValue={setMessageText}
                     value={message_text}
-                    my={3}
+                
                 />
-                <Button type="submit" isDisabled={!currentAccount}>
-                    Encrypt message!
-                </Button>
-            </FormControl>
-        </form>
+                
+             <div className={css.buttonLast}>
+                <button onClick={encryptMessage} className={css.buttonLast}
+                disabled={public_key === ""}
+                style={{ cursor: public_key === "" ? 'not-allowed' : 'pointer' }}
+                > 
+                   <span> Encrypt message!</span>
+                </button>
+                
+                </div>
+                <div>
+                <h3>Encrypted text:</h3> 
+                </div>
+                <div className={css.Wrap}>
+                    {message_text}
+                </div>
+            </div>
+  
     )
 }

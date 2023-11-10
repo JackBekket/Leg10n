@@ -89,7 +89,7 @@ const Home: NextPage = () => {
         if (!public_key) return
 
         const encrypted_text = await encryptText(outgoingMessage, public_key)
-        console.log(encryptText)
+        console.log("encrypt", encrypted_text)
         encrypted_text && setOutgoingMessage(encrypted_text)
     }
 

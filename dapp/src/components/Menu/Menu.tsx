@@ -9,11 +9,14 @@ export function Menu() {
         <div className={css.menu}>
             <div className={css.logo}></div>
             <ul>
-                <Link href="/telesend">CHAT</Link>
-                <Link href="/requestJoin">MANIFEST</Link>
-                <Link href="/acceptRequest">ACCEPT</Link>
+                {/* 
+                +delete
+                +manifest
+                +faq
+                */}
                 <Link href="/requestJoin">JOIN</Link>
-                <Link href="/requestJoin">FAQ</Link>
+                <Link href="/encrypt">ENCRYPT</Link>
+                <Link href="/decrypt">DECRYPT</Link>
             </ul>
         </div>
     )

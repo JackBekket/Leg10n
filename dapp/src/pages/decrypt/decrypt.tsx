@@ -6,38 +6,26 @@ import { Text, Button } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 //import GetPublicKey from '../components/getPuclicKey'
-import DecryptMessage from '../../components/decrypt'
+import DecryptMessage from '../../components/Decrypt/decrypt'
 import { useAppContext } from '../../components/AppContext'
 import { AccountInfo, WalletNumber } from '@/components'
-
+import css from './Decrypt.module.scss'
 declare let window: any
 
 const Home: NextPage = () => {
     const { currentAccount, legionAddress } = useAppContext()
 
     return (
+
+        <div className='page'>
+<div className={css.decryptContainer}>
         <>
-            <Head>
-                <title>Decrypt message</title>
-            </Head>
-
-            <Heading as="h3" my={4}>
-                LYOD
-            </Heading>
-
-            <VStack>
                 <WalletNumber />
-
                 <AccountInfo />
-
-                <Box mb={0} p={4} w="100%" borderWidth="1px" borderRadius="lg">
-                    <Heading my={4} fontSize="xl">
-                        Encrypt message
-                    </Heading>
-                    <DecryptMessage />
-                </Box>
-            </VStack>
+                <DecryptMessage />
         </>
+        </div>
+        </div>
     )
 }
 

@@ -32,7 +32,7 @@ export default function RequestJoin() {
 
         const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
 
-        Legion.RequestJoin(userId, userName, parentName, public_key, plainId, {
+        Legion.RequestJoin(userId, userName, public_key, {
             value: ethers.utils.formatUnits(2000000000000000, 'wei')
         })
             .then((tr: TransactionResponse) => {
@@ -51,27 +51,15 @@ export default function RequestJoin() {
         <Form title="Join Request" asyncHandler={sendJoinRequest} buttonText="APPLY FOR JOIN">
             <SimpleInput
                 id="tgid"
-                placeholder="Your encrypted Telegram ID"
+                placeholder="Your e-mail"
                 setValue={setUserId}
                 value={userId}
-            />
-            <SimpleInput
-                id="tgid"
-                placeholder="Your telegram ID"
-                setValue={setPlain}
-                value={plainId}
             />
             <SimpleInput
                 id="tg_name"
                 placeholder="Your codename"
                 setValue={setUserName}
                 value={userName}
-            />
-            <SimpleInput
-                id="parent_name"
-                placeholder="Inviter's codename"
-                setValue={setParentName}
-                value={parentName}
             />
             <SimpleInput
                 id="public_key"

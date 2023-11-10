@@ -58,7 +58,7 @@ const appContext = createContext<AppContext>({} as AppContext)
 export const useAppContext = () => useContext(appContext)
 
 export function AppContextProvider({ children = null as React.ReactNode }) {
-    const legionAddress = '0xf86C79Da432c84ce57f323DC2f6e852eCE48F1C1'
+    const legionAddress = '0x7d7bdb77c6a3e195cd0d3b13e2565bd7dda1c85d'
 
     //------------------------ ACCOUNT INFO ------------------------//
 
@@ -266,16 +266,18 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
         // Ранее эта функция принимала в себя userTGName, теперь я поменяла её на recieverName
 
         // QUESTION: спроси у ребят, тождественны ли recieverName и то, что нужно передавать в GetWalletByNickName
-
+     
         event.preventDefault()
-        if (!window.ethereum || !recieverName || recieverName.trim() === '') return null
+        //if (!window.ethereum || !recieverName || recieverName.trim() === '') return null
+    
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
 
         const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
 
         try {
-            await Legion.GetWalletByNickName(recieverName).then((result: string) => {
+            await Legion.GetWalletByNickName(userName).then((result: string) => {
+                console.log(recieverName)
                 console.log('RemoteAddressWallet: ', result)
                 // setUserWallet(result)  QUESTION: реально ли мы хотим поместить эту инфу в userWallet? Ведь это запрашиваемый нами же адрес кошелька по имени пользователя
 
@@ -288,6 +290,7 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
     }
 
     async function getRemotePublicKey(event: React.FormEvent) {
+        console.log(userWallet)
         event.preventDefault()
         // Здесь мы так же разделяем кошельки получателя и отправителя. Ранее использовался userWallet, теперь будет recieverWallet
         if (!window.ethereum || !recieverWallet || recieverWallet.trim() === '') return null
@@ -321,7 +324,7 @@ export function AppContextProvider({ children = null as React.ReactNode }) {
         const Legion: Contract = new ethers.Contract(legionAddress, abi, signer)
 
         try {
-            await Legion.GetTgIdByAddress(recieverWallet).then((result: Bytes) => {
+            await Legion.GetEmailByAddress(recieverWallet).then((result: Bytes) => {
                //const plainID = Legion.GetIdByHash(result)
                 const str = result.toString()
                 console.log(str)

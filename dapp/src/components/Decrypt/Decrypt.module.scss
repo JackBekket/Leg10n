@@ -1,0 +1,71 @@
+
+.decryptContainer {
+    font-family: 'Zen Dots', cursive;
+    margin-bottom: 0.69em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h4 {
+        margin-bottom: 0.7em;
+    }
+
+    button  {
+        color: var(--lime);
+        padding: 0.8em 1.6em;
+        background-image: url(./icons/publicKeyButton.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        font-size: 1.1vw;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    input {
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
+
+    &.active {
+        button {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    }
+}
+.Wrap {
+    max-width: 20%;
+    word-wrap: break-word;
+}
+.buttonLast {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05vw;
+    button {
+        color: black;
+        margin: 1em 0em;
+        font-family: 'Bungee Inline', cursive;
+        background-image: url(../../styles/icons/formButton.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        width: 25.1vw;
+        height: 7vw;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        font-size: 1.05vw;
+    }
+    span {
+        position: absolute;
+    top: 35%;
+        left: 50%; /* Adjust this value based on your layout */
+        transform: translate(-50%, -50%);
+    }
+
+}
+
+
+
